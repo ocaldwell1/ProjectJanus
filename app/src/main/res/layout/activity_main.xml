@@ -11,11 +11,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:text="csce490 view"
-=======
-        android:text="menkus wrote this"
->>>>>>> c5d8f4d1b11102397c8f19bbca15f52b2eb67ce3
+        android:text="Hello World!!!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,8 +60,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jackie S"
+<<<<<<< HEAD
         tools:layout_editor_absoluteX="78dp"
         tools:layout_editor_absoluteY="209dp" />
 >>>>>>> 5e9c6ab3357b9774620a55993e87ecb3c2d5528d
+=======
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.234"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.331" />
+>>>>>>> 8d42c27fa09465bba92eab6113a0d5abf9b84d88
 
 </androidx.constraintlayout.widget.ConstraintLayout>

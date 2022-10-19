@@ -27,7 +27,11 @@ TBD
 
 # Authors
 Joseph Alam (jaalam@email.sc.edu)
+
 O'Darrius Caldwell (odarius@email.sc.edu)
+
 Walker Menkus (wmenkus@email.sc.edu)
+
 Ethan Hang (enhang@email.sc.edu)
+
 Jackie Schellberg (schellbj@email.sc.edu)

@@ -1,6 +1,6 @@
 # CSCE 490 - Team Janus Repository
 An app that assists users with time and schedule management by 
-importing assignments and prioritizing assignments in a user-friendly manner.
+importing tasks and prioritizing tasks in a user-friendly manner.
 See [The Wiki](https://github.com/SCCapstone/Janus/wiki/Design) for more details.
 
 ## External Requirements 

@@ -10,7 +10,11 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="csce490 view"
+=======
+        android:text="menkus wrote this"
+>>>>>>> c5d8f4d1b11102397c8f19bbca15f52b2eb67ce3
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

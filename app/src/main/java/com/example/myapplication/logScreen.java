@@ -19,9 +19,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class logScreen extends AppCompatActivity {
     private TextView login;
-    private TextView forgotpass;
-    private EditText logemail, logpass;
-    private Button back;
+    private TextView forgotPass;
+    private EditText logEmail, logPass;
+    private Button backButton;
 
     private FirebaseAuth mAuth;
 
@@ -31,11 +31,11 @@ public class logScreen extends AppCompatActivity {
         setContentView(R.layout.activity_logscreen);
 
 
-        login = (TextView) findViewById(R.id.logintextclick);
-        forgotpass = (TextView) findViewById(R.id.forgottext);
-        logemail = (EditText) findViewById(R.id.editLogEmail);
-        logpass = (EditText) findViewById(R.id.editLogPass);
-        back = (Button) findViewById(R.id.backButton);
+        login = (TextView) findViewById(R.id.logScreenLogInTextView);
+        forgotPass = (TextView) findViewById(R.id.logScreenForgotPassTextView);
+        logEmail = (EditText) findViewById(R.id.logScreenEmailEditText);
+        logPass = (EditText) findViewById(R.id.logScreenPasswordEditText);
+        backButton = (Button) findViewById(R.id.logScreenBackButton);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -46,14 +46,14 @@ public class logScreen extends AppCompatActivity {
             }
         });
 
-        forgotpass.setOnClickListener(new View.OnClickListener() {
+        forgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 forgotPassword();
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 backMenu();
@@ -62,20 +62,20 @@ public class logScreen extends AppCompatActivity {
     }
 
     public void loginNow() {
-        String userEmail = logemail.getText().toString().trim();
-        String userPass = logpass.getText().toString().trim();
+        String userEmail = logEmail.getText().toString().trim();
+        String userPass = logPass.getText().toString().trim();
 
         if(userEmail.isEmpty()){
-            logemail.setError("Email required!");
+            logEmail.setError("Email required!");
             //return;
         }else if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()){
-            logemail.setError("Email is not valid!");
-            logemail.requestFocus();
+            logEmail.setError("Email is not valid!");
+            logEmail.requestFocus();
             //return;
         }
         if(userPass.isEmpty() || userPass.length() < 8){
-            logpass.setError("Password length needs to be at least 8 characters");
-            logpass.requestFocus();
+            logPass.setError("Password length needs to be at least 8 characters");
+            logPass.requestFocus();
             return;
         }
         mAuth.signInWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

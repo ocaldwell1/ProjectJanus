@@ -7,7 +7,7 @@
     tools:context=".logScreen">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/logScreenTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.318" />
 
     <EditText
-        android:id="@+id/editLogEmail"
+        android:id="@+id/logScreenEmailEditText"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:ems="10"
@@ -38,7 +38,7 @@
         app:layout_constraintVertical_bias="0.462" />
 
     <EditText
-        android:id="@+id/editLogPass"
+        android:id="@+id/logScreenPasswordEditText"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:ems="10"
@@ -53,7 +53,7 @@
         app:layout_constraintVertical_bias="0.59" />
 
     <TextView
-        android:id="@+id/forgottext"
+        android:id="@+id/logScreenForgotPassTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
@@ -68,7 +68,7 @@
         app:layout_constraintVertical_bias="0.741" />
 
     <TextView
-        android:id="@+id/logintextclick"
+        android:id="@+id/logScreenLogInTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
@@ -84,7 +84,7 @@
         app:layout_constraintVertical_bias="0.744" />
 
     <Button
-        android:id="@+id/backButton"
+        android:id="@+id/logScreenBackButton"
         android:layout_width="96dp"
         android:layout_height="48dp"
         android:background="#000000"

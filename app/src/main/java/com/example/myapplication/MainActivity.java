@@ -22,21 +22,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
 
-        registerButton = (Button) findViewById(R.id.mainRegButton);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openRegister();
-            }
-        });
-
-        logButton = (Button) findViewById(R.id.mainLogButton);
-        logButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openLogin();
-            }
-        });
     }
     @Override
     protected void onStart() {
@@ -46,16 +31,9 @@ public class MainActivity extends AppCompatActivity {
         if (user != null){
             Intent intent = new Intent(MainActivity.this, logComplete.class);
             startActivity(intent);
+        }else if (user == null) {
+            Intent intent = new Intent(MainActivity.this, MainMenu.class);
+            startActivity(intent);
         }
-    }
-    public void openRegister() {
-        // go to register screen
-        Intent intent = new Intent(MainActivity.this, registerScreen.class);
-        startActivity(intent);
-    }
-    public void openLogin() {
-        // go to log in screen
-        Intent intent = new Intent(MainActivity.this, logScreen.class);
-        startActivity(intent);
     }
 }

@@ -8,11 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class regComplete extends AppCompatActivity {
     //private TextView firstName;
     private Button loginButton;
+
     //private EditText editFirst = (EditText) findViewById(R.id.firstNameText);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,9 @@ public class regComplete extends AppCompatActivity {
         setContentView(R.layout.activity_regcomplete);
         //Bundle Extra = getIntent().getExtras();
         //String displayFirst = Extra.getString("MessageFirst");
+
+        FirebaseAuth.getInstance().signOut();
+
 
         loginButton =  (Button) findViewById(R.id.regCompleteLogInButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -29,9 +34,9 @@ public class regComplete extends AppCompatActivity {
             }
         });
     }
-
+    // click log in button to go to log in screen
     public void logIn(){
-        Intent intent = new Intent(this, logScreen.class);
+        Intent intent = new Intent(regComplete.this, logScreen.class);
         startActivity(intent);
     }
 }

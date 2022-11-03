@@ -48,6 +48,7 @@ public class MainMenu extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
     public void openRegister() {
         // go to register screen
         Intent intent = new Intent(MainMenu.this, registerScreen.class);

@@ -30,7 +30,7 @@ public class logComplete extends AppCompatActivity {
     }
     public void logOut() {
         mAuth.signOut();
-        Intent intent = new Intent(logComplete.this, MainActivity.class);
+        Intent intent = new Intent(logComplete.this, MainMenu.class);
         startActivity(intent);
     }
 }

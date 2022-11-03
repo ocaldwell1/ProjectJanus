@@ -24,7 +24,7 @@ public class forgotEmailScreen extends AppCompatActivity {
         });
     }
     public void goToMain(){
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainMenu.class);
         startActivity(intent);
     }
 }

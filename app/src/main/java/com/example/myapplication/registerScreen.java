@@ -98,7 +98,7 @@ public class registerScreen extends AppCompatActivity {
     }
     // goes back to menu if back button is clicked
     public void backMenu() {
-        Intent intent = new Intent(registerScreen.this, com.example.myapplication.MainActivity.class);
+        Intent intent = new Intent(registerScreen.this, com.example.myapplication.MainMenu.class);
         startActivity(intent);
     }
 

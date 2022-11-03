@@ -98,7 +98,7 @@ public class logScreen extends AppCompatActivity {
     }
 
     public void backMenu() {
-        Intent intent = new Intent(logScreen.this, MainActivity.class);
+        Intent intent = new Intent(logScreen.this, MainMenu.class);
         startActivity(intent);
     }
 }

@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         // if a user is logged in, stays logged in
         if (user != null){
-            startActivity(new Intent(MainActivity.this, logComplete.class));
+            Intent intent = new Intent(MainActivity.this, logComplete.class);
+            startActivity(intent);
         }
     }
     public void openRegister() {

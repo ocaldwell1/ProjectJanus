@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class regComplete extends AppCompatActivity {
     //private TextView firstName;
-    private Button loginbutton;
+    private Button loginButton;
     //private EditText editFirst = (EditText) findViewById(R.id.firstNameText);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +21,8 @@ public class regComplete extends AppCompatActivity {
         //Bundle Extra = getIntent().getExtras();
         //String displayFirst = Extra.getString("MessageFirst");
 
-        loginbutton =  (Button) findViewById(R.id.regCompleteLogInButton);
-        loginbutton.setOnClickListener(new View.OnClickListener() {
+        loginButton =  (Button) findViewById(R.id.regCompleteLogInButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 logIn();

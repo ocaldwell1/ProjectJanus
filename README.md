@@ -26,7 +26,6 @@ TBD
 TBD
 
 # Authors
-Joseph Alam (jaalam@email.sc.edu)
 
 O'Darrius Caldwell (odarius@email.sc.edu)
 

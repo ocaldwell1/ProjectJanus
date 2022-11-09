@@ -52,7 +52,6 @@ public class registerScreen extends AppCompatActivity {
         });
     }
 
-
     public void registerClick() {
         String userFirst = firstName.getText().toString().trim();
         String userLast = lastName.getText().toString().trim();
@@ -88,8 +87,8 @@ public class registerScreen extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Toast.makeText(registerScreen.this, "Registered!", Toast.LENGTH_SHORT).show();
                     // sendMessage = new Intent(MainActivity2.this, MainActivity4.class);
-                    //sendMessage.putExtra("MessageFirst", messageFirst);
-                    //startActivity(sendMessage);
+                    // sendMessage.putExtra("MessageFirst", messageFirst);
+                    // startActivity(sendMessage);
                     // this will go to next registration complete
                     startActivity(new Intent(registerScreen.this, regComplete.class));
                 }
@@ -98,7 +97,7 @@ public class registerScreen extends AppCompatActivity {
     }
     // goes back to menu if back button is clicked
     public void backMenu() {
-        Intent intent = new Intent(registerScreen.this, com.example.myapplication.MainMenu.class);
+        Intent intent = new Intent(registerScreen.this, MainMenu.class);
         startActivity(intent);
     }
 

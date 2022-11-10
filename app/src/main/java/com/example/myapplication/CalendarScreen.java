@@ -2,17 +2,16 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+//import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
-public class AddTask extends AppCompatActivity {
+public class CalendarScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_task);
+        setContentView(R.layout.activity_calendar);
+        /**
         Button addTaskNewTaskButton = (Button) findViewById(R.id.addTaskNewTaskButton);
         addTaskNewTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -20,15 +19,16 @@ public class AddTask extends AppCompatActivity {
                 showNewTaskScreen(view);
             }
         });
-        Button addTaskImportTaskButton = (Button) findViewById(R.id.deleteTaskButton);
+        Button addTaskImportTaskButton = (Button) findViewById(R.id.addTaskImportTaskButton);
         addTaskImportTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showImportTaskScreen(view);
             }
-        });
+        });     **/
     }
 
+    /**
     public void showNewTaskScreen(View view) {
         Intent intent = new Intent(this, NewTask.class);
         //TODO pass relevant information into the intent?
@@ -39,5 +39,5 @@ public class AddTask extends AppCompatActivity {
         Intent intent = new Intent(this, ImportTask.class);
         //TODO pass relevant information into the intent?
         startActivity(intent);
-    }
+    }   **/
 }

@@ -64,6 +64,7 @@
         app:layout_constraintVertical_bias="0.963" />
 
     <ScrollView
+        android:id="@+id/taskScrollView"
         android:layout_width="309dp"
         android:layout_height="363dp"
         android:layout_marginTop="30dp"
@@ -72,17 +73,19 @@
         app:layout_constraintTop_toBottomOf="@+id/logCompleteLogOutButton">
 
         <LinearLayout
+            android:id="@+id/taskLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!-- TODO: Dynamically add tasks from the DB -->
+            <!-- TODO: Dynamically add tasks from the DB
+             Following from https://stackoverflow.com/questions/14920535/how-to-add-more-than-one-button-to-scrollview-in-android-->
             <Button
                 android:id="@+id/exampleTask1"
                 android:layout_width="fill_parent"
                 android:layout_height="120dp"
                 android:text="example Task 1" />
-
+            <!--
             <Button
                 android:id="@+id/exampleTask2"
                 android:layout_width="fill_parent"
@@ -99,7 +102,7 @@
                 android:id="@+id/exampleTask4"
                 android:layout_width="fill_parent"
                 android:layout_height="120dp"
-                tools:text="Example Task 4" />
+                tools:text="Example Task 4" /> -->
         </LinearLayout>
 
     </ScrollView>

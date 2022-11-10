@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -14,6 +16,8 @@ public class logComplete extends AppCompatActivity {
     private Button logoutButton;
     private Button addTaskButton;
     private Button goToCalendarButton;
+    private ScrollView taskScrollView;
+    private Button testScrollView1;
 
     private FirebaseAuth mAuth;
     @Override
@@ -24,8 +28,18 @@ public class logComplete extends AppCompatActivity {
         addTaskButton = (Button) findViewById(R.id.logCompleteAddTaskShim);
         logoutButton = (Button) findViewById(R.id.logCompleteLogOutButton);
         goToCalendarButton = (Button) findViewById(R.id.logCompleteCalendar);
+        taskScrollView = (ScrollView) findViewById(R.id.taskScrollView);
+        testScrollView1 = (Button) findViewById(R.id.exampleTask1);
         mAuth = FirebaseAuth.getInstance();
 
+        // Create a LinearLayout element (placeholder)
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.taskLinearLayout);
+        //linearLayout.setOrientation(LinearLayout.VERTICAL);
+        // TODO: Add way to dynamically aggregate tasks from DB to the scrollview as buttons
+        /** Button button = new Button(this);
+         * button.setText("Some text");             // Just add formatted text for now?
+         * linearLayout.addView(button);
+         **/
 
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override

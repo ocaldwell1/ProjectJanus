@@ -40,6 +40,10 @@ public class logComplete extends AppCompatActivity {
          * button.setText("Some text");             // Just add formatted text for now?
          * linearLayout.addView(button);
          **/
+        testScrollView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { showTaskDetails();}
+        });
 
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +63,13 @@ public class logComplete extends AppCompatActivity {
         });
 
     }
+
+    public void showTaskDetails() {
+        mAuth.signOut();
+        Intent intent = new Intent(logComplete.this, TaskDetails.class);
+        startActivity(intent);
+    }
+
     public void logOut() {
         mAuth.signOut();
         Intent intent = new Intent(logComplete.this, MainMenu.class);

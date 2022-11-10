@@ -20,7 +20,7 @@ public class AddTask extends AppCompatActivity {
                 showNewTaskScreen(view);
             }
         });
-        Button addTaskImportTaskButton = (Button) findViewById(R.id.addTaskImportTaskButton);
+        Button addTaskImportTaskButton = (Button) findViewById(R.id.deleteTaskButton);
         addTaskImportTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

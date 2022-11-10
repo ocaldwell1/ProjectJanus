@@ -45,4 +45,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.285" />
 
+    <!-- Jackie's Additions for the Calendar Screen
+    Note: This is just a placeholder until we create a unified
+          bottom bar. -->
+    <Button
+        android:id="@+id/logCompleteCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go To the Calendar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.712"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.785" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

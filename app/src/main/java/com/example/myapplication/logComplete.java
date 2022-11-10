@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class logComplete extends AppCompatActivity {
     private Button logoutButton;
     private Button addTaskButton;
+    private Button goToCalendarButton;
 
     private FirebaseAuth mAuth;
     @Override
@@ -22,6 +23,7 @@ public class logComplete extends AppCompatActivity {
 
         addTaskButton = (Button) findViewById(R.id.logCompleteAddTaskShim);
         logoutButton = (Button) findViewById(R.id.logCompleteLogOutButton);
+        goToCalendarButton = (Button) findViewById(R.id.logCompleteCalendar);
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -35,6 +37,12 @@ public class logComplete extends AppCompatActivity {
                 logOut();
             }
         });
+        goToCalendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCalendarScreen();
+            }
+        });
 
     }
     public void logOut() {
@@ -44,6 +52,10 @@ public class logComplete extends AppCompatActivity {
     }
     public void showAddTaskScreen() {
         Intent intent = new Intent(logComplete.this, AddTask.class);
+        startActivity(intent);
+    }
+    public void showCalendarScreen() {
+        Intent intent = new Intent(logComplete.this, CalendarScreen.class);
         startActivity(intent);
     }
 }

@@ -12,15 +12,25 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class registerScreen extends AppCompatActivity {
     private Button submitButton, backButton;
     private EditText firstName, lastName, password, email;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,7 @@ public class registerScreen extends AppCompatActivity {
         setContentView(R.layout.activity_registerscreen);
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         firstName = (EditText) findViewById(R.id.registerScreenFirstNameEditText);
         lastName = (EditText) findViewById(R.id.registerScreenLastNameEditText);
@@ -58,23 +69,23 @@ public class registerScreen extends AppCompatActivity {
         String userEmail = email.getText().toString().trim();
         String userPass = password.getText().toString().trim();
 
-        if(userFirst.isEmpty()){
+        if (userFirst.isEmpty()) {
             firstName.setError("First name required!");
             //return;
         }
-        if(userLast.isEmpty()){
+        if (userLast.isEmpty()) {
             lastName.setError("Last name required!");
             //return;
         }
-        if(userEmail.isEmpty()){
+        if (userEmail.isEmpty()) {
             email.setError("Email required!");
             //return;
-        }else if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
             email.setError("Email is not valid!");
             email.requestFocus();
             //return;
         }
-        if(userPass.isEmpty() || userPass.length() < 8){
+        if (userPass.isEmpty() || userPass.length() < 8) {
             password.setError("Password length needs to be at least 8 characters");
             password.requestFocus();
             // Add return statement here so all errors will be displayed
@@ -84,14 +95,29 @@ public class registerScreen extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(registerScreen.this, "Registered!", Toast.LENGTH_SHORT).show();
-                    // sendMessage = new Intent(MainActivity2.this, MainActivity4.class);
-                    // sendMessage.putExtra("MessageFirst", messageFirst);
-                    // startActivity(sendMessage);
-                    // this will go to next registration complete
-                    startActivity(new Intent(registerScreen.this, regComplete.class));
-                }
+                    mAuth.signOut();
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("userFirstName", userFirst);
+                    user.put("userLastName", userLast);
+                    user.put("userEmail", userEmail);
+                    //user.put("userPass", userPass);
+
+                    db.collection("User")
+                            .add(user)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Toast.makeText(registerScreen.this, "Registered Successfully!", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(registerScreen.this, regComplete.class);
+                                    startActivity(intent);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull @NotNull Exception e) {
+                                    Toast.makeText(registerScreen.this, "ERROR! Cannot Register.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
             }
         });
     }

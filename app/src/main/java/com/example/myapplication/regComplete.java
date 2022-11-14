@@ -20,10 +20,7 @@ public class regComplete extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regcomplete);
-        //Bundle Extra = getIntent().getExtras();
-        //String displayFirst = Extra.getString("MessageFirst");
 
-        FirebaseAuth.getInstance().signOut();
 
 
         loginButton =  (Button) findViewById(R.id.regCompleteLogInButton);

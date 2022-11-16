@@ -76,7 +76,7 @@ public class logComplete extends AppCompatActivity {
         startActivity(intent);
     }
     public void showAddTaskScreen() {
-        Intent intent = new Intent(logComplete.this, AddTask.class);
+        Intent intent = new Intent(logComplete.this, NavBar.class);
         startActivity(intent);
     }
     public void showCalendarScreen() {

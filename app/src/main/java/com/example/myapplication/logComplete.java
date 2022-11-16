@@ -65,7 +65,7 @@ public class logComplete extends AppCompatActivity {
     }
 
     public void showTaskDetails() {
-        mAuth.signOut();
+        //mAuth.signOut();
         Intent intent = new Intent(logComplete.this, TaskDetails.class);
         startActivity(intent);
     }

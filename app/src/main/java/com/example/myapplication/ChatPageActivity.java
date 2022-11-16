@@ -8,18 +8,23 @@ import android.view.Menu;
 
 import java.util.ArrayList;
 
-public class ChatPage extends AppCompatActivity {
+public class ChatPageActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private ArrayList<Chat> chats;
+    private ArrayList<ChatActivity> chats;
     private String username = "example1";
     private String username2 = "example2";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chat_page);
+        setContentView(R.layout.activity_chat_page);
         recyclerView = findViewById(R.id.recyclerview);
         chats = new ArrayList<>();
         }
+        public void onUserClicksChat(){
+        //TODO once user clicks chat from arraylist, chat activity will start, transfer username and int pos. w/putExtra
+
+    }
+
 
 
     @Override

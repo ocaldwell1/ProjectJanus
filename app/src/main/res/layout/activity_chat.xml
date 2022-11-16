@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chat">
+    tools:context=".ChatActivity">
 
     <LinearLayout
         android:id="@+id/LinearLayout"
@@ -15,6 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--circle that holds profile image, TODO add profile image-->
     <androidx.cardview.widget.CardView
         android:id="@+id/CardView"
         android:layout_width="72dp"
@@ -22,6 +23,8 @@
         app:cardCornerRadius="55dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LinearLayout" />
+
+
 
     <TextView
         android:id="@+id/ChattingWith"
@@ -31,25 +34,34 @@
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerchat"
-        android:layout_width="0dp"
-        android:layout_height="0dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBaseline_toTopOf="@id/editMessageInput"
+        app:layout_constraintTop_toBottomOf="@id/LinearLayout"
+        />
+
 <!-- chat bubble -->
     <EditText
-        android:id="@+id/editTxt"
+        android:id="@+id/editMessageInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="10dp"
         android:background="@drawable/chat_input_color"
         android:maxHeight="100dp"
         android:minHeight="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/sendIcon"
         app:layout_constraintStart_toStartOf="parent" />
 <!--send icon -->
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/sendIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="12dp"
         android:src="@drawable/sent_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

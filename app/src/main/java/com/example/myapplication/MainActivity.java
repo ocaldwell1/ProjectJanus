@@ -8,8 +8,8 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -17,12 +17,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.auth.User;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-
-public class NavBar extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
+    private Users ouruser; //This can be renamed, potentially made public
     private FirebaseAuth mAuth;
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
@@ -36,7 +33,6 @@ public class NavBar extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-        FirebaseUser user = mAuth.getCurrentUser();
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
@@ -49,9 +45,10 @@ public class NavBar extends AppCompatActivity {
             }
         });
 
-        if (user == null){
+        //if (user == null){
             //navController.navigate(R.id.loginFragment);
-        }
+            //no, this should be in the start Fragment (UpcomingTaskFragment)
+        //}
     }
 
     @Override
@@ -59,6 +56,10 @@ public class NavBar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_bar);
         mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        //TODO Figure out the flow of loading user and task information and turn it into a method.
+        //TODO call method from UpcomingTaskList (or do we need a start fragment?)
+        //ouruser = new Users("ourfirst", "ourlast", "ouremail", "ourpass", 13);
         //TODO user = new User(some kind of Firebase access?)
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);

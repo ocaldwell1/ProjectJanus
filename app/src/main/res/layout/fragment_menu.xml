@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainMenu">
+    tools:context=".MenuFragment">
 
 
     <Button
-        android:id="@+id/mainLogButton"
+        android:id="@+id/mainFragLogButton"
         android:layout_width="144dp"
         android:layout_height="48dp"
         android:text="Log in"
@@ -20,12 +20,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.854"
-        app:layout_constraintStart_toEndOf="@+id/mainRegButton"
+        app:layout_constraintStart_toEndOf="@+id/mainFragRegButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.544" />
 
     <Button
-        android:id="@+id/mainRegButton"
+        android:id="@+id/mainFragRegButton"
         android:layout_width="144dp"
         android:layout_height="48dp"
         android:background="@color/black"
@@ -42,7 +42,7 @@
         app:layout_constraintVertical_bias="0.544" />
 
     <TextView
-        android:id="@+id/mainMenuMessage2"
+        android:id="@+id/mainFragMenuMessage2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
@@ -57,7 +57,7 @@
         app:layout_constraintVertical_bias="0.332" />
 
     <TextView
-        android:id="@+id/mainMenuMessage1"
+        android:id="@+id/mainFragMenuMessage1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="124dp"

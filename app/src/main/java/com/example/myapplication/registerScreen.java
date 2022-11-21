@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,6 +21,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Document;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +31,7 @@ public class registerScreen extends AppCompatActivity {
     private EditText firstName, lastName, password, email;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,29 +96,10 @@ public class registerScreen extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                    mAuth.signOut();
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("userFirstName", userFirst);
-                    user.put("userLastName", userLast);
-                    user.put("userEmail", userEmail);
-                    //user.put("userPass", userPass);
-
-                    db.collection("User")
-                            .add(user)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Toast.makeText(registerScreen.this, "Registered Successfully!", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(registerScreen.this, regComplete.class);
-                                    startActivity(intent);
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull @NotNull Exception e) {
-                                    Toast.makeText(registerScreen.this, "ERROR! Cannot Register.", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                // navigate to register complete fragment
+                Toast.makeText(registerScreen.this, "Successfully Registered!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(registerScreen.this, regComplete.class);
+                startActivity(intent);
             }
         });
     }

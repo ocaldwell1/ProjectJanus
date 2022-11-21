@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/taskFragment"
-        android:name="com.example.myapplication.TaskFragment"
+        android:name="com.example.myapplication.UpcomingTasksFragment"
         android:label="fragment_task"
         tools:layout="@layout/fragment_task" >
         <action
@@ -33,7 +33,14 @@
         android:id="@+id/addTaskFragment"
         android:name="com.example.myapplication.AddTaskFragment"
         android:label="fragment_add_task"
-        tools:layout="@layout/fragment_add_task" />
+        tools:layout="@layout/fragment_add_task" >
+        <action
+            android:id="@+id/action_addTaskFragment_to_newTaskFragment"
+            app:destination="@id/newTaskFragment" />
+        <action
+            android:id="@+id/action_addTaskFragment_to_importTaskFragment"
+            app:destination="@id/importTaskFragment" />
+    </fragment>
     <fragment
         android:id="@+id/newTaskFragment"
         android:name="com.example.myapplication.NewTaskFragment"

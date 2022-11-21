@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-    private Users ouruser; //This can be renamed, potentially made public
+    private User ouruser; //This can be renamed, potentially made public
     private FirebaseAuth mAuth;
     private NavController navController;
     private BottomNavigationView bottomNavigationView;

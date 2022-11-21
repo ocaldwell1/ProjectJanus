@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_taskFragment_to_addTaskFragment"
             app:destination="@id/addTaskFragment" />
+        <action
+            android:id="@+id/action_taskFragment_to_taskDetailsFragment"
+            app:destination="@id/taskDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/calendarFragment"

@@ -75,7 +75,6 @@ public class UpcomingTasksFragment extends Fragment {
         });
         TextView testTextView = view.findViewById(R.id.testText);
         MainActivity activity = (MainActivity) getActivity();
-        testTextView.setText(activity.ouruser.email);
 
         return view;
     }

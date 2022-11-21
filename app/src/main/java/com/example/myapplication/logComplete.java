@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,8 +10,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import org.w3c.dom.Text;
 
 public class logComplete extends AppCompatActivity {
     private Button logoutButton;
@@ -18,6 +27,9 @@ public class logComplete extends AppCompatActivity {
     private Button goToCalendarButton;
     private ScrollView taskScrollView;
     private Button testScrollView1;
+    private String userID;
+    private FirebaseFirestore db;
+    private TextView message;
 
     private FirebaseAuth mAuth;
     @Override
@@ -30,7 +42,10 @@ public class logComplete extends AppCompatActivity {
         goToCalendarButton = (Button) findViewById(R.id.logCompleteCalendar);
         taskScrollView = (ScrollView) findViewById(R.id.taskScrollView);
         testScrollView1 = (Button) findViewById(R.id.exampleTask1);
+        message = (TextView) findViewById(R.id.logCompleteTextView1);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        displayName();
 
         // Create a LinearLayout element (placeholder)
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.taskLinearLayout);
@@ -63,7 +78,17 @@ public class logComplete extends AppCompatActivity {
         });
 
     }
-
+    public void displayName(){
+        userID = mAuth.getCurrentUser().getUid();
+        DocumentReference documentReference = db.collection("User").document(userID);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        message.setText("Welcome back, " + value.getString("userFirstName") + "!");
+                    }
+                }
+        );
+    }
     public void showTaskDetails() {
         //mAuth.signOut();
         Intent intent = new Intent(logComplete.this, TaskDetails.class);

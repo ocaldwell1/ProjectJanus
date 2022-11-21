@@ -80,4 +80,9 @@
         android:name="com.example.myapplication.RegCompleteFragment"
         android:label="fragment_reg_complete"
         tools:layout="@layout/fragment_reg_complete" />
+    <fragment
+        android:id="@+id/MenuFragment"
+        android:name="com.example.myapplication.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" />
 </navigation>

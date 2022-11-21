@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-    private Users ouruser; //This can be renamed, potentially made public
+    private User user; //This can be renamed, potentially made public
     private FirebaseAuth mAuth;
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
             R.id.registerScreenFragment,
             R.id.regCompleteFragment,
             R.id.forgotEmailFragment,
-            R.id.forgotPasswordFragment
+            R.id.forgotPasswordFragment,
+            R.id.MenuFragment
     };
 
     protected void onStart() {
@@ -45,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //if (user == null){
-            //navController.navigate(R.id.loginFragment);
+        if (user == null){
+            //navController.navigate(R.id.logScreenFragment);
             //no, this should be in the start Fragment (UpcomingTaskFragment)
-        //}
+        }
     }
 
     @Override
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nav_bar);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+        User users = new User();
         //TODO Figure out the flow of loading user and task information and turn it into a method.
         //TODO call method from UpcomingTaskList (or do we need a start fragment?)
         //ouruser = new Users("ourfirst", "ourlast", "ouremail", "ourpass", 13);

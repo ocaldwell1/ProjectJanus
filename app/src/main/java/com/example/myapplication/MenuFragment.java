@@ -1,35 +1,37 @@
 package com.example.myapplication;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UpcomingTasksFragment#newInstance} factory method to
+ * Use the {@link MenuFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UpcomingTasksFragment extends Fragment {
-
+public class MenuFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Button registerButton;
+    private Button logButton;
+    private FirebaseAuth mAuth;
+    private NavController navController;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button addTaskButton;
 
-    public UpcomingTasksFragment() {
+    public MenuFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +41,11 @@ public class UpcomingTasksFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TaskFragment.
+     * @return A new instance of fragment AddTaskFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UpcomingTasksFragment newInstance(String param1, String param2) {
-        UpcomingTasksFragment fragment = new UpcomingTasksFragment();
+    public static MenuFragment newInstance(String param1, String param2) {
+        MenuFragment fragment = new MenuFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -54,6 +56,8 @@ public class UpcomingTasksFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -64,21 +68,36 @@ public class UpcomingTasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_task, container, false);
-        //user = getActivity().getUser();
-        Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
-        addTaskButton.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
+        mAuth = FirebaseAuth.getInstance();
+
+        registerButton = (Button) view.findViewById(R.id.mainFragRegButton);
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_addTaskFragment);
+            public void onClick(View v) {
+                openRegister();
             }
         });
-        TextView testTextView = view.findViewById(R.id.testText);
-        MainActivity activity = (MainActivity) getActivity();
-        //testTextView.setText(activity.ouruser.email);
 
+        logButton = (Button) view.findViewById(R.id.mainFragLogButton);
+        logButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLogin();
+            }
+        });
         return view;
+
     }
 
+    public void openRegister() {
+        // go to register screen
+        navController.navigate(R.id.registerScreenFragment);
 
+    }
+    public void openLogin() {
+        // go to log in screen
+        navController.navigate(R.id.logScreenFragment);
+
+    }
 }

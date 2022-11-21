@@ -92,11 +92,12 @@ public class MenuFragment extends Fragment {
 
     public void openRegister() {
         // go to register screen
-        //navController.navigate(R.id.RegisterScreenFragment);
+        navController.navigate(R.id.registerScreenFragment);
 
     }
     public void openLogin() {
         // go to log in screen
+        navController.navigate(R.id.logScreenFragment);
 
     }
 }

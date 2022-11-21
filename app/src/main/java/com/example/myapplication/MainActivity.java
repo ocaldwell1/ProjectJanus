@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nav_bar);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+        User users = new User();
         //TODO Figure out the flow of loading user and task information and turn it into a method.
         //TODO call method from UpcomingTaskList (or do we need a start fragment?)
         //ouruser = new Users("ourfirst", "ourlast", "ouremail", "ourpass", 13);

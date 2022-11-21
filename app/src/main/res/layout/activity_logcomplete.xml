@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/logCompleteTextView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="324dp"
+        android:layout_height="68dp"
         android:fontFamily="monospace"
         android:text="You have successfully logged in!"
         android:textColor="#000000"

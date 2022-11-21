@@ -17,23 +17,26 @@ public class User {
     private FirebaseFirestore db;
     private ArrayList <Task> taskList;
 
-    public User(String first, String last, String email, String pass, String id){
+    public User(String first, String last, String email, String id){
         this.firstName = first;
         this.lastName = last;
         this.email = email;
         this.id = id;
     }
 
-    public User(String userFirst, String userLast, String userEmail, String userID) {
-    }
+    /*public User(String userFirst, String userLast, String userEmail, String userID) {
+    }*/
 
     public User() {
-        mAuth.getInstance();
-        fUser = mAuth.getCurrentUser();
+        // this was causing errors, i guess we can't get instance here
+        /*mAuth.getInstance();
+        fUser = mAuth.getCurrentUser();*/
         if (fUser == null){
 
         }
     }
+
+
 
     public String getFirstName(){
         return firstName;
@@ -57,15 +60,14 @@ public class User {
         return id;
     }
 
-    public void addUserToFirestore(String firstName, String lastName, String email, String id){
-        id = mAuth.getCurrentUser().getUid();
+    public void addUserToFirestore(User fsUser){
 
         DocumentReference documentReference = db.collection("User").document(id);
         Map<String, Object> user = new HashMap<>();
-        user.put("userFirstName", firstName);
-        user.put("userLastName", lastName);
-        user.put("userEmail", email);
-        user.put("userID", id);
+        user.put("userFirstName", fsUser.getFirstName());
+        user.put("userLastName", fsUser.getLastName());
+        user.put("userEmail", fsUser.getEmail());
+        user.put("userID", fsUser.getID());
     }
 
     public boolean isLoggedIn(){

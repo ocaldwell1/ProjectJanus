@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-    private User ouruser; //This can be renamed, potentially made public
+    private User user; //This can be renamed, potentially made public
     private FirebaseAuth mAuth;
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
             R.id.registerScreenFragment,
             R.id.regCompleteFragment,
             R.id.forgotEmailFragment,
-            R.id.forgotPasswordFragment
+            R.id.forgotPasswordFragment,
+            R.id.MenuFragment
     };
 
     protected void onStart() {
@@ -45,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //if (user == null){
-            //navController.navigate(R.id.loginFragment);
+        if (user == null){
+            //navController.navigate(R.id.logScreenFragment);
             //no, this should be in the start Fragment (UpcomingTaskFragment)
-        //}
+        }
     }
 
     @Override

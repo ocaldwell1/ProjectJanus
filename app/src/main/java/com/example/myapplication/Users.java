@@ -1,8 +1,8 @@
 package com.example.myapplication;
 
 public class Users {
-    public String first, last, email, pass;
-    public int id;
+    public String first, last, email, pass = "";
+    public int id = 0;
 
     public Users(){
 

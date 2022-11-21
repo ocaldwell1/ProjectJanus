@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,15 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import com.google.firebase.firestore.auth.User;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TaskFragment#newInstance} factory method to
+ * Use the {@link UpcomingTasksFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TaskFragment extends Fragment {
+public class UpcomingTasksFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +29,7 @@ public class TaskFragment extends Fragment {
     private String mParam2;
     private Button addTaskButton;
 
-    public TaskFragment() {
+    public UpcomingTasksFragment() {
         // Required empty public constructor
     }
 
@@ -42,8 +42,8 @@ public class TaskFragment extends Fragment {
      * @return A new instance of fragment TaskFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TaskFragment newInstance(String param1, String param2) {
-        TaskFragment fragment = new TaskFragment();
+    public static UpcomingTasksFragment newInstance(String param1, String param2) {
+        UpcomingTasksFragment fragment = new UpcomingTasksFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,6 +73,10 @@ public class TaskFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_addTaskFragment);
             }
         });
+        TextView testTextView = view.findViewById(R.id.testText);
+        MainActivity activity = (MainActivity) getActivity();
+        testTextView.setText(activity.ouruser.email);
+
         return view;
     }
 

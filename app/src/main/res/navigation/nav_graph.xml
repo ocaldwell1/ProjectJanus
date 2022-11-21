@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/taskFragment">
+
     <fragment
         android:id="@+id/taskFragment"
         android:name="com.example.myapplication.TaskFragment"
@@ -43,4 +44,30 @@
         android:name="com.example.myapplication.ImportTaskFragment"
         android:label="fragment_import_task"
         tools:layout="@layout/fragment_import_task" />
+    <fragment
+        android:id="@+id/logScreenFragment"
+        android:name="com.example.myapplication.logScreenFragment"
+        android:label="fragment_log_screen"
+        tools:layout="@layout/fragment_log_screen" />
+
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.myapplication.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" />
+    <fragment
+        android:id="@+id/forgotEmailFragment"
+        android:name="com.example.myapplication.ForgotEmailFragment"
+        android:label="fragment_forgot_email"
+        tools:layout="@layout/fragment_forgot_email" />
+    <fragment
+        android:id="@+id/registerScreenFragment"
+        android:name="com.example.myapplication.RegisterScreenFragment"
+        android:label="fragment_register_screen"
+        tools:layout="@layout/fragment_register_screen" />
+    <fragment
+        android:id="@+id/regCompleteFragment"
+        android:name="com.example.myapplication.RegCompleteFragment"
+        android:label="fragment_reg_complete"
+        tools:layout="@layout/fragment_reg_complete" />
 </navigation>

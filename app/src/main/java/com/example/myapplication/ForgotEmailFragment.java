@@ -3,21 +3,17 @@ package com.example.myapplication;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
-import com.google.firebase.firestore.auth.User;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TaskFragment#newInstance} factory method to
+ * Use the {@link ForgotEmailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TaskFragment extends Fragment {
+public class ForgotEmailFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,9 +23,8 @@ public class TaskFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button addTaskButton;
 
-    public TaskFragment() {
+    public ForgotEmailFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +34,11 @@ public class TaskFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TaskFragment.
+     * @return A new instance of fragment ForgotEmailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TaskFragment newInstance(String param1, String param2) {
-        TaskFragment fragment = new TaskFragment();
+    public static ForgotEmailFragment newInstance(String param1, String param2) {
+        ForgotEmailFragment fragment = new ForgotEmailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,17 +59,6 @@ public class TaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_task, container, false);
-        //user = getActivity().getUser();
-        Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
-        addTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_addTaskFragment);
-            }
-        });
-        return view;
+        return inflater.inflate(R.layout.fragment_forgot_email, container, false);
     }
-
-
 }

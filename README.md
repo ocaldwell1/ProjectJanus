@@ -14,19 +14,18 @@ TBD
 [TBD]
 
 # Deployment
-TBD
+.apk Distribution
 
 # Testing
-TBD
+Build/Run via Android Studio using Emulator
 
 ## Testing Technology
-TBD
+Android Studio Pixel_3a_API_33_x86_64
 
 ## Running Tests
 TBD
 
 # Authors
-Joseph Alam (jaalam@email.sc.edu)
 
 O'Darrius Caldwell (odarius@email.sc.edu)
 

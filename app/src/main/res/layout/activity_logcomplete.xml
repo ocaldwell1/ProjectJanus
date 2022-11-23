@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".logComplete">
+
+    <TextView
+        android:id="@+id/logCompleteTextView1"
+        android:layout_width="324dp"
+        android:layout_height="68dp"
+        android:fontFamily="monospace"
+        android:text="You have successfully logged in!"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <!-- Jackie's Additions for the Calendar Screen
+    Note: This is just a placeholder until we create a unified
+          bottom bar. -->
+
+    <Button
+        android:id="@+id/logCompleteLogOutButton"
+        android:layout_width="144dp"
+        android:layout_height="48dp"
+        android:background="#000000"
+        android:text="Log Out"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.155" />
+
+    <Button
+        android:id="@+id/logCompleteAddTaskShim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.874"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.155" />
+
+    <Button
+        android:id="@+id/logCompleteCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go To the Calendar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.966"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.963" />
+
+    <TextView
+        android:id="@+id/upcomingAssignmentsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="Upcoming Assignments:"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
+    <ScrollView
+        android:id="@+id/taskScrollView"
+        android:layout_width="309dp"
+        android:layout_height="363dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logCompleteLogOutButton">
+
+        <LinearLayout
+            android:id="@+id/taskLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- TODO: Dynamically add tasks from the DB
+             Following from https://stackoverflow.com/questions/14920535/how-to-add-more-than-one-button-to-scrollview-in-android-->
+            <Button
+                android:id="@+id/exampleTask1"
+                android:layout_width="fill_parent"
+                android:layout_height="120dp"
+                android:text="example Task 1" />
+            <!--
+            <Button
+                android:id="@+id/exampleTask2"
+                android:layout_width="fill_parent"
+                android:layout_height="120dp"
+                android:text="Example Task 2" />
+
+            <Button
+                android:id="@+id/exampleTask3"
+                android:layout_width="fill_parent"
+                android:layout_height="120dp"
+                tools:text="Example Task 3" />
+
+            <Button
+                android:id="@+id/exampleTask4"
+                android:layout_width="fill_parent"
+                android:layout_height="120dp"
+                tools:text="Example Task 4" /> -->
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

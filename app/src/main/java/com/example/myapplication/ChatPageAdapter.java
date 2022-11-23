@@ -1,9 +1,12 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,17 +36,28 @@ public class ChatPageAdapter extends RecyclerView.Adapter<ChatPageAdapter.ChatPa
 
     @Override
     public void onBindViewHolder(@androidx.annotation.NonNull ChatPageHolder holder, int position) {
-
+        holder.holder_username.setText(users.get(position).getFirstName());
+        //Glide.with(context... complete when implementing profile pic upload feature
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return users.size();
     }
 
     class ChatPageHolder extends RecyclerView.ViewHolder{
+        TextView holder_username;
+        ImageView holder_imageView;
+
         public ChatPageHolder(@NonNull View itemView){
             super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View view){
+                    onUserClickListener.OnUserClicked(getAdapterPosition());
+                }
+            });
+            holder_username = itemView.findViewById(R.id.holder_username);
+            holder_imageView = itemView.findViewById(R.id.holder_profile_img);
         }
     }
 }

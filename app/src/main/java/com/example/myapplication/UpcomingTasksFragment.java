@@ -82,9 +82,7 @@ public class UpcomingTasksFragment extends Fragment {
         });
         MainActivity activity = (MainActivity) requireActivity();
         User user = activity.user;
-        Log.i("TASK", "user: " + user.isLoggedIn());
-        if(user.isLoggedIn()){
-            Log.i("TASK FRAG", activity.user.getFirstName());
+        if(!user.isLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
         }
     }

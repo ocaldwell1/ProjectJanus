@@ -1,29 +1,38 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.Menu;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-/*public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
-}*/
 public class MainActivity extends AppCompatActivity {
-
+    private String name;
+    private RecyclerView recyclerView;
+    private EditText messageInput;
+    private TextView chattingWith;
+    private ImageView imageView;
+    private ArrayList<Message> messages;
+    private Messages messageHolder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        name = "example1";
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_page);
+        setContentView(R.layout.activity_chat);
+        //initializes variables to respective xml layout counterparts
+        recyclerView = findViewById(R.id.recyclerchat);
+        messageInput = findViewById(R.id.editMessageInput);
+        chattingWith = findViewById(R.id.ChattingWith);
+        imageView = findViewById(R.id.sendIcon);
+        chattingWith.setText(name);
+        messages= new ArrayList<>();
+        //++messageHolder = new Messages(messages,g)
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.profile_menu, menu);
-        return true;
+    private void messageListener() {
+        //TODO connect to firebase
     }
 }

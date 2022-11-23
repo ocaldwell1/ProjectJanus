@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/profile_img"
-                android:layout_height="match_parent"
+                android:layout_height="match_parent"/>
         </androidx.cardview.widget.CardView>
 
         <!--chat bubble-->
@@ -41,4 +41,5 @@
 
         </TextView>
 
+</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

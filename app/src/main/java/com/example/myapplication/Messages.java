@@ -36,14 +36,31 @@ class Messages extends RecyclerView.Adapter<Messages.MessageHolder> {
 
      @Override
      public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
-        holder.message.setText(messages.get(position).getContent());
+         holder.message.setText(messages.get(position).getContent());
 
-        ConstraintLayout constraintLayout = holder.constraintLayout;
-        // TODO add firebase auth. to check
+         ConstraintLayout constraintLayout = holder.constraintLayout;
+         // TODO add firebase auth. to check if sender
          //if(messages.get(position).getSender().equals())
-         ConstraintSet  constraintSet = new ConstraintSet();
+
+         //Moves sender message/profile img to correct side of phone screen (right) at runtime
+
+         ConstraintSet constraintSet = new ConstraintSet();
          constraintSet.clone(constraintLayout);
-         constraintSet.clear(R.id.CardView);
+         constraintSet.clear(R.id.CardView, ConstraintSet.LEFT);
+         constraintSet.clear(R.id.messageContents, ConstraintSet.LEFT);
+         constraintSet.connect(R.id.CardView, constraintSet.RIGHT, R.id.constraintLayout, constraintSet.RIGHT, 0);
+         constraintSet.connect(R.id.messageContents, constraintSet.RIGHT, R.id.constraintLayout, constraintSet.RIGHT, 0);
+         constraintSet.applyTo(constraintLayout);
+         //person is receiver, aligns messages to left
+         /*else{
+             ConstraintSet constraintSet = new ConstraintSet();
+             constraintSet.clone(constraintLayout);
+             constraintSet.clear(R.id.CardView, ConstraintSet.RIGHT);
+             constraintSet.clear(R.id.messageContents, ConstraintSet.RIGHT);
+             constraintSet.connect(R.id.CardView, constraintSet.LEFT, R.id.constraintLayout, constraintSet.LEFT, 0);
+             constraintSet.connect(R.id.messageContents, constraintSet.LEFT, R.id.constraintLayout, constraintSet.RIGHT, 0);
+             constraintSet.applyTo(constraintLayout);
+     }*/
      }
 
      @Override

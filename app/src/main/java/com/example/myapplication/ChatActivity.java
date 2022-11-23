@@ -17,7 +17,7 @@ public class ChatActivity extends AppCompatActivity {
     private TextView chattingWith;
     private ImageView imageView;
     private ArrayList<Message> messages;
-
+    private Messages messageHolder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         name = "example1";
@@ -30,6 +30,7 @@ public class ChatActivity extends AppCompatActivity {
         imageView = findViewById(R.id.sendIcon);
         chattingWith.setText(name);
         messages= new ArrayList<>();
+        //++messageHolder = new Messages(messages,g)
     }
     private void messageListener() {
         //TODO connect to firebase

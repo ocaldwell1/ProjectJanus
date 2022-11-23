@@ -29,10 +29,13 @@ public class User {
 
     public User() {
         // this was causing errors, i guess we can't get instance here
-        /*mAuth.getInstance();
-        fUser = mAuth.getCurrentUser();*/
-        if (fUser == null){
-
+        mAuth = FirebaseAuth.getInstance();
+        fUser = mAuth.getCurrentUser();
+        if (fUser != null){
+            firstName = "test";
+            lastName = "user";
+            email = "anEmail";
+            id = "anId";
         }
     }
 

@@ -16,10 +16,9 @@ import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-    private User user; //This can be renamed, potentially made public
+    public User user; //This can be renamed, potentially made public
     private FirebaseAuth mAuth;
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
@@ -29,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
             R.id.regCompleteFragment,
             R.id.forgotEmailFragment,
             R.id.forgotPasswordFragment,
-            R.id.MenuFragment
+            R.id.menuFragment,
+            R.id.startFragment
     };
 
     protected void onStart() {
@@ -55,16 +55,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nav_bar);
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        User users = new User();
-        //TODO Figure out the flow of loading user and task information and turn it into a method.
-        //TODO call method from UpcomingTaskList (or do we need a start fragment?)
-        //ouruser = new Users("ourfirst", "ourlast", "ouremail", "ourpass", 13);
-        //TODO user = new User(some kind of Firebase access?)
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        user = new User();
+        if (user != null) {
+            Log.i("MAIN", "" + user.isLoggedIn());
+        }
+        setContentView(R.layout.activity_main);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

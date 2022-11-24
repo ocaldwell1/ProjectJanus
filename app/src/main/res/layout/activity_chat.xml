@@ -13,25 +13,45 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
 
-    <!--circle that holds profile image, TODO add profile image-->
+    <!--circle that holds profile image-->
     <androidx.cardview.widget.CardView
         android:id="@+id/CardView"
-        android:layout_width="72dp"
-        android:layout_height="77dp"
-        app:cardCornerRadius="60dp"
+        android:layout_width="55dp"
+        android:layout_gravity="center"
+        android:layout_height="55dp"
+        app:cardCornerRadius="44dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LinearLayout" >
+
+        <ImageView
+            android:id="@+id/imageToolbar"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_img"
+            android:layout_height="match_parent" />
+    </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/ChattingWith"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressChat"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toTopOf="@+id/editMessageInput"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LinearLayout" />
 
-
-
-    <TextView
-        android:id="@+id/ChattingWith"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerchat"
         android:layout_width="match_parent"

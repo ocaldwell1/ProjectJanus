@@ -42,22 +42,21 @@ public class ChatPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat_page);
 
         progressBar = findViewById(R.id.progressBar);
+        recyclerView = findViewById(R.id.recyclerview);
+        users = new ArrayList<>();
         onUserClickListener = new ChatPageAdapter.OnUserClickListener() {
             public void OnUserClicked(int position) {
-                Toast.makeText(ChatPageActivity.this,"Clicked on this user"+
-                        users.get(position).getFirstName(), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ChatPageActivity.this, ChatActivity.class).putExtra("name_of" +
+                        "_roommate", users.get(position).getFirstName())
+                        .putExtra("email_of_roommate", users.get(position).getEmail()));
+
             }
         };
 
         getUsers();
 
-        recyclerView = findViewById(R.id.recyclerview);
-        users = new ArrayList<>();
         }
-        public void onUserClicksChat(){
-        //TODO once user clicks chat from arraylist, chat activity will start, transfer username and int pos. w/putExtra
 
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.profile_menu, menu);
@@ -73,6 +72,8 @@ public class ChatPageActivity extends AppCompatActivity {
 
     // gets users by querying for docs in users class, gets contents from each doc, converts to java user object
     private void getUsers(){
+        //use if arraylist becomes duplicated after each start of app
+        // users.clear();
         FirebaseFirestore.getInstance().collection("User").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

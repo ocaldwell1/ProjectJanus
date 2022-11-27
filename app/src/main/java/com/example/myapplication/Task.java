@@ -4,11 +4,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Task {
-    private String name, note, dueDate, source, id;
+    private String name, note, source, id;
+    private Date dueDate;
     private int weight;
     public FirebaseAuth mAuth;
     public FirebaseUser fUser;
@@ -17,7 +19,7 @@ public class Task {
     public Task(){
 
     }
-    public Task(String name, String note, String dueDate, String source) {
+    public Task(String name, String note, int weight, Date dueDate, String source) {
         this.name = name;
         this.note = note;
         this.dueDate = dueDate;
@@ -45,11 +47,11 @@ public class Task {
     public String getTaskNote(){
         return this.note;
     }
-    public String getTaskDueDate(){
+    public Date getTaskDueDate(){
         return this.dueDate;
     }
     public String getTaskSource(){
-        return this.dueDate;
+        return this.source;
     }
     public int getTaskWeight(){
         return this.weight;

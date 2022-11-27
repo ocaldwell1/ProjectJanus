@@ -31,7 +31,11 @@
         android:id="@+id/chatFragment"
         android:name="com.example.myapplication.ChatFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat" >
+        <action
+            android:id="@+id/action_chatFragment_to_chatInstanceFragment"
+            app:destination="@id/chatInstanceFragment" />
+    </fragment>
     <fragment
         android:id="@+id/taskDetailsFragment"
         android:name="com.example.myapplication.TaskDetailsFragment"
@@ -53,7 +57,13 @@
         android:id="@+id/newTaskFragment"
         android:name="com.example.myapplication.NewTaskFragment"
         android:label="fragment_new_task"
-        tools:layout="@layout/fragment_new_task" />
+        tools:layout="@layout/fragment_new_task" >
+        <action
+            android:id="@+id/action_newTaskFragment_to_taskFragment"
+            app:destination="@id/taskFragment"
+            app:popUpTo="@id/taskFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/importTaskFragment"
         android:name="com.example.myapplication.ImportTaskFragment"
@@ -129,4 +139,9 @@
             app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/chatInstanceFragment"
+        android:name="com.example.myapplication.ChatInstanceFragment"
+        android:label="fragment_chat_instance"
+        tools:layout="@layout/fragment_chat_instance" />
 </navigation>

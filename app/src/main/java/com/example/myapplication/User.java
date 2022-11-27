@@ -28,7 +28,6 @@ public class User {
     }*/
 
     public User() {
-        // this was causing errors, i guess we can't get instance here
         mAuth = FirebaseAuth.getInstance();
         fUser = mAuth.getCurrentUser();
         if (fUser != null){

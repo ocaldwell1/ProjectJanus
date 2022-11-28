@@ -1,28 +1,38 @@
 package com.example.myapplication;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,9 +50,16 @@ public class RegisterScreenFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private String userFirst;
+    private String userLast;
+    private String userEmail;
+    private String userPass;
+    private String userID;
     private Button submitButton;
     private EditText firstName, lastName, password, email;
     private FirebaseAuth mAuth;
+    private DocumentReference documentReference;
+    private FirebaseFirestore db;
     private NavController navController;
 
     public RegisterScreenFragment() {
@@ -71,6 +88,7 @@ public class RegisterScreenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
 
         if (getArguments() != null) {
@@ -105,10 +123,10 @@ public class RegisterScreenFragment extends Fragment {
     }
 
     public void registerClick() {
-        String userFirst = firstName.getText().toString().trim();
-        String userLast = lastName.getText().toString().trim();
-        String userEmail = email.getText().toString().trim();
-        String userPass = password.getText().toString().trim();
+        userFirst = firstName.getText().toString().trim();
+        userLast = lastName.getText().toString().trim();
+        userEmail = email.getText().toString().trim();
+        userPass = password.getText().toString().trim();
 
         if (userFirst.isEmpty()) {
             firstName.setError("First name required!");
@@ -133,23 +151,31 @@ public class RegisterScreenFragment extends Fragment {
             return;
         }
 
-        mAuth.createUserWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    // toast and then navigate to register complete fragment
-                    Toast.makeText(getActivity(), "Successfully Registered!", Toast.LENGTH_SHORT).show();
-                    // add user to fireStore function from User class
-                    /*User rUser = new User();
-                    String userID = rUser.getID();
-                    User regUser = new User(userFirst, userLast, userEmail, userID);
-                    regUser.addUserToFirestore(regUser);*/
+        mAuth.createUserWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // toast and then navigate to register complete fragment
+                Toast.makeText(getActivity(), "Successfully Registered!", Toast.LENGTH_SHORT).show();
+                // add user to fireStore function from User class
+                userID = mAuth.getCurrentUser().getUid();
+                User regUser = new User(userFirst, userLast, userEmail, userID);
+                regUser.addUserToFireStore(userFirst, userLast, userEmail, userID);
+               /* documentReference = db.collection("User").document(userID);
+                Map<String, Object> user = new HashMap<>();
+                user.put("userFirstName", userFirst);
+                user.put("userLastName", userLast);
+                user.put("userEmail", userEmail);
+                user.put("userID", userID);
 
-                    navController.navigate(R.id.action_registerScreenFragment_to_regCompleteFragment);
-                }else{
-                    Toast.makeText(getActivity(), "Error! Cannot register!", Toast.LENGTH_SHORT).show();
-                }
-
+                documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Success: Added to FireStore");
+                    }
+                });*/
+                //mAuth.signOut();
+                navController.navigate(R.id.action_registerScreenFragment_to_regCompleteFragment);
+            } else {
+                Toast.makeText(getActivity(), "Error! Cannot register!", Toast.LENGTH_SHORT).show();
             }
         });
     }

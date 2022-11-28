@@ -18,7 +18,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    public User user; //This can be renamed, potentially made public
+    public User user;
     private FirebaseAuth mAuth;
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
@@ -45,11 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        if (user == null){
-            //navController.navigate(R.id.logScreenFragment);
-            //no, this should be in the start Fragment (UpcomingTaskFragment)
-        }
     }
 
     @Override

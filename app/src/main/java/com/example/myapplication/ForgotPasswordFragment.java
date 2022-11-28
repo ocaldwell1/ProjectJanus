@@ -1,12 +1,20 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +31,11 @@ public class ForgotPasswordFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Button submitButton;
+    private Button forgotEmailButton;
+    private EditText emailEditText;
+    private NavController navController;
 
     public ForgotPasswordFragment() {
         // Required empty public constructor
@@ -61,4 +74,43 @@ public class ForgotPasswordFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_forgot_password, container, false);
     }
+
+    @Override
+    public void onViewCreated(@org.checkerframework.checker.nullness.qual.NonNull View view, @Nullable Bundle savedInstanceState) {
+        navController = Navigation.findNavController(view);
+        emailEditText = (EditText) view.findViewById(R.id.forgotPasswordFragEmailEditText);
+
+        submitButton = (Button) view.findViewById(R.id.forgotPassFragSubmitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                forgotPassSubmit();
+            }
+        });
+
+       /* forgotEmailButton = (Button) view.findViewById(R.id.forgotPassFragForgotEmailButton);
+        forgotEmailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                forgotEmail();
+            }
+        });*/
+
+
+
+    }
+
+    public void forgotPassSubmit(){
+        String userEmail = emailEditText.getText().toString();
+        if(userEmail.isEmpty()){
+            emailEditText.setError("Email required!");
+            return;
+        }else if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()){
+            emailEditText.setError("Email is not valid!");
+            emailEditText.requestFocus();
+            return;
+        }
+        navController.navigate(R.id.action_forgotPassFragment_to_forgotEmailFragment);
+    }
+
 }

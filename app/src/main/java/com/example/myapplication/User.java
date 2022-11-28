@@ -60,11 +60,13 @@ public class User {
         this.email = email;
     }
     public String getID(){
+        mAuth = FirebaseAuth.getInstance();
+        id = mAuth.getCurrentUser().getUid();
         return id;
     }
 
     public void addUserToFirestore(User fsUser){
-
+        id = fsUser.getID();
         DocumentReference documentReference = db.collection("User").document(id);
         Map<String, Object> user = new HashMap<>();
         user.put("userFirstName", fsUser.getFirstName());
@@ -72,18 +74,29 @@ public class User {
         user.put("userEmail", fsUser.getEmail());
         user.put("userID", fsUser.getID());
     }
+    public void removeUserFromFirestore(User fsUser){
+        mAuth = FirebaseAuth.getInstance();
+        id = fsUser.getID();
+        DocumentReference documentReference = db.collection("User").document(id);
+        Map<String, Object> user = new HashMap<>();
+        user.remove("userFirstName");
+        user.remove("userLastName");
+        user.remove("userEmail");
+        user.remove("userID");
+    }
 
     public boolean isLoggedIn(){
         return fUser != null;
     }
 
-    public void addTask(Task task){
+    public void addTask(Task task) {
         taskList.add(task);
         task.addTaskToFirestore();
     }
-    public void removeTask(Task task){
+
+    public void removeTask(Task task) {
         taskList.remove(task);
-        //task.addTaskToFirestore();
+        // task.removeTaskFromFirestore();
     }
 
 

@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class forgotPasswordScreen extends AppCompatActivity {
-    private Button forgotEmailButton, backButton;
+    private Button forgotEmailButton;
     private EditText emailEditText;
 
     @Override
@@ -29,13 +29,6 @@ public class forgotPasswordScreen extends AppCompatActivity {
             }
         });
 
-        backButton = (Button) findViewById(R.id.forgotPassBackButton);
-        backButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                backToLog();
-            }
-        });
     }
 
     public void forgotEmail(){

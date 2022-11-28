@@ -79,12 +79,20 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.myapplication.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" />
+        tools:layout="@layout/fragment_forgot_password" >
+        <action
+        android:id="@+id/action_forgotPassFragment_to_forgotEmailFragment"
+        app:destination="@id/forgotEmailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/forgotEmailFragment"
         android:name="com.example.myapplication.ForgotEmailFragment"
         android:label="fragment_forgot_email"
-        tools:layout="@layout/fragment_forgot_email" />
+        tools:layout="@layout/fragment_forgot_email" >
+        <action
+        android:id="@+id/action_forgotEmailFragment_to_menuFragment"
+        app:destination="@id/menuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerScreenFragment"
         android:name="com.example.myapplication.RegisterScreenFragment"
@@ -93,7 +101,7 @@
         <action
             android:id="@+id/action_registerScreenFragment_to_regCompleteFragment"
             app:destination="@id/regCompleteFragment"
-            app:popUpTo="@id/menuFragment" />
+            />
     </fragment>
     <fragment
         android:id="@+id/regCompleteFragment"

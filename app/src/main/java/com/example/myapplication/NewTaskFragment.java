@@ -1,10 +1,13 @@
 package com.example.myapplication;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,15 +107,17 @@ public class NewTaskFragment extends Fragment {
         });
     }
 
-    public void saveTaskAndNavigateBack(View view) throws ParseException {
+    public void saveTaskAndNavigateBack(View view) {
         String taskName = taskNameEditText.getText().toString();
         String source = sourceEditText.getText().toString();
         int weight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
-        Date dueDate = new SimpleDateFormat("MM/dd/yyyy").parse(dueDateEditText.getText().toString());
+        String dueDate = dueDateEditText.getText().toString();
         String notes = notesEditText.getText().toString();
         Task newTask = new Task(taskName, source, weight, dueDate, notes);
         MainActivity activity = (MainActivity) requireActivity();
+        // add task
         activity.user.addTask(newTask);
+        Log.d(TAG, "Success: Add Task");
         Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
     }
 }

@@ -1,9 +1,22 @@
 package com.example.myapplication;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +28,8 @@ public class User {
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
     private FirebaseFirestore db;
+    private CollectionReference dbc;
+    private DocumentReference documentReference;
     private ArrayList <Task> taskList;
 
     public User(String first, String last, String email, String id){
@@ -23,60 +38,89 @@ public class User {
         this.email = email;
         this.id = id;
     }
+    /*public User(String first, String last, String email){
+        this.firstName = first;
+        this.lastName = last;
+        this.email = email;
+        // to get id
+        mAuth = FirebaseAuth.getInstance();
+        this.id = mAuth.getCurrentUser().getUid();
+    }
 
-    /*public User(String userFirst, String userLast, String userEmail, String userID) {
+    public User(String userFirst, String userLast, String userEmail, String userID) {
     }*/
 
     public User() {
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         fUser = mAuth.getCurrentUser();
+
+        taskList = new ArrayList<Task>();
+
         if (fUser != null){
-            firstName = "test";
-            lastName = "user";
-            email = "anEmail";
-            id = "anId";
+            String userID = fUser.getUid();
+            DocumentReference documentReference = db.collection("User").document(userID);
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if(document.exists()){
+                            Map<String, Object> user = document.getData();
+                            firstName = (String) user.get("userFirstName");
+                            lastName = (String) user.get("userLastName");
+                            email = (String) user.get("userEmail");
+                            id = (String) user.get("userID");
+                            Log.d(TAG, "Success: " + firstName);
+                        }
+                    }
+                }
+            });
         }
     }
 
-
-
     public String getFirstName(){
-        return firstName;
+        return this.firstName;
     }
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
     public String getLastName(){
-        return lastName;
+        return this.lastName;
     }
-    public void setLastName(String firstName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
     public String getEmail(){
-        return email;
+        return this.email;
     }
-    public void setEmail(String firstName) {
+    public void setEmail(String email) {
         this.email = email;
     }
     public String getID(){
-        mAuth = FirebaseAuth.getInstance();
-        id = mAuth.getCurrentUser().getUid();
-        return id;
+        return this.id;
+    }
+    public void addUserToFireStore(String firstName, String lastName, String email, String id){
+        db = FirebaseFirestore.getInstance();
+
+        documentReference = db.collection("User").document(id);
+        Map<String, Object> user = new HashMap<>();
+        user.put("userFirstName", firstName);
+        user.put("userLastName", lastName);
+        user.put("userEmail", email);
+        user.put("userID", id);
+        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG, "Success: Added to FireStore");
+            }
+        });
     }
 
-    public void addUserToFirestore(User fsUser){
-        id = fsUser.getID();
-        DocumentReference documentReference = db.collection("User").document(id);
-        Map<String, Object> user = new HashMap<>();
-        user.put("userFirstName", fsUser.getFirstName());
-        user.put("userLastName", fsUser.getLastName());
-        user.put("userEmail", fsUser.getEmail());
-        user.put("userID", fsUser.getID());
-    }
-    public void removeUserFromFirestore(User fsUser){
+    public void removeUserFromFireStore(User fsUser){
         mAuth = FirebaseAuth.getInstance();
         id = fsUser.getID();
-        DocumentReference documentReference = db.collection("User").document(id);
+        documentReference = db.collection("User").document(id);
         Map<String, Object> user = new HashMap<>();
         user.remove("userFirstName");
         user.remove("userLastName");
@@ -89,13 +133,16 @@ public class User {
     }
 
     public void addTask(Task task) {
+        Log.d(TAG, "Success: Added to Task FireStore 1 ");
         taskList.add(task);
-        task.addTaskToFirestore();
+        Log.d(TAG, "Success: Added to Task FireStore 2 ");
+        task.addTaskToFireStore();
+        Log.d(TAG, "Success: Added to Task FireStore 3 ");
     }
 
     public void removeTask(Task task) {
         taskList.remove(task);
-        // task.removeTaskFromFirestore();
+        // task.removeTaskFromFireStore();
     }
 
 

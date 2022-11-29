@@ -37,7 +37,7 @@ public class Task {
         DocumentReference documentReference = db.collection("Task").document();
         Map<String, Object> user = new HashMap<>();
         user.put("taskName", name);
-        user.put("taskDueDate", note);
+        user.put("taskDueDate", dueDate);
         user.put("taskNote", note);
         user.put("taskWeight", weight);
         user.put("taskSource", source);

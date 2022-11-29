@@ -5,7 +5,6 @@ import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -14,9 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,17 +35,6 @@ public class User {
         this.email = email;
         this.id = id;
     }
-    /*public User(String first, String last, String email){
-        this.firstName = first;
-        this.lastName = last;
-        this.email = email;
-        // to get id
-        mAuth = FirebaseAuth.getInstance();
-        this.id = mAuth.getCurrentUser().getUid();
-    }
-
-    public User(String userFirst, String userLast, String userEmail, String userID) {
-    }*/
 
     public User() {
         mAuth = FirebaseAuth.getInstance();
@@ -56,6 +42,7 @@ public class User {
         fUser = mAuth.getCurrentUser();
 
         taskList = new ArrayList<Task>();
+
 
         if (fUser != null){
             String userID = fUser.getUid();
@@ -65,13 +52,24 @@ public class User {
                 public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
                     if(task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
-                        if(document.exists()){
+                        if(document.exists()) {
                             Map<String, Object> user = document.getData();
                             firstName = (String) user.get("userFirstName");
                             lastName = (String) user.get("userLastName");
                             email = (String) user.get("userEmail");
                             id = (String) user.get("userID");
+
                             Log.d(TAG, "Success: " + firstName);
+
+                            // add taskList functions
+                            /* for(QueryDocumentSnapshot document : task.getResult()) {
+                            String taskName = data.get("taskName");
+                            etc
+                            Task newTask = new Task(taskName, taskSource, etc.);
+                            taskList.add(newTask);
+                            }
+                        }
+                        */
                         }
                     }
                 }

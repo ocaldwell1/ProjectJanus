@@ -8,31 +8,31 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.type.DateTime;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
-public class Task {
-    private String name, note, source, id, dueDate;
+public class Task implements Comparable<Task>{
+    private String name, note, source, dueDate;
     private int weight;
     public FirebaseAuth mAuth;
-    public FirebaseUser fUser;
     public FirebaseFirestore db;
 
-    public Task(){
-
-    }
     public Task(String name, String note, int weight, String dueDate, String source) {
         this.name = name;
         this.note = note;
+        this.weight = weight;
         this.dueDate = dueDate;
         this.source = source;
         mAuth = FirebaseAuth.getInstance();
     }
 
     public void addTaskToFireStore(){
-        id = mAuth.getCurrentUser().getUid();
+        String id = mAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
 
         DocumentReference documentReference = db.collection("Task").document();
@@ -55,6 +55,30 @@ public class Task {
 
     }
 
+    public double getPriority() throws ParseException {
+        Date now = new Date(System.currentTimeMillis());
+        Date due = new SimpleDateFormat("dd/MM/yyyy").parse(dueDate); //duedate - now
+        double timeDiff = Math.abs(due.getTime() - now.getTime());
+        return weight/timeDiff;
+    }
+
+    public int compareTo(Task task) {
+        int result = 0;
+        try {
+            if (getPriority() > task.getPriority()) {
+                result = 1;
+            }
+            else {
+                result = -1;
+            }
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+            Log.d("PARSE", "Failed to parse string into date");
+        }
+        return result;
+    }
+
     public String getTaskName(){
         return this.name;
     }
@@ -69,5 +93,25 @@ public class Task {
     }
     public int getTaskWeight(){
         return this.weight;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

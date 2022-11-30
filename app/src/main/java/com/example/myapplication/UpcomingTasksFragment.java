@@ -6,11 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -30,7 +31,8 @@ public class UpcomingTasksFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button addTaskButton;
+    private Button addTaskButton, logOutButton;
+    private FirebaseAuth mAuth;
 
     public UpcomingTasksFragment() {
         // Required empty public constructor
@@ -57,6 +59,7 @@ public class UpcomingTasksFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth.getInstance();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -72,12 +75,21 @@ public class UpcomingTasksFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
+        addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
+        logOutButton = (Button) view.findViewById(R.id.taskFragmentLogOutButton);
         final NavController navController = Navigation.findNavController(view);
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
+            }
+        });
+
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //mAuth.signOut();
+                navController.navigate(R.id.action_taskFragment_to_menuFragment);
             }
         });
         MainActivity activity = (MainActivity) requireActivity();

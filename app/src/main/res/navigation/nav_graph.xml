@@ -19,7 +19,7 @@
         <action
             android:id="@+id/action_taskFragment_to_menuFragment"
             app:destination="@id/menuFragment"
-            app:popUpTo="@id/taskFragment"
+            app:popUpTo="@id/menuFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

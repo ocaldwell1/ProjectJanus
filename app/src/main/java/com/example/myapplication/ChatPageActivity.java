@@ -74,6 +74,8 @@ public class ChatPageActivity extends AppCompatActivity {
     private void getUsers(){
         //use if arraylist becomes duplicated after each start of app
         // users.clear();
+
+        // supposed to get users from database and convert to user class to add to array list of users
         FirebaseFirestore.getInstance().collection("User").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

@@ -26,7 +26,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_task,parent);
+        //View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_task,parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.taskdisplayitem,parent, false);
         return new MyViewHolder(v);
     }
 
@@ -49,10 +50,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.taskTitleName);
-            note = itemView.findViewById(R.id.taskNotes);
-            dueDate = itemView.findViewById(R.id.taskDueDate);
-            source = itemView.findViewById(R.id.taskSource);
+            this.name = itemView.findViewById(R.id.taskTitleName);
+            this.note = itemView.findViewById(R.id.taskNotes);
+            this.dueDate = itemView.findViewById(R.id.taskDueDate);
+            this.source = itemView.findViewById(R.id.taskSource);
         }
     }
 }

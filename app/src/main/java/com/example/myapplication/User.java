@@ -79,6 +79,11 @@ public class User {
         }
     }
 
+    // get task list [JMS]
+    public ArrayList<Task> getTaskList() {
+        return this.taskList;
+    }
+
     public String getFirstName(){
         return this.firstName;
     }

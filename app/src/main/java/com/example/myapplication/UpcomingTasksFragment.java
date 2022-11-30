@@ -34,7 +34,7 @@ public class UpcomingTasksFragment extends Fragment {
     //DatabaseReference database;
     TaskAdapter taskAdapter;
     ArrayList<Task> taskList;
-
+    //MainActivity activity = (MainActivity) requireActivity();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -75,31 +75,9 @@ public class UpcomingTasksFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        taskList = new ArrayList<>();
-/**
- *
-        // Recycler view related
-        recyclerView = findViewById(R.id.taskRecyclerView);
-        database = FirebaseDatabase.getInstance().getReference(path= "Task");
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        taskList = new ArrayList<>();
-        taskAdapter = new TaskAdapter(context= this, list);
-        recyclerView.setAdapter(taskAdapter);
-
-        database.addValueEventListener(new ValueEventListener() {
-          @Override
-          public void onDataChange(@NonNull DataSnapshot snapshot){
-            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                Task task = dataSnapshot.getValue(Task.class);
-                taskList.add(task);
-            }
-            taskAdapter.notifyDataSetChanged();
-          }
-
-
-        });**/
+        //taskList = new ArrayList<>();
+        MainActivity activity = (MainActivity) requireActivity();
+        taskList = activity.user.getTaskList();
     }
 
     @Override

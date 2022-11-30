@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
     //Context context;
     ArrayList<Task> taskList;
+    ItemClickListener clickListener;
 /**
     public TaskAdapter(UpcomingTasksFragment context, ArrayList<Task> task) {
         this.context = context;
@@ -44,8 +45,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     public int getItemCount() {
         return taskList.size();
     }
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView name, note, dueDate, source;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -54,6 +57,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             this.note = itemView.findViewById(R.id.taskNotes);
             this.dueDate = itemView.findViewById(R.id.taskDueDate);
             this.source = itemView.findViewById(R.id.taskSource);
+
+            itemView.setOnClickListener(this); // bind the listener
+        }
+
+        @Override
+        public void onClick(View view) {
+            //clickListener.onClick(view, getAdapterPosition()); // call the onClick in the OnItemClickListener
+            if (clickListener != null) clickListener.onClick(view, getAdapterPosition());
         }
     }
 }

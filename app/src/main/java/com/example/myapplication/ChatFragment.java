@@ -3,10 +3,17 @@ package com.example.myapplication;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +30,16 @@ public class ChatFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String usernameOfRoommate, emailOfRoomate, chatroomId;
+    private RecyclerView recyclerView;
+    private EditText messageInput;
+    private TextView chattingWith;
+    private ImageView sendIcon;
+    private ProgressBar progressBar;
+    private ImageView imageToolbar;
+    private ArrayList<Message> messages;
+    private Messages messageHolder;
+    private MessageAdapter messageAdapter;
 
     public ChatFragment() {
         // Required empty public constructor

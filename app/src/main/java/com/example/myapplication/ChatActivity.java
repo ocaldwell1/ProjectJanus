@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class ChatActivity extends AppCompatActivity {
     private ImageView imageToolbar;
     private ArrayList<Message> messages;
     private Messages messageHolder;
+    private MessageAdapter messageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +49,25 @@ public class ChatActivity extends AppCompatActivity {
         chattingWith.setText(usernameOfRoommate);
         messages= new ArrayList<>();
 
+        //method for when send button is pressed, pushes message to firebase
+        // creates doc in messages called chatroom id and sets data to message parameters
+        sendIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseFirestore.getInstance().collection("messages")
+                        .document(chatroomId).set(new Message(FirebaseAuth.getInstance().getCurrentUser()
+                                .getEmail(), emailOfRoomate, messageInput.getText().toString()
+                                ));
+                messageInput.setText(""); //clears previous message after send
+            }
+        });
+        messageAdapter = new MessageAdapter(messages,ChatActivity.this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(messageAdapter);
+
         setUpChatroom();
     }
-    //placeholder method, needs fixing, supposed to fetch username?
+    //placeholder method, needs fixing, supposed to create chatroomid by fetching username?
     private void setUpChatroom() {
         FirebaseFirestore.getInstance().collection("user/"+FirebaseAuth.getInstance().getUid()).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -77,6 +95,7 @@ public class ChatActivity extends AppCompatActivity {
                 for (DocumentSnapshot querySnapshot: value.getDocuments()) {
                     messages.add(querySnapshot.toObject(Message.class));
                 }
+                messageAdapter.notifyDataSetChanged();
                 recyclerView.scrollToPosition(messages.size()-1);
                 recyclerView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);

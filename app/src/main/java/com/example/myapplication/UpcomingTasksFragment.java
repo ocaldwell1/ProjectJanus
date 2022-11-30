@@ -1,16 +1,19 @@
 package com.example.myapplication;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,21 +67,26 @@ public class UpcomingTasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_task, container, false);
-        //user = getActivity().getUser();
+        return inflater.inflate(R.layout.fragment_task, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
+        final NavController navController = Navigation.findNavController(view);
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_addTaskFragment);
+                navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
             }
         });
-        TextView testTextView = view.findViewById(R.id.testText);
-        MainActivity activity = (MainActivity) getActivity();
-        //testTextView.setText(activity.ouruser.email);
-
-        return view;
+        MainActivity activity = (MainActivity) requireActivity();
+        User user = activity.user;
+        if(!user.isLoggedIn()){
+            navController.navigate(R.id.action_taskFragment_to_menuFragment);
+        }
     }
+
 
 
 }

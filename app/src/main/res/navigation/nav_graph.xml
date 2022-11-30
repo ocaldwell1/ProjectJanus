@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/taskFragment">
+    app:startDestination="@id/startFragment">
 
     <fragment
         android:id="@+id/taskFragment"
@@ -13,6 +13,14 @@
         <action
             android:id="@+id/action_taskFragment_to_addTaskFragment"
             app:destination="@id/addTaskFragment" />
+        <action
+            android:id="@+id/action_taskFragment_to_taskDetailsFragment"
+            app:destination="@id/taskDetailsFragment" />
+        <action
+            android:id="@+id/action_taskFragment_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/taskFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/calendarFragment"
@@ -23,7 +31,11 @@
         android:id="@+id/chatFragment"
         android:name="com.example.myapplication.ChatFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat" >
+        <action
+            android:id="@+id/action_chatFragment_to_chatInstanceFragment"
+            app:destination="@id/chatInstanceFragment" />
+    </fragment>
     <fragment
         android:id="@+id/taskDetailsFragment"
         android:name="com.example.myapplication.TaskDetailsFragment"
@@ -45,7 +57,13 @@
         android:id="@+id/newTaskFragment"
         android:name="com.example.myapplication.NewTaskFragment"
         android:label="fragment_new_task"
-        tools:layout="@layout/fragment_new_task" />
+        tools:layout="@layout/fragment_new_task" >
+        <action
+            android:id="@+id/action_newTaskFragment_to_taskFragment"
+            app:destination="@id/taskFragment"
+            app:popUpTo="@id/taskFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/importTaskFragment"
         android:name="com.example.myapplication.ImportTaskFragment"
@@ -55,31 +73,83 @@
         android:id="@+id/logScreenFragment"
         android:name="com.example.myapplication.logScreenFragment"
         android:label="fragment_log_screen"
-        tools:layout="@layout/fragment_log_screen" />
+        tools:layout="@layout/fragment_log_screen" >
+        <action
+            android:id="@+id/action_logScreenFragment_to_forgotEmailFragment"
+            app:destination="@id/forgotEmailFragment" />
+        <action
+            android:id="@+id/action_logScreenFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_logScreenFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.myapplication.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" />
+        tools:layout="@layout/fragment_forgot_password" >
+        <action
+        android:id="@+id/action_forgotPassFragment_to_forgotEmailFragment"
+        app:destination="@id/forgotEmailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/forgotEmailFragment"
         android:name="com.example.myapplication.ForgotEmailFragment"
         android:label="fragment_forgot_email"
-        tools:layout="@layout/fragment_forgot_email" />
+        tools:layout="@layout/fragment_forgot_email" >
+        <action
+        android:id="@+id/action_forgotEmailFragment_to_menuFragment"
+        app:destination="@id/menuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerScreenFragment"
         android:name="com.example.myapplication.RegisterScreenFragment"
         android:label="fragment_register_screen"
-        tools:layout="@layout/fragment_register_screen" />
+        tools:layout="@layout/fragment_register_screen" >
+        <action
+            android:id="@+id/action_registerScreenFragment_to_regCompleteFragment"
+            app:destination="@id/regCompleteFragment"
+            />
+    </fragment>
     <fragment
         android:id="@+id/regCompleteFragment"
         android:name="com.example.myapplication.RegCompleteFragment"
         android:label="fragment_reg_complete"
-        tools:layout="@layout/fragment_reg_complete" />
+        tools:layout="@layout/fragment_reg_complete" >
+        <action
+            android:id="@+id/action_regCompleteFragment_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/menuFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
-        android:id="@+id/MenuFragment"
+        android:id="@+id/menuFragment"
         android:name="com.example.myapplication.MenuFragment"
         android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_registerScreenFragment"
+            app:destination="@id/registerScreenFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_logScreenFragment"
+            app:destination="@id/logScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.example.myapplication.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_startFragment_to_taskFragment"
+            app:destination="@id/taskFragment"
+            app:popUpTo="@id/startFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatInstanceFragment"
+        android:name="com.example.myapplication.ChatInstanceFragment"
+        android:label="fragment_chat_instance"
+        tools:layout="@layout/fragment_chat_instance" />
 </navigation>

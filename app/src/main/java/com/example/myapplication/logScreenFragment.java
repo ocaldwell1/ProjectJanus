@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -19,6 +21,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,7 +42,7 @@ public class logScreenFragment extends Fragment {
     private TextView login;
     private TextView forgotPass;
     private EditText logEmail, logPass;
-    private Button backButton;
+    private NavController navController;
 
     private FirebaseAuth mAuth;
 
@@ -77,15 +81,32 @@ public class logScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_log_screen, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_log_screen, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@org.checkerframework.checker.nullness.qual.NonNull View view, @Nullable Bundle savedInstanceState) {
+        navController = Navigation.findNavController(view);
         login = (TextView) view.findViewById(R.id.logScreenFragLogInTextView);
         forgotPass = (TextView) view.findViewById(R.id.logScreenFragForgotPassTextView);
         logEmail = (EditText) view.findViewById(R.id.logScreenFragEmailEditText);
         logPass = (EditText) view.findViewById(R.id.logScreenFragPasswordEditText);
-        backButton = (Button) view.findViewById(R.id.logScreenFragBackButton);
 
-        // Inflate the layout for this fragment
-        return view;
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginNow();
+            }
+        });
+
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                forgotPassword();
+            }
+        });
+
     }
 
     public void loginNow() {
@@ -110,11 +131,19 @@ public class logScreenFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(getActivity(), "Logged in!", Toast.LENGTH_SHORT).show();
-                    // nav to log complete
+                    // nav to log complete / upcoming assignments
+
+                    navController.navigate(R.id.action_logScreenFragment_to_taskFragment);
                 }else{
                     Toast.makeText(getActivity(), "Error! Invalid Credentials!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
+    public void forgotPassword() {
+        navController.navigate(R.id.action_logScreenFragment_to_forgotPasswordFragment);
+    }
+
+
 }

@@ -33,8 +33,6 @@ public class ChatPageActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private ChatPageAdapter chatPageAdapter;
     ChatPageAdapter.OnUserClickListener onUserClickListener;
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

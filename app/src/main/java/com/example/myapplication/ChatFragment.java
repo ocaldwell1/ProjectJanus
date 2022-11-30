@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -13,11 +14,21 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ChatFragment#newInstance} factory method to
+ * Use the {@link ChatFragment #newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ChatFragment extends Fragment {
@@ -69,6 +80,11 @@ public class ChatFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            Bundle bundle = this.getArguments();
+            if(bundle != null) {
+                emailOfRoomate = bundle.getString("email_of_roomate", "unknown");
+                usernameOfRoommate = bundle.getString("name_of_roomate", "unknown");
+            }
         }
     }
 
@@ -78,4 +94,89 @@ public class ChatFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chat, container, false);
     }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //initializes variables to respective xml layout counterparts
+       // usernameOfRoommate = getActivity().getIntent().getStringExtra("username_of_roomate");
+        //emailOfRoomate = getActivity().getIntent().getStringExtra("email_of_roommate");
+        recyclerView = view.findViewById(R.id.recyclerchat);
+        messageInput = view.findViewById(R.id.editMessageInput);
+        chattingWith = view.findViewById(R.id.ChattingWith);
+        imageToolbar = view.findViewById(R.id.imageToolbar);
+        sendIcon = view.findViewById(R.id.sendIcon);
+        progressBar = view.findViewById(R.id.progressChat);
+        chattingWith.setText(usernameOfRoommate);
+        messages= new ArrayList<>();
+
+        //method for when send button is pressed, pushes message to firebase
+        // creates doc in messages called chatroom id and sets data to message parameters
+        sendIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseFirestore.getInstance().collection("messages")
+                        .document(chatroomId).set(new Message(FirebaseAuth.getInstance().getCurrentUser()
+                                .getEmail(), emailOfRoomate, messageInput.getText().toString()
+                        ));
+                messageInput.setText(""); //clears previous message after send
+            }
+        });
+        messageAdapter = new MessageAdapter(messages,getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(messageAdapter);
+
+        setUpChatroom();
+    }
+    //placeholder method, needs fixing, supposed to create chatroomid by fetching username?
+    private void setUpChatroom() {
+        FirebaseFirestore.getInstance().collection("user").document(FirebaseAuth.getInstance().getUid())
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@androidx.annotation.Nullable DocumentSnapshot value,
+                                        @androidx.annotation.Nullable FirebaseFirestoreException error) {
+                        String myUsername = value.getString("userFirstName");
+                        if(usernameOfRoommate == null && myUsername == null)
+                            chatroomId = "0";
+                        else if(myUsername == null)
+                            chatroomId= "1";
+                        else if (usernameOfRoommate == null)
+                            chatroomId = "2";
+                        else{
+                            chatroomId = "4";
+                        }
+                        /*if(usernameOfRoommate.compareTo(myUsername) > 0) {
+                            chatroomId = myUsername + usernameOfRoommate;
+                        }
+                        else if(usernameOfRoommate.compareTo(myUsername) == 0) {
+                            chatroomId = myUsername + usernameOfRoommate;
+                        }
+                        else{
+                            chatroomId = usernameOfRoommate + myUsername;
+                        }*/
+                        attachMessageListener(chatroomId);
+                    }
+                });
+    }
+
+    //checks for when messages change
+    private void attachMessageListener(String chatroomId) {
+        FirebaseFirestore.getInstance().collection("messages").document(chatroomId)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@androidx.annotation.Nullable DocumentSnapshot value,
+                                        @androidx.annotation.Nullable FirebaseFirestoreException error) {
+                        messages.clear();
+                       // for (DocumentSnapshot querySnapshot: value) {
+                           // messages.add(querySnapshot.toObject(Message.class));
+                        messages.add(new Message(FirebaseAuth.getInstance().getCurrentUser().toString(),
+                                usernameOfRoommate, FirebaseFirestore.getInstance().
+                                collection("messages").document(chatroomId).toString()));
+                      //  }
+                        messageAdapter.notifyDataSetChanged();
+                        recyclerView.scrollToPosition(messages.size()-1);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                    }
+        });
+    }
+
 }

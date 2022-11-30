@@ -36,6 +36,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     private TaskAdapter taskAdapter;
     private ArrayList<Task> taskList;
     private NavController navController;
+    private MainActivity activity;
     //MainActivity activity = (MainActivity) requireActivity();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -89,6 +90,10 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
 
         // Send the values of the current card to the next fragemnt
         Bundle bundle = new Bundle();
+        /**bundle.putString("taskName",taskSelected.getTaskName());
+        bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
+        bundle.putString("taskSource",taskSelected.getTaskSource());
+        bundle.putString("taskNotes",taskSelected.getTaskNote());**/
         bundle.putString("taskName",taskSelected.getTaskName());
         bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
         bundle.putString("taskSource",taskSelected.getTaskSource());
@@ -115,6 +120,9 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         recyclerView.setAdapter(taskAdapter);
         taskAdapter.setClickListener(this); // bind the listener
 
+        activity = (MainActivity) requireActivity();
+        User user = activity.user;
+        activity.user.setPosition(recyclerView.getChildAdapterPosition(recyclerView.getFocusedChild()));
         return view;
     }
 
@@ -129,7 +137,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
                 navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
             }
         });
-        MainActivity activity = (MainActivity) requireActivity();
+        activity = (MainActivity) requireActivity();
         User user = activity.user;
         if(!user.isLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);

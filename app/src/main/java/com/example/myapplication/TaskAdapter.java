@@ -15,7 +15,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     //Context context;
     ArrayList<Task> taskList;
     ItemClickListener clickListener;
-/**
+    /**
     public TaskAdapter(UpcomingTasksFragment context, ArrayList<Task> task) {
         this.context = context;
         this.taskList = task;
@@ -29,11 +29,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_task,parent, false);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.taskdisplayitem,parent, false);
+
         return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        // add task
+        //activity.user.setPosition(position);
         Task task = taskList.get(position);
         holder.name.setText(task.getTaskName());
         holder.note.setText(task.getTaskNote());

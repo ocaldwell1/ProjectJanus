@@ -5,9 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
+import java.util.ArrayList;
+
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +31,12 @@ public class EditTaskFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private MainActivity activity;
+    int position;
+    ArrayList<Task> taskList;
+    Task currentTask;
+    TextView titleNameView, taskSourceView,taskDueDateView,taskNotesView;
 
     public EditTaskFragment() {
         // Required empty public constructor
@@ -61,20 +74,53 @@ public class EditTaskFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_task, container, false);
-        Button addTaskNewTaskButton = (Button) view.findViewById(R.id.addTaskNewTaskButton);
-        addTaskNewTaskButton.setOnClickListener(new View.OnClickListener() {
+        Button newTaskSaveButton = (Button) view.findViewById(R.id.newTaskSaveButton);
+        newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.action_addTaskFragment_to_newTaskFragment);
             }
         });
-        Button addTaskImportTaskButton = (Button) view.findViewById(R.id.deleteTaskButton);
-        addTaskImportTaskButton.setOnClickListener(new View.OnClickListener() {
+
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        //final NavController navController = Navigation.findNavController(view);
+        NavController navController = Navigation.findNavController(view);
+
+        /**
+        Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_addTaskFragment_to_importTaskFragment);
+                navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
             }
-        });
-        return view;
+        }); **/
+        activity = (MainActivity) requireActivity();
+        User user =  activity.user;
+        position = activity.user.getPosition();
+        taskList = activity.user.getTaskList();
+/**
+        currentTask = taskList.get(0);
+
+        titleNameView = (TextView) view.findViewById(R.id.newTaskTaskNameEditText);
+        titleNameView.setText(getArguments().getString("taskName"));
+
+        taskSourceView = (TextView) view.findViewById(R.id.newTaskSourceEditText);
+        taskSourceView.setText(getArguments().getString("taskSource"));
+        //newTaskWeightText
+        taskDueDateView = (TextView) view.findViewById(R.id.taskDueDate);
+        taskDueDateView.setText(getArguments().getString("taskDueDate"));
+
+        taskNotesView = (TextView) view.findViewById(R.id.taskNotes);
+        taskNotesView.setText(getArguments().getString("taskNotes"));
+//**/
+        if(!user.isLoggedIn()){
+            navController.navigate(R.id.action_taskFragment_to_menuFragment);
+        }
     }
 }

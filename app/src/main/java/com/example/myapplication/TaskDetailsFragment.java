@@ -90,13 +90,14 @@ public class TaskDetailsFragment extends Fragment {
         editTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
+                navController.navigate(R.id.action_taskDetailsFragment_to_editTaskFragment);
             }
         });
         MainActivity activity = (MainActivity) requireActivity();
+        /**
         User user = activity.user;
         if(!user.isLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
-        }
+        }**/
     }
 }

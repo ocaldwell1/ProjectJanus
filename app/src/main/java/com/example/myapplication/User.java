@@ -31,12 +31,14 @@ public class User {
     private CollectionReference dbc;
     private DocumentReference documentReference;
     private ArrayList <Task> taskList;
+    private int taskPosition;
 
     public User(String first, String last, String email, String id){
         this.firstName = first;
         this.lastName = last;
         this.email = email;
         this.id = id;
+        this.taskPosition = 0;
     }
     /*public User(String first, String last, String email){
         this.firstName = first;
@@ -84,6 +86,8 @@ public class User {
         return this.taskList;
     }
 
+    public void setPosition(int position){this.taskPosition = position;}
+    public int getPosition(){return this.taskPosition;}
     public String getFirstName(){
         return this.firstName;
     }

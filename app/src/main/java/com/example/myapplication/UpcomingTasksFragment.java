@@ -6,22 +6,44 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.content.Intent;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.checkerframework.checker.nullness.qual.Nullable;
+
+import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link UpcomingTasksFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UpcomingTasksFragment extends Fragment {
+public class UpcomingTasksFragment extends Fragment implements ItemClickListener  {
+    //public class UpcomingTasksFragment extends  AppCompatActivity {
+    private RecyclerView recyclerView;
+    //DatabaseReference database;
+    private TaskAdapter taskAdapter;
+    private ArrayList<Task> taskList;
+    private NavController navController;
+    private MainActivity activity;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,8 +53,7 @@ public class UpcomingTasksFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button addTaskButton, logOutButton;
-    private FirebaseAuth mAuth;
+    private Button addTaskButton;
 
     public UpcomingTasksFragment() {
         // Required empty public constructor
@@ -59,37 +80,66 @@ public class UpcomingTasksFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth.getInstance();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        //taskList = new ArrayList<>();
+        MainActivity activity = (MainActivity) requireActivity();
+        taskList = activity.user.getTaskList();
+    }
+    @Override
+    public void onClick(View view, int position) {
+        // The onClick implementation of the RecyclerView item click
+        final Task taskSelected = taskList.get(position);
+
+        // Send the values of the current card to the next fragemnt
+        Bundle bundle = new Bundle();
+        /**bundle.putString("taskName",taskSelected.getTaskName());
+         bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
+         bundle.putString("taskSource",taskSelected.getTaskSource());
+         bundle.putString("taskNotes",taskSelected.getTaskNote());**/
+        bundle.putString("taskName",taskSelected.getTaskName());
+        bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
+        bundle.putString("taskSource",taskSelected.getTaskSource());
+        bundle.putString("taskNotes",taskSelected.getTaskNote());
+        Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_taskDetailsFragment,bundle);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task, container, false);
+        //return inflater.inflate(R.layout.fragment_task, container, false);
+        View view = inflater.inflate(R.layout.fragment_task, container, false);
+        recyclerView = view.findViewById(R.id.taskRecyclerView);
+        recyclerView = view.findViewById(R.id.taskRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setAdapter(new TaskAdapter(taskList));
+
+        // Add listeners to treat the item cards as buttonss
+
+        taskAdapter = new TaskAdapter(taskList);
+        recyclerView.setAdapter(taskAdapter);
+        taskAdapter.setClickListener(this); // bind the listener
+
+        activity = (MainActivity) requireActivity();
+        User user = activity.user;
+        activity.user.setPosition(recyclerView.getChildAdapterPosition(recyclerView.getFocusedChild()));
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
-        logOutButton = (Button) view.findViewById(R.id.taskFragmentLogOutButton);
-        final NavController navController = Navigation.findNavController(view);
+        Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
+        //final NavController navController = Navigation.findNavController(view);
+        NavController navController = Navigation.findNavController(view);
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
-            }
-        });
-
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //mAuth.signOut();
-                navController.navigate(R.id.action_taskFragment_to_menuFragment);
             }
         });
         MainActivity activity = (MainActivity) requireActivity();

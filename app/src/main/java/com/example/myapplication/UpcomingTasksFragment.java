@@ -86,8 +86,13 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     public void onClick(View view, int position) {
         // The onClick implementation of the RecyclerView item click
         final Task taskSelected = taskList.get(position);
+
+        // Send the values of the current card to the next fragemnt
         Bundle bundle = new Bundle();
-        bundle.putString("taskSelected",taskSelected.getTaskName());
+        bundle.putString("taskName",taskSelected.getTaskName());
+        bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
+        bundle.putString("taskSource",taskSelected.getTaskSource());
+        bundle.putString("taskNotes",taskSelected.getTaskNote());
         Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_taskDetailsFragment,bundle);
 
     }

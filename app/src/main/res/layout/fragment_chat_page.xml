@@ -5,7 +5,7 @@
     xmlns:tools2="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatPage">
+    tools:context=".ChatPageFragment">
 
     <!--circle that show revolves until loading is done-->
     <ProgressBar

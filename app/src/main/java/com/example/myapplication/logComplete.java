@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import org.w3c.dom.Text;
 
-public class logComplete extends AppCompatActivity {
+public class    logComplete extends AppCompatActivity {
     private Button logoutButton;
     private Button addTaskButton;
     private Button goToCalendarButton;

@@ -104,7 +104,9 @@ public class ChatFragment extends Fragment {
         //imageToolbar = view.findViewById(R.id.imageToolbar);
         sendIcon = view.findViewById(R.id.sendIcon);
         progressBar = view.findViewById(R.id.progressChat);
-        chattingWith.setText(usernameOfRoommate);
+        //below line is commented out because covered up by message
+        //in runtime and also null
+        //chattingWith.setText(usernameOfRoommate);
         messages= new ArrayList<>();
 
         //method for when send button is pressed, pushes message to firebase
@@ -113,7 +115,7 @@ public class ChatFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FirebaseFirestore.getInstance().collection("messages")
-                        .document(chatroomId).set(new Message(FirebaseAuth.getInstance().getCurrentUser()
+                       .document(chatroomId).set(new Message(FirebaseAuth.getInstance().getCurrentUser()
                                 .getEmail(), emailOfRoomate, messageInput.getText().toString()
                         ));
                 messageInput.setText(""); //clears previous message after send
@@ -126,6 +128,7 @@ public class ChatFragment extends Fragment {
         setUpChatroom();
     }
     //placeholder method, needs fixing, supposed to create chatroomid by fetching username?
+    // doesnt work because both variables are null so will return error when implementing compareto
     private void setUpChatroom() {
         FirebaseFirestore.getInstance().collection("user").document(FirebaseAuth.getInstance().getUid())
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -163,7 +166,7 @@ public class ChatFragment extends Fragment {
                     @Override
                     public void onEvent(@androidx.annotation.Nullable DocumentSnapshot value,
                                         @androidx.annotation.Nullable FirebaseFirestoreException error) {
-                        messages.clear();
+                        //messages.clear(); if commented out displays repetitive reference
                        // for (DocumentSnapshot querySnapshot: value) {
                            // messages.add(querySnapshot.toObject(Message.class));
                         messages.add(new Message(FirebaseAuth.getInstance().getCurrentUser().toString(),

@@ -47,7 +47,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
                 constraintSet.connect(R.id.profileCardview, ConstraintSet.RIGHT, R.id.constraintLayout,
                         ConstraintSet.RIGHT, 0);
                 constraintSet.connect(R.id.messageContents, ConstraintSet.RIGHT, R.id.profileCardview,
-                        ConstraintSet.LEFT, 0);
+                        ConstraintSet.RIGHT, 0);
                 constraintSet.applyTo(constraintLayout);
             } else {
                 ConstraintSet constraintSet = new ConstraintSet();

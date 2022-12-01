@@ -34,9 +34,12 @@ public class ChatPageAdapter extends RecyclerView.Adapter<ChatPageAdapter.ChatPa
         return new ChatPageHolder(view);
     }
 
-    @Override
+    @Override//sets username next to profile pic in list of users on chat page
     public void onBindViewHolder(@androidx.annotation.NonNull ChatPageHolder holder, int position) {
-        holder.holder_username.setText(users.get(position).getFirstName());
+        //holder.holder_username.setText(users.get(position).getFirstName());figure out why null
+        // most likely because bundle is getting null in chatpage in Onuserclicked due to maybe
+        //wrong firebase query in getusers() method
+        holder.holder_username.setText("Username");
     }
 
     @Override

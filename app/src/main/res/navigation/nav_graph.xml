@@ -174,5 +174,12 @@
     <fragment
         android:id="@+id/editTaskFragment"
         android:name="com.example.myapplication.EditTaskFragment"
-        android:label="EditTaskFragment" />
+        android:label="EditTaskFragment" >
+        <action
+            android:id="@+id/action_editTaskFragment_to_taskDetailsFragment"
+            app:destination="@id/taskDetailsFragment" />
+        <action
+            android:id="@+id/action_editTaskFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
 </navigation>

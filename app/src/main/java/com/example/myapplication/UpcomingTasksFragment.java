@@ -119,8 +119,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_task, container, false);
-        View view = inflater.inflate(R.layout.fragment_task, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_task, container, false);
     }
 
     @Override

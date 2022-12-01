@@ -32,10 +32,22 @@
         android:name="com.example.myapplication.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
-        <action
-            android:id="@+id/action_chatFragment_to_chatInstanceFragment"
-            app:destination="@id/chatInstanceFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/chatPageFragment"
+        android:name="com.example.myapplication.ChatPageFragment"
+        android:label="fragment_chat_page"
+        tools:layout="@layout/fragment_chat_page" >
+        <action
+            android:id="@+id/action_chatPageFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+
+    <action
+        android:id="@+id/chatPageFragment_to_chatFragment"
+        app:destination="@id/chatFragment"/>
+
     <fragment
         android:id="@+id/taskDetailsFragment"
         android:name="com.example.myapplication.TaskDetailsFragment"

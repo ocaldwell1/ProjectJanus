@@ -109,7 +109,9 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         bundle.putString("taskSource",taskSelected.getTaskSource());
         bundle.putString("taskNotes",taskSelected.getTaskNote());
         Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_taskDetailsFragment,bundle);
-
+        activity = (MainActivity) requireActivity();
+        User user = activity.user;
+        activity.user.setPosition(position);
     }
 
     @Override
@@ -130,9 +132,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         recyclerView.setAdapter(taskAdapter);
         taskAdapter.setClickListener(this); // bind the listener
 
-        activity = (MainActivity) requireActivity();
-        User user = activity.user;
-        activity.user.setPosition(recyclerView.getChildAdapterPosition(recyclerView.getFocusedChild()));
+
         return view;
     }
 

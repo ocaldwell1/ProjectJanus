@@ -85,12 +85,20 @@ public class TaskDetailsFragment extends Fragment {
         taskNotesView.setText(getArguments().getString("taskNotes"));
 
         Button editTaskButton = (Button) view.findViewById(R.id.editTaskButton);
+        Button deleteTaskButton = (Button) view.findViewById(R.id.deleteTaskButton);
         //final NavController navController = Navigation.findNavController(view);
         NavController navController = Navigation.findNavController(view);
         editTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_taskDetailsFragment_to_editTaskFragment);
+            }
+        });
+
+        deleteTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_taskDetailsFragment_to_taskFragment);
             }
         });
         MainActivity activity = (MainActivity) requireActivity();

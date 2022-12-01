@@ -91,6 +91,7 @@ public class ChatPageFragment extends Fragment {
         navController = Navigation.findNavController(view);
         onUserClickListener = new ChatPageAdapter.OnUserClickListener() {
             public void OnUserClicked(int position) {
+                //bundle is supposed to pass data to ChatFragment
                 ChatFragment fragment = new ChatFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("name_of_roomate", users.get(position).getFirstName());

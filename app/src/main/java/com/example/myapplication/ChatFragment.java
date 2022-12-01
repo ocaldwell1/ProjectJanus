@@ -49,7 +49,6 @@ public class ChatFragment extends Fragment {
     private ProgressBar progressBar;
     private ImageView imageToolbar;
     private ArrayList<Message> messages;
-    private Messages messageHolder;
     private MessageAdapter messageAdapter;
 
     public ChatFragment() {

@@ -37,7 +37,6 @@ public class ChatPageAdapter extends RecyclerView.Adapter<ChatPageAdapter.ChatPa
     @Override
     public void onBindViewHolder(@androidx.annotation.NonNull ChatPageHolder holder, int position) {
         holder.holder_username.setText(users.get(position).getFirstName());
-        //Glide.with(context... complete when implementing profile pic upload feature
     }
 
     @Override

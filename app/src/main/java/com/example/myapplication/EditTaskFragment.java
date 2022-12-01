@@ -1,12 +1,17 @@
 package com.example.myapplication;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -36,8 +41,9 @@ public class EditTaskFragment extends Fragment {
     int position;
     ArrayList<Task> taskList;
     Task currentTask;
-    TextView titleNameView, taskSourceView,taskDueDateView,taskNotesView;
-
+    TextView titleNameView, taskSourceView,taskDueDateView,taskNotesView, taskWeightView;
+    Spinner weightSpinner;
+    Button saveButton;
     public EditTaskFragment() {
         // Required empty public constructor
     }
@@ -104,25 +110,60 @@ public class EditTaskFragment extends Fragment {
         User user =  activity.user;
         position = activity.user.getPosition();
         taskList = activity.user.getTaskList();
+        currentTask = taskList.get(position);
 
         //currentTask = taskList.get(0);
 
         titleNameView = (TextView) view.findViewById(R.id.newTaskTaskNameEditText);
-        //titleNameView.setText(getArguments().getString("taskName"));
-        titleNameView.setText(String.valueOf(taskList.size()));
+        titleNameView.setText(currentTask.getTaskName());
+        //titleNameView.setText(String.valueOf(taskList.size()));
 
         taskSourceView = (TextView) view.findViewById(R.id.newTaskSourceEditText);
-        //taskSourceView.setText(getArguments().getString("taskSource"));
-        taskSourceView.setText(String.valueOf(position));
-        /**      //newTaskWeightText
-        taskDueDateView = (TextView) view.findViewById(R.id.taskDueDate);
-        taskDueDateView.setText(getArguments().getString("taskDueDate"));
+        taskSourceView.setText(currentTask.getTaskSource());
+        //taskSourceView.setText(String.valueOf(position));
+             //newTaskWeightText
+        taskDueDateView = (TextView) view.findViewById(R.id.newTaskDueDateEditText);
+        taskDueDateView.setText(currentTask.getTaskDueDate());
 
-        taskNotesView = (TextView) view.findViewById(R.id.taskNotes);
-        taskNotesView.setText(getArguments().getString("taskNotes"));
-//**/
+        taskNotesView = (TextView) view.findViewById(R.id.newTaskNotesEditText);
+        taskNotesView.setText(currentTask.getTaskNote());
+
+        weightSpinner = view.findViewById(R.id.newTaskWeightSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.weights, android.R.layout.simple_spinner_item);
+        weightSpinner.setAdapter(adapter);
+        weightSpinner.setSelection(currentTask.getTaskWeight());
+
+        saveButton = (Button) view.findViewById(R.id.newTaskSaveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+            public void onClick(View view) {
+                try {
+                    modifyTaskAndNavigateBack(view);
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         if(!user.isLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
         }
     }
+    public void modifyTaskAndNavigateBack(View view) {
+        this.currentTask.setName(titleNameView.getText().toString());
+
+        this.currentTask.setSource(taskSourceView.getText().toString());
+        this.currentTask.setWeight(Integer.parseInt(weightSpinner.getSelectedItem().toString()));
+        this.currentTask.setDueDate(taskDueDateView.getText().toString());
+        this.currentTask.setNote( taskNotesView.getText().toString());
+        //Task newTask = new Task(taskName, source, weight, dueDate, notes);
+        //Task newTask = new Task(taskName, notes, weight, dueDate,source);
+        //MainActivity activity = (MainActivity) requireActivity();
+        // add task
+        //activity.user.addTask(newTask);
+        Log.d(TAG, "Success: Modify Task");
+        // TODO: Fix bug for navigating to details: Bundle Does not exist!
+        Navigation.findNavController(view).navigate(R.id.action_editTaskFragment_to_taskFragment);
+
+         }
 }

@@ -113,7 +113,8 @@ public class NewTaskFragment extends Fragment {
         int weight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
         String dueDate = dueDateEditText.getText().toString();
         String notes = notesEditText.getText().toString();
-        Task newTask = new Task(taskName, source, weight, dueDate, notes);
+        //Task newTask = new Task(taskName, source, weight, dueDate, notes);
+        Task newTask = new Task(taskName, notes, weight, dueDate,source);
         MainActivity activity = (MainActivity) requireActivity();
         // add task
         activity.user.addTask(newTask);

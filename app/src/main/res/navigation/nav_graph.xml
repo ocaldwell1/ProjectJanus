@@ -19,7 +19,7 @@
         <action
             android:id="@+id/action_taskFragment_to_menuFragment"
             app:destination="@id/menuFragment"
-            app:popUpTo="@id/taskFragment"
+            app:popUpTo="@id/menuFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -52,7 +52,11 @@
         android:id="@+id/taskDetailsFragment"
         android:name="com.example.myapplication.TaskDetailsFragment"
         android:label="fragment_task_details"
-        tools:layout="@layout/fragment_task_details" />
+        tools:layout="@layout/fragment_task_details" >
+        <action
+            android:id="@+id/action_taskDetailsFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addTaskFragment"
         android:name="com.example.myapplication.AddTaskFragment"
@@ -159,4 +163,13 @@
             app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/chatInstanceFragment"
+        android:name="com.example.myapplication.ChatInstanceFragment"
+        android:label="fragment_chat_instance"
+        tools:layout="@layout/fragment_chat_instance" />
+    <fragment
+        android:id="@+id/editTaskFragment"
+        android:name="com.example.myapplication.EditTaskFragment"
+        android:label="EditTaskFragment" />
 </navigation>

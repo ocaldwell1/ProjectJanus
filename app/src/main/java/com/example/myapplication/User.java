@@ -47,7 +47,7 @@ public class User {
         fUser = mAuth.getCurrentUser();
 
         taskList = new ArrayList<Task>();
-
+        this.taskPosition = 0;
 
         if (fUser != null){
             String userID = fUser.getUid();
@@ -177,7 +177,7 @@ public class User {
     public void removeTask(Task task) {
         taskList.remove(task);
         sortTaskList();
-        // task.removeTaskFromFireStore();
+        task.removeTaskFromFireStore();
     }
 
 

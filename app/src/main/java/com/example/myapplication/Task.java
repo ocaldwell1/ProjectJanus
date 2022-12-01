@@ -4,12 +4,17 @@ import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 import android.util.Log;
 
 import androidx.compose.ui.res.ColorResources_androidKt;
+import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.type.DateTime;
 
 import java.text.ParseException;
@@ -19,7 +24,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class Task implements Comparable<Task>{
-    private String name, note, source, dueDate;
+    private String name, note, source, dueDate, taskID;
     private int weight;
     public FirebaseAuth mAuth;
     public FirebaseFirestore db;
@@ -38,19 +43,38 @@ public class Task implements Comparable<Task>{
         db = FirebaseFirestore.getInstance();
 
         DocumentReference documentReference = db.collection("Task").document();
-        Map<String, Object> user = new HashMap<>();
-        user.put("taskName", name);
-        user.put("taskDueDate", dueDate);
-        user.put("taskNote", note);
-        user.put("taskWeight", weight);
-        user.put("taskSource", source);
-        user.put("userID", id);
-        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Map<String, Object> task = new HashMap<>();
+        task.put("taskName", name);
+        task.put("taskDueDate", dueDate);
+        task.put("taskNote", note);
+        task.put("taskWeight", weight);
+        task.put("taskSource", source);
+        task.put("userID", id);
+        taskID = documentReference.getId();
+        documentReference.set(task).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Log.d(TAG, "Success: Added Task to FireStore");
             }
         });
+    }
+    public void removeTaskFromFireStore(){
+
+        db = FirebaseFirestore.getInstance();
+        db.collection("Task").document(taskID)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
     }
 
     public void deleteTask(){

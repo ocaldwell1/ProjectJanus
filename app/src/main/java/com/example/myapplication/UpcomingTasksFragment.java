@@ -22,7 +22,9 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -44,6 +46,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     private ArrayList<Task> taskList;
     private NavController navController;
     private MainActivity activity;
+    private FirebaseAuth mAuth;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,6 +57,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     private String mParam1;
     private String mParam2;
     private Button addTaskButton;
+    private Button logOutButton;
 
     public UpcomingTasksFragment() {
         // Required empty public constructor
@@ -80,6 +84,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth.getInstance();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -119,15 +124,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
-        //final NavController navController = Navigation.findNavController(view);
-        NavController navController = Navigation.findNavController(view);
-        addTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
-            }
-        });
-
+        logOutButton = (Button) view.findViewById(R.id.taskFragmentLogOutButton);
         recyclerView = view.findViewById(R.id.taskRecyclerView);
         recyclerView = view.findViewById(R.id.taskRecyclerView);
         recyclerView.setHasFixedSize(true);
@@ -143,9 +140,22 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         activity = (MainActivity) requireActivity();
         User user = activity.user;
         activity.user.setPosition(recyclerView.getChildAdapterPosition(recyclerView.getFocusedChild()));
-
-        MainActivity activity = (MainActivity) requireActivity();
-        User user = activity.user;
+        //final NavController navController = Navigation.findNavController(view);
+        NavController navController = Navigation.findNavController(view);
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
+            }
+        });
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.getInstance().signOut();
+                Toast.makeText(getActivity(), "Logged out!", Toast.LENGTH_SHORT).show();
+                navController.navigate(R.id.action_taskFragment_to_menuFragment);
+            }
+        });
         if(!user.isLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
         }

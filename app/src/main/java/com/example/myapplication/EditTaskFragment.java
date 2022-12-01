@@ -104,15 +104,17 @@ public class EditTaskFragment extends Fragment {
         User user =  activity.user;
         position = activity.user.getPosition();
         taskList = activity.user.getTaskList();
-/**
-        currentTask = taskList.get(0);
+
+        //currentTask = taskList.get(0);
 
         titleNameView = (TextView) view.findViewById(R.id.newTaskTaskNameEditText);
-        titleNameView.setText(getArguments().getString("taskName"));
+        //titleNameView.setText(getArguments().getString("taskName"));
+        titleNameView.setText(String.valueOf(taskList.size()));
 
         taskSourceView = (TextView) view.findViewById(R.id.newTaskSourceEditText);
-        taskSourceView.setText(getArguments().getString("taskSource"));
-        //newTaskWeightText
+        //taskSourceView.setText(getArguments().getString("taskSource"));
+        taskSourceView.setText(String.valueOf(position));
+        /**      //newTaskWeightText
         taskDueDateView = (TextView) view.findViewById(R.id.taskDueDate);
         taskDueDateView.setText(getArguments().getString("taskDueDate"));
 

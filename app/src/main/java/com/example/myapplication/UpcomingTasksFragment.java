@@ -113,6 +113,21 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_task, container, false);
         View view = inflater.inflate(R.layout.fragment_task, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
+        //final NavController navController = Navigation.findNavController(view);
+        NavController navController = Navigation.findNavController(view);
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
+            }
+        });
+
         recyclerView = view.findViewById(R.id.taskRecyclerView);
         recyclerView = view.findViewById(R.id.taskRecyclerView);
         recyclerView.setHasFixedSize(true);
@@ -128,20 +143,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         activity = (MainActivity) requireActivity();
         User user = activity.user;
         activity.user.setPosition(recyclerView.getChildAdapterPosition(recyclerView.getFocusedChild()));
-        return view;
-    }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
-        //final NavController navController = Navigation.findNavController(view);
-        NavController navController = Navigation.findNavController(view);
-        addTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
-            }
-        });
         MainActivity activity = (MainActivity) requireActivity();
         User user = activity.user;
         if(!user.isLoggedIn()){

@@ -14,6 +14,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,6 +78,24 @@ public class User {
                     }
                 }
             });
+
+            db.collection("Task").whereEqualTo("userID", userID)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+                            for(QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> data = document.getData();
+                                String taskName = data.get("taskName").toString();
+                                String taskSource = data.get("taskSource").toString();
+                                int weight = Math.toIntExact( (Long) data.get("taskWeight"));
+                                String dueDate = data.get("taskDueDate").toString();
+                                String notes = data.get("taskNote").toString();
+                                Task newTask = new Task(taskName, notes, weight, dueDate, taskSource);
+                                taskList.add(newTask);
+                            }
+                        }
+                    });
         }
     }
 

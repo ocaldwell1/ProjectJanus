@@ -13,20 +13,10 @@
         android:layout_width="411dp"
         android:layout_height="707dp"
         android:text="Upcoming Tasks"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="24dp" />
-
-    <Button
-        android:id="@+id/taskFragmentAddTaskButton"
-        android:layout_width="104dp"
-        android:layout_height="wrap_content"
-        android:text="Add Task"
-        app:layout_constraintBottom_toBottomOf="@+id/testText"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.802" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <!--
@@ -39,16 +29,27 @@
         tools:layout_editor_absoluteY="154dp" />
     -->
 
+    <Button
+        android:id="@+id/taskFragmentAddTaskButton"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:text="Add Task"
+        app:layout_constraintBottom_toBottomOf="@+id/testText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.831" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/taskRecyclerView"
         android:layout_width="409dp"
         android:layout_height="460dp"
-        android:layout_marginStart="1dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/button_second"
+        app:layout_constraintBottom_toTopOf="@+id/taskFragmentAddTaskButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,9 +62,9 @@
         android:text="Log Out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="@+id/testText"
         app:layout_constraintTop_toTopOf="@+id/testText"
-        app:layout_constraintVertical_bias="0.773" />
+        app:layout_constraintVertical_bias="0.976" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

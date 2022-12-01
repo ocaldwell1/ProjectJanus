@@ -116,6 +116,8 @@ public class ChatPageFragment extends Fragment {
             @Override
             public void onEvent(@androidx.annotation.Nullable QuerySnapshot value, @androidx.annotation.Nullable FirebaseFirestoreException error) {
                 for(DocumentSnapshot querySnapshot: value.getDocuments()) {
+                    //appears to get correct # of users for displaying list, but cannot extract user info?
+                    //maybe try new user constructor with .add method?
                     users.add(querySnapshot.toObject(User.class));
                 }
                 chatPageAdapter = new ChatPageAdapter(users,getActivity(), onUserClickListener);

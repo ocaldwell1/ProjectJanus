@@ -79,7 +79,7 @@ public class User {
                 }
             });
 
-            db.collection("Task").whereEqualTo("userID", id)
+            db.collection("Task").whereEqualTo("userID", userID)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -88,7 +88,7 @@ public class User {
                                 Map<String, Object> data = document.getData();
                                 String taskName = data.get("taskName").toString();
                                 String taskSource = data.get("taskSource").toString();
-                                int weight = (int) data.get("taskWeight");
+                                int weight = Math.toIntExact( (Long) data.get("taskWeight"));
                                 String dueDate = data.get("taskDueDate").toString();
                                 String notes = data.get("taskNote").toString();
                                 Task newTask = new Task(taskName, notes, weight, dueDate, taskSource);

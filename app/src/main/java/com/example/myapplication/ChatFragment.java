@@ -102,7 +102,7 @@ public class ChatFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerchat);
         messageInput = view.findViewById(R.id.editMessageInput);
         chattingWith = view.findViewById(R.id.ChattingWith);
-        imageToolbar = view.findViewById(R.id.imageToolbar);
+        //imageToolbar = view.findViewById(R.id.imageToolbar);
         sendIcon = view.findViewById(R.id.sendIcon);
         progressBar = view.findViewById(R.id.progressChat);
         chattingWith.setText(usernameOfRoommate);

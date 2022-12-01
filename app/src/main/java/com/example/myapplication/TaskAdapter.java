@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         //activity.user.setPosition(position);
         Task task = taskList.get(position);
         holder.name.setText(task.getTaskName());
+        holder.name.setTextColor(task.getPriorityColor());
+        Log.i("COLORS", "got color " + task.getPriorityColor());
         holder.note.setText(task.getTaskNote());
         holder.dueDate.setText(task.getTaskDueDate());
         holder.source.setText(task.getTaskSource());

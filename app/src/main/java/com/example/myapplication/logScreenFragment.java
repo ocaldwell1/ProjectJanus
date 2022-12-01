@@ -132,7 +132,8 @@ public class logScreenFragment extends Fragment {
                 if(task.isSuccessful()){
                     Toast.makeText(getActivity(), "Logged in!", Toast.LENGTH_SHORT).show();
                     // nav to log complete / upcoming assignments
-
+                    MainActivity activity = (MainActivity) requireActivity();
+                    activity.user = new User();
                     navController.navigate(R.id.action_logScreenFragment_to_taskFragment);
                 }else{
                     Toast.makeText(getActivity(), "Error! Invalid Credentials!", Toast.LENGTH_SHORT).show();

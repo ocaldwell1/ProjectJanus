@@ -79,7 +79,7 @@ public class User {
                 }
             });
 
-            db.collection("Task").whereEqualTo("id", id)
+            db.collection("Task").whereEqualTo("userID", id)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -89,8 +89,8 @@ public class User {
                                 String taskName = data.get("taskName").toString();
                                 String taskSource = data.get("taskSource").toString();
                                 int weight = (int) data.get("taskWeight");
-                                String dueDate = data.get("dueDate").toString();
-                                String notes = data.get("notes").toString();
+                                String dueDate = data.get("taskDueDate").toString();
+                                String notes = data.get("taskNote").toString();
                                 Task newTask = new Task(taskName, notes, weight, dueDate, taskSource);
                                 taskList.add(newTask);
                             }

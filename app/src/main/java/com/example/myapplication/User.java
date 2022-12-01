@@ -18,6 +18,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -96,7 +97,12 @@ public class User {
                             }
                         }
                     });
+            sortTaskList();
         }
+    }
+
+    public void sortTaskList() {
+        Collections.sort(taskList);
     }
 
     // get task list [JMS]
@@ -162,6 +168,7 @@ public class User {
     public void addTask(Task task) {
         Log.d(TAG, "Success: Added to Task FireStore 1 ");
         taskList.add(task);
+        sortTaskList();
         Log.d(TAG, "Success: Added to Task FireStore 2 ");
         task.addTaskToFireStore();
         Log.d(TAG, "Success: Added to Task FireStore 3 ");
@@ -169,6 +176,7 @@ public class User {
 
     public void removeTask(Task task) {
         taskList.remove(task);
+        sortTaskList();
         // task.removeTaskFromFireStore();
     }
 

@@ -39,6 +39,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         //activity.user.setPosition(position);
         Task task = taskList.get(position);
         holder.name.setText(task.getTaskName());
+        holder.name.setTextColor(task.getColor());
         holder.note.setText(task.getTaskNote());
         holder.dueDate.setText(task.getTaskDueDate());
         holder.source.setText(task.getTaskSource());

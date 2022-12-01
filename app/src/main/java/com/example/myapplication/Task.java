@@ -3,6 +3,8 @@ import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
 import android.util.Log;
 
+import androidx.compose.ui.res.ColorResources_androidKt;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,6 +55,35 @@ public class Task implements Comparable<Task>{
 
     public void deleteTask(){
 
+    }
+
+    public int getColor() {
+        double priority = 0;
+        try {
+            priority = getPriority();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        int colorInt = 0;
+
+        if(priority >= 2 * (4.0/4)) {
+            colorInt = R.color.red;
+        }
+        else if(priority > 2 * (3.0/4)) {
+            colorInt = R.color.orange;
+        }
+        else if(priority > 2 * (2.0)/4) {
+            colorInt = R.color.yellow;
+        }
+        else if(priority > 2 * (1.0)/4) {
+            colorInt = R.color.lime;
+        }
+        else {
+            colorInt = R.color.green;
+        }
+
+        return colorInt;
     }
 
     public double getPriority() throws ParseException {

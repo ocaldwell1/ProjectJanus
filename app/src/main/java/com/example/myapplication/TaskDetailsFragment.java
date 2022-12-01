@@ -87,7 +87,7 @@ public class TaskDetailsFragment extends Fragment {
 
         Button editTaskButton = (Button) view.findViewById(R.id.editTaskButton);
         Button deleteTaskButton = (Button) view.findViewById(R.id.deleteTaskButton);
-        //final NavController navController = Navigation.findNavController(view);
+
         NavController navController = Navigation.findNavController(view);
         editTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +100,7 @@ public class TaskDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 MainActivity activity = (MainActivity) requireActivity();
-                // add task
-
+                // remove
                 activity.user.removeTask(taskID);
                 navController.navigate(R.id.action_taskDetailsFragment_to_taskFragment);
             }

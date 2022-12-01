@@ -25,7 +25,8 @@
                 android:text="Task Title: "
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/taskTitleName"
                 android:layout_width="wrap_content"
@@ -34,7 +35,7 @@
                 android:text="First Name : "
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -49,7 +50,8 @@
                 android:text="Source : "
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/taskSource"
                 android:layout_width="wrap_content"
@@ -58,7 +60,7 @@
                 android:text="CSCE 310 "
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -73,7 +75,8 @@
                 android:text="Due Date : "
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/taskDueDate"
                 android:layout_width="wrap_content"
@@ -82,7 +85,7 @@
                 android:text="10/24 "
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,7 +100,8 @@
                 android:text="Additional Notes : "
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/taskNotes"
                 android:layout_width="wrap_content"
@@ -106,7 +110,7 @@
                 android:text="Task Notes "
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 

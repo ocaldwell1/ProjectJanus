@@ -26,7 +26,17 @@
         android:id="@+id/calendarFragment"
         android:name="com.example.myapplication.CalendarFragment"
         android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" />
+        tools:layout="@layout/fragment_calendar">
+        <action
+            android:id="@+id/action_calendarFragment_to_calendarDayFragment"
+            app:destination="@id/calendarDayFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calendarDayFragment"
+        android:name="com.example.myapplication.CalendarDayFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" >
+    </fragment>
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.example.myapplication.ChatFragment"

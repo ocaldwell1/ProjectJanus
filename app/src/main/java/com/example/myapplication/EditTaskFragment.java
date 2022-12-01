@@ -1,26 +1,27 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+import java.util.ArrayList;
+
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TaskDetailsFragment#newInstance} factory method to
+ * Use the {@link EditTaskFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TaskDetailsFragment extends Fragment {
+public class EditTaskFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,9 +31,14 @@ public class TaskDetailsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView titleNameView,taskSourceView,taskDueDateView,taskNotesView ;
 
-    public TaskDetailsFragment() {
+    private MainActivity activity;
+    int position;
+    ArrayList<Task> taskList;
+    Task currentTask;
+    TextView titleNameView, taskSourceView,taskDueDateView,taskNotesView;
+
+    public EditTaskFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +48,11 @@ public class TaskDetailsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TaskDetailsFragment.
+     * @return A new instance of fragment AddTaskFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TaskDetailsFragment newInstance(String param1, String param2) {
-        TaskDetailsFragment fragment = new TaskDetailsFragment();
+    public static EditTaskFragment newInstance(String param1, String param2) {
+        EditTaskFragment fragment = new EditTaskFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,37 +73,54 @@ public class TaskDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_task, container, false);
+        Button newTaskSaveButton = (Button) view.findViewById(R.id.newTaskSaveButton);
+        newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_addTaskFragment_to_newTaskFragment);
+            }
+        });
+
+
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        titleNameView = (TextView) view.findViewById(R.id.taskTitleName);
+
+        //final NavController navController = Navigation.findNavController(view);
+        NavController navController = Navigation.findNavController(view);
+
+        /**
+        Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
+            }
+        }); **/
+        activity = (MainActivity) requireActivity();
+        User user =  activity.user;
+        position = activity.user.getPosition();
+        taskList = activity.user.getTaskList();
+/**
+        currentTask = taskList.get(0);
+
+        titleNameView = (TextView) view.findViewById(R.id.newTaskTaskNameEditText);
         titleNameView.setText(getArguments().getString("taskName"));
 
-        taskSourceView = (TextView) view.findViewById(R.id.taskSource);
+        taskSourceView = (TextView) view.findViewById(R.id.newTaskSourceEditText);
         taskSourceView.setText(getArguments().getString("taskSource"));
-
+        //newTaskWeightText
         taskDueDateView = (TextView) view.findViewById(R.id.taskDueDate);
         taskDueDateView.setText(getArguments().getString("taskDueDate"));
 
         taskNotesView = (TextView) view.findViewById(R.id.taskNotes);
         taskNotesView.setText(getArguments().getString("taskNotes"));
-
-        Button editTaskButton = (Button) view.findViewById(R.id.editTaskButton);
-        //final NavController navController = Navigation.findNavController(view);
-        NavController navController = Navigation.findNavController(view);
-        editTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_taskDetailsFragment_to_editTaskFragment);
-            }
-        });
-        MainActivity activity = (MainActivity) requireActivity();
-        /**
-        User user = activity.user;
+//**/
         if(!user.isLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
-        }**/
+        }
     }
 }

@@ -169,7 +169,7 @@ public class User {
 
     public void removeTask(Task task) {
         taskList.remove(task);
-        // task.removeTaskFromFireStore();
+        task.removeTaskFromFireStore();
     }
 
 

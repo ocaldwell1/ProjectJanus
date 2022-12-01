@@ -102,7 +102,7 @@ public class User {
     }
 
     public void sortTaskList() {
-        Collections.sort(taskList);
+        Collections.sort(taskList, Collections.reverseOrder());
     }
 
     // get task list [JMS]

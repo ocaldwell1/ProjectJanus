@@ -57,7 +57,7 @@ public class Task implements Comparable<Task>{
 
     }
 
-    public int getColor() {
+    public int getPriorityColor() {
         double priority = 0;
         try {
             priority = getPriority();
@@ -68,21 +68,22 @@ public class Task implements Comparable<Task>{
         int colorInt = 0;
 
         if(priority >= 2 * (4.0/4)) {
-            colorInt = R.color.red;
+            colorInt = 0xFFFF0000;
         }
         else if(priority > 2 * (3.0/4)) {
-            colorInt = R.color.orange;
+            colorInt = 0xFFFF8000;
         }
         else if(priority > 2 * (2.0)/4) {
-            colorInt = R.color.yellow;
+            colorInt = 0xFFFFFF00;
         }
         else if(priority > 2 * (1.0)/4) {
-            colorInt = R.color.lime;
+            colorInt = 0xFFC5FF00;
         }
         else {
-            colorInt = R.color.green;
+            colorInt = 0xFF00FF00;
         }
 
+        //TODO replace
         return colorInt;
     }
 
@@ -90,7 +91,7 @@ public class Task implements Comparable<Task>{
         Date now = new Date(System.currentTimeMillis());
         Date due = new SimpleDateFormat("dd/MM/yyyy").parse(dueDate); //duedate - now
         double timeDiff = Math.abs(due.getTime() - now.getTime());
-        return weight/timeDiff;
+        return weight/(timeDiff/8.64e+7);
     }
 
     public int compareTo(Task task) {

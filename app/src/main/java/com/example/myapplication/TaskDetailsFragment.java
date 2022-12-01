@@ -29,7 +29,7 @@ public class TaskDetailsFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String mParam1;
-    private String mParam2;
+    private String mParam2, taskID;
     TextView titleNameView,taskSourceView,taskDueDateView,taskNotesView ;
 
     public TaskDetailsFragment() {
@@ -83,6 +83,7 @@ public class TaskDetailsFragment extends Fragment {
 
         taskNotesView = (TextView) view.findViewById(R.id.taskNotes);
         taskNotesView.setText(getArguments().getString("taskNotes"));
+        taskID = getArguments().getString("taskID");
 
         Button editTaskButton = (Button) view.findViewById(R.id.editTaskButton);
         Button deleteTaskButton = (Button) view.findViewById(R.id.deleteTaskButton);
@@ -100,7 +101,8 @@ public class TaskDetailsFragment extends Fragment {
             public void onClick(View view) {
                 MainActivity activity = (MainActivity) requireActivity();
                 // add task
-                //activity.user.removeTask(newTask);
+
+                activity.user.removeTask(taskID);
                 navController.navigate(R.id.action_taskDetailsFragment_to_taskFragment);
             }
         });

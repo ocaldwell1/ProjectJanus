@@ -94,6 +94,7 @@ public class User {
                                 String notes = data.get("taskNote").toString();
                                 Task newTask = new Task(taskName, notes, weight, dueDate, taskSource);
                                 taskList.add(newTask);
+                                newTask.setTaskID(document.getId());
                             }
                         }
                     });
@@ -174,10 +175,16 @@ public class User {
         Log.d(TAG, "Success: Added to Task FireStore 3 ");
     }
 
-    public void removeTask(Task task) {
-        taskList.remove(task);
+    public void removeTask(String id) {
+        Task found = null;
+        for(Task task : taskList){
+            if(task.getTaskID().equals(id)) {
+                found = task;
+                task.removeTaskFromFireStore();
+            }
+        }
+        taskList.remove(found);
         sortTaskList();
-        task.removeTaskFromFireStore();
     }
 
 

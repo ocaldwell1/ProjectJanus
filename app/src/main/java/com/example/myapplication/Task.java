@@ -147,10 +147,15 @@ public class Task implements Comparable<Task>{
     public String getTaskSource(){
         return this.source;
     }
+    public String getTaskID(){
+        return this.taskID;
+    }
     public int getTaskWeight(){
         return this.weight;
     }
-
+    public void setTaskID(String id){
+        this.taskID = id;
+    }
     public void setName(String name) {
         this.name = name;
     }

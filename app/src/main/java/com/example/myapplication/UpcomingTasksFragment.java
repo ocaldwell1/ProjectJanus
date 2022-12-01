@@ -108,6 +108,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
         bundle.putString("taskSource",taskSelected.getTaskSource());
         bundle.putString("taskNotes",taskSelected.getTaskNote());
+        bundle.putString("taskID",taskSelected.getTaskID());
         Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_taskDetailsFragment,bundle);
         activity = (MainActivity) requireActivity();
         User user = activity.user;

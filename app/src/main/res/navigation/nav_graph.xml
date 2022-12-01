@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_taskDetailsFragment_to_editTaskFragment"
             app:destination="@id/editTaskFragment" />
+        <action
+            android:id="@+id/action_taskDetailsFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
     </fragment>
     <fragment
         android:id="@+id/addTaskFragment"

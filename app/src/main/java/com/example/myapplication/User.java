@@ -46,7 +46,7 @@ public class User {
         fUser = mAuth.getCurrentUser();
 
         taskList = new ArrayList<Task>();
-
+        this.taskPosition = 0;
 
         if (fUser != null){
             String userID = fUser.getUid();

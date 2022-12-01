@@ -112,23 +112,19 @@
 
     <Button
         android:id="@+id/editTaskButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="350dp"
-        android:text="Edit Task"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskNotes" />
+        android:layout_width="122dp"
+     android:layout_height="wrap_content"
+      android:layout_marginTop="350dp"
+      android:text="Edit Task" />
 
-
-    <Button
-        android:id="@+id/deleteTaskButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:text="Delete Task"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+  <Button
+      android:id="@+id/deleteTaskButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="400dp"
+      android:text="Delete Task/Mark Completed"
+    app:layout_constraintEnd_toEndOf="parent"
+app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskNotes" />
 
 </FrameLayout>

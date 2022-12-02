@@ -98,7 +98,6 @@ public class RegCompleteFragment extends Fragment {
 
     }
 
-
     public void goToMenu(){
         // sign out user
         mAuth.signOut();

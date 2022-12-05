@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.janus;
 
 import android.os.Bundle;
 
@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.

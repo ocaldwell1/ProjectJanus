@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:456210645408:android:3a9ef4b2c1b9a55194e4c5",
         "android_client_info": {
-          "package_name": "com.example.myapplication"
+          "package_name": "com.example.janus"
         }
       },
       "oauth_client": [

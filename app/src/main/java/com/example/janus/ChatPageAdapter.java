@@ -1,4 +1,5 @@
-package com.example.myapplication;
+
+package com.example.janus;
 
 import android.content.Context;
 import android.media.Image;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.R;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -63,3 +66,6 @@ public class ChatPageAdapter extends RecyclerView.Adapter<ChatPageAdapter.ChatPa
         }
     }
 }
+
+
+

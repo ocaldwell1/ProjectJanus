@@ -77,10 +77,6 @@ public class Task implements Comparable<Task>{
                 });
     }
 
-    public void deleteTask(){
-
-    }
-
     public int getPriorityColor() {
         double priority = 0;
         try {

@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,8 +10,7 @@ import androidx.navigation.Navigation;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.ViewGroup;;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;

@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CalendarFragment">
+    tools:context=".CalendarDayFragment">
 
 
-    <CalendarView
-        android:id="@+id/calendarViewFragment"
-        android:layout_width="420dp"
-        android:layout_height="400dp"
+    <TextView
+        android:id="@+id/calendarDayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pre-text"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.368">
-    </CalendarView>
+        app:layout_constraintVertical_bias="0.023"></TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

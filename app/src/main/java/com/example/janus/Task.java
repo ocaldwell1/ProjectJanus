@@ -1,21 +1,15 @@
-package com.example.myapplication;
+package com.example.janus;
 import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
 import android.util.Log;
 
-import androidx.compose.ui.res.ColorResources_androidKt;
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.type.DateTime;
 
 import java.text.ParseException;
 import java.util.HashMap;

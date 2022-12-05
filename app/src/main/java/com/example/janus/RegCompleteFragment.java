@@ -1,6 +1,5 @@
-package com.example.myapplication;
+package com.example.janus;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,16 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ForgotEmailFragment#newInstance} factory method to
+ * Use the {@link RegCompleteFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ForgotEmailFragment extends Fragment {
+public class RegCompleteFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,10 +32,11 @@ public class ForgotEmailFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private Button mainMenuButton;
+    private Button menuButton;
+    private FirebaseAuth mAuth;
     private NavController navController;
 
-    public ForgotEmailFragment() {
+    public RegCompleteFragment() {
         // Required empty public constructor
     }
 
@@ -44,11 +46,11 @@ public class ForgotEmailFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ForgotEmailFragment.
+     * @return A new instance of fragment RegCompleteFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ForgotEmailFragment newInstance(String param1, String param2) {
-        ForgotEmailFragment fragment = new ForgotEmailFragment();
+    public static RegCompleteFragment newInstance(String param1, String param2) {
+        RegCompleteFragment fragment = new RegCompleteFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,8 @@ public class ForgotEmailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -69,22 +73,27 @@ public class ForgotEmailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forgot_email, container, false);
+        return inflater.inflate(R.layout.fragment_reg_complete, container, false);
     }
-
     @Override
-    public void onViewCreated(@org.checkerframework.checker.nullness.qual.NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(view);
-        mainMenuButton = (Button) view.findViewById(R.id.forgotEmailFragMenuButton);
-        mainMenuButton.setOnClickListener(new View.OnClickListener() {
+
+        menuButton =  (Button) view.findViewById(R.id.regCompleteFragMenuButton);
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                goToMain();
+            public void onClick(View v) {
+                goToMenu();
             }
         });
+
     }
 
-    public void goToMain(){
-        navController.navigate(R.id.action_forgotEmailFragment_to_menuFragment);
+    public void goToMenu(){
+        // sign out user
+        mAuth.signOut();
+        navController.navigate(R.id.action_regCompleteFragment_to_menuFragment);
     }
+
 }

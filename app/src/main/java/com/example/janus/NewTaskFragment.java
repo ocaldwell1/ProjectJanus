@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.janus;
 
 import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
@@ -15,14 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.

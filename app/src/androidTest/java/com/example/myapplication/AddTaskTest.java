@@ -45,5 +45,13 @@ public class AddTaskTest extends TestCase {
         } catch (AssertionFailedError e) {
 
         };
+        onView((withId(R.id.newTaskTaskNameEditText))).perform(typeText("TestTask"));
+        onView(withId(R.id.newTaskSourceEditText)).perform(typeText("TestSource"));
+        onView(withId(R.id.newTaskWeightSpinner)).perform(click());
+        onData(withId(R.id.newTaskWeightSpinner)).atPosition(1).perform(click());
+        onView(withId(R.id.newTaskDueDateEditText)).perform(typeText("01/01/2100"));
+        onView(withId(R.id.newTaskNotesEditText)).perform(typeText("TestNotes"));
+        onView((withId(R.id.newTaskSaveButton))).perform(click());
+
     }
 }

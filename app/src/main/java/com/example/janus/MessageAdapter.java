@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -48,7 +49,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
                 constraintSet.connect(R.id.profileCardview, ConstraintSet.RIGHT, R.id.constraintLayout,
                         ConstraintSet.RIGHT, 0);
                 constraintSet.connect(R.id.messageContents, ConstraintSet.RIGHT, R.id.profileCardview,
-                        ConstraintSet.LEFT, 0);
+                        ConstraintSet.RIGHT, 0);
                 constraintSet.applyTo(constraintLayout);
             } else {
                 ConstraintSet constraintSet = new ConstraintSet();
@@ -81,4 +82,5 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
             }
         }
     }
+
 

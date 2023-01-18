@@ -62,3 +62,4 @@ public class ChatPageAdapter extends RecyclerView.Adapter<ChatPageAdapter.ChatPa
     }
 }
 
+

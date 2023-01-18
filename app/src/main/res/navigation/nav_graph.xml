@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/taskFragment"
-        android:name="com.example.myapplication.UpcomingTasksFragment"
+        android:name="com.example.janus.UpcomingTasksFragment"
         android:label="fragment_task"
         tools:layout="@layout/fragment_task" >
         <action
@@ -24,19 +24,29 @@
     </fragment>
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="com.example.myapplication.CalendarFragment"
+        android:name="com.example.janus.CalendarFragment"
         android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" />
+        tools:layout="@layout/fragment_calendar">
+        <action
+            android:id="@+id/action_calendarFragment_to_calendarDayFragment"
+            app:destination="@id/calendarDayFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calendarDayFragment"
+        android:name="com.example.janus.CalendarDayFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" >
+    </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.myapplication.ChatFragment"
+        android:name="com.example.janus.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
     </fragment>
 
     <fragment
         android:id="@+id/chatPageFragment"
-        android:name="com.example.myapplication.ChatPageFragment"
+        android:name="com.example.janus.ChatPageFragment"
         android:label="fragment_chat_page"
         tools:layout="@layout/fragment_chat_page" >
         <action
@@ -50,16 +60,19 @@
 
     <fragment
         android:id="@+id/taskDetailsFragment"
-        android:name="com.example.myapplication.TaskDetailsFragment"
+        android:name="com.example.janus.TaskDetailsFragment"
         android:label="fragment_task_details"
         tools:layout="@layout/fragment_task_details" >
         <action
             android:id="@+id/action_taskDetailsFragment_to_editTaskFragment"
             app:destination="@id/editTaskFragment" />
+        <action
+            android:id="@+id/action_taskDetailsFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
     </fragment>
     <fragment
         android:id="@+id/addTaskFragment"
-        android:name="com.example.myapplication.AddTaskFragment"
+        android:name="com.example.janus.AddTaskFragment"
         android:label="fragment_add_task"
         tools:layout="@layout/fragment_add_task" >
         <action
@@ -71,7 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/newTaskFragment"
-        android:name="com.example.myapplication.NewTaskFragment"
+        android:name="com.example.janus.NewTaskFragment"
         android:label="fragment_new_task"
         tools:layout="@layout/fragment_new_task" >
         <action
@@ -82,12 +95,12 @@
     </fragment>
     <fragment
         android:id="@+id/importTaskFragment"
-        android:name="com.example.myapplication.ImportTaskFragment"
+        android:name="com.example.janus.ImportTaskFragment"
         android:label="fragment_import_task"
         tools:layout="@layout/fragment_import_task" />
     <fragment
         android:id="@+id/logScreenFragment"
-        android:name="com.example.myapplication.logScreenFragment"
+        android:name="com.example.janus.logScreenFragment"
         android:label="fragment_log_screen"
         tools:layout="@layout/fragment_log_screen" >
         <action
@@ -103,7 +116,7 @@
 
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.example.myapplication.ForgotPasswordFragment"
+        android:name="com.example.janus.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" >
         <action
@@ -112,7 +125,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgotEmailFragment"
-        android:name="com.example.myapplication.ForgotEmailFragment"
+        android:name="com.example.janus.ForgotEmailFragment"
         android:label="fragment_forgot_email"
         tools:layout="@layout/fragment_forgot_email" >
         <action
@@ -121,7 +134,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerScreenFragment"
-        android:name="com.example.myapplication.RegisterScreenFragment"
+        android:name="com.example.janus.RegisterScreenFragment"
         android:label="fragment_register_screen"
         tools:layout="@layout/fragment_register_screen" >
         <action
@@ -131,7 +144,7 @@
     </fragment>
     <fragment
         android:id="@+id/regCompleteFragment"
-        android:name="com.example.myapplication.RegCompleteFragment"
+        android:name="com.example.janus.RegCompleteFragment"
         android:label="fragment_reg_complete"
         tools:layout="@layout/fragment_reg_complete" >
         <action
@@ -142,7 +155,7 @@
     </fragment>
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.myapplication.MenuFragment"
+        android:name="com.example.janus.MenuFragment"
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" >
         <action
@@ -154,7 +167,7 @@
     </fragment>
     <fragment
         android:id="@+id/startFragment"
-        android:name="com.example.myapplication.StartFragment"
+        android:name="com.example.janus.StartFragment"
         android:label="fragment_start"
         tools:layout="@layout/fragment_start" >
         <action
@@ -165,11 +178,18 @@
     </fragment>
     <fragment
         android:id="@+id/chatInstanceFragment"
-        android:name="com.example.myapplication.ChatInstanceFragment"
+        android:name="com.example.janus.ChatInstanceFragment"
         android:label="fragment_chat_instance"
         tools:layout="@layout/fragment_chat_instance" />
     <fragment
         android:id="@+id/editTaskFragment"
-        android:name="com.example.myapplication.EditTaskFragment"
-        android:label="EditTaskFragment" />
+        android:name="com.example.janus.EditTaskFragment"
+        android:label="EditTaskFragment" >
+        <action
+            android:id="@+id/action_editTaskFragment_to_taskDetailsFragment"
+            app:destination="@id/taskDetailsFragment" />
+        <action
+            android:id="@+id/action_editTaskFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
 </navigation>

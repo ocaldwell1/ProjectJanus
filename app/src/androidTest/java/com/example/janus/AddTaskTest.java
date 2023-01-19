@@ -4,6 +4,8 @@ import static androidx.test.espresso.action.ViewActions.*;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
 
+import static org.hamcrest.CoreMatchers.anything;
+
 import android.os.SystemClock;
 
 import androidx.fragment.app.testing.FragmentScenario;
@@ -49,12 +51,12 @@ public class AddTaskTest extends TestCase {
 
         };
         //attempts to fill in values for new task and click save
-        onView((withId(R.id.newTaskTaskNameEditText))).perform(typeText("TestTask"));
-        onView(withId(R.id.newTaskSourceEditText)).perform(typeText("TestSource"));
+        onView(withId(R.id.newTaskNotesEditText)).perform(click()).perform(typeText("TestNotes"));
+        onView(withId(R.id.newTaskDueDateEditText)).perform(click()).perform(typeText("01/01/2100"));
+        onView((withId(R.id.newTaskTaskNameEditText))).perform(click()).perform(typeText("TestTask"));
+        onView(withId(R.id.newTaskSourceEditText)).perform(click()).perform(typeText("TestSource"));
         onView(withId(R.id.newTaskWeightSpinner)).perform(click());
-        onData(withId(R.id.newTaskWeightSpinner)).atPosition(1).perform(click());
-        onView(withId(R.id.newTaskDueDateEditText)).perform(typeText("01/01/2100"));
-        onView(withId(R.id.newTaskNotesEditText)).perform(typeText("TestNotes"));
+        onData(anything()).atPosition(1).perform(click());
         onView((withId(R.id.newTaskSaveButton))).perform(click());
 
     }

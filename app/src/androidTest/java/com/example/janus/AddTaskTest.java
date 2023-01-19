@@ -3,6 +3,9 @@ import static androidx.test.espresso.Espresso.*;
 import static androidx.test.espresso.action.ViewActions.*;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
+
+import android.os.SystemClock;
+
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.test.espresso.ViewAssertion;
 import  androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -25,26 +28,27 @@ public class AddTaskTest extends TestCase {
         onView(withId(R.id.startFragmentStartButton)).perform(click());
 
         // attempts to make sure right view is displayed, if not throws error
-        /*try{
+        try{
             onView((withId(R.id.taskFragmentAddTaskButton))).check(matches(isDisplayed()));
         } catch (AssertionFailedError e) {
 
-        };*/
+        };
         //clicks add task button
-       onData(withId(R.id.taskFragmentAddTaskButton)).perform(click());
-       //Thread.sleep(500);
-        /*try {
-            onData((withId(R.id.addTaskNewTaskButton))).check(matches(isDisplayed()));
+        SystemClock.sleep(2000);
+       onView(withId(R.id.taskFragmentAddTaskButton)).perform(click());
+        try {
+            onView((withId(R.id.addTaskNewTaskButton))).check(matches(isDisplayed()));
         } catch (AssertionFailedError e) {
 
-        };*/
+        };
         //clicks new task button
-        onView(withId(R.id.addTaskNewTaskButton)).perform(scrollTo(),click());
+        onView(withId(R.id.addTaskNewTaskButton)).perform(click());
         try {
             onView((withId(R.id.newTaskSaveButton))).check(matches(isDisplayed()));
         } catch (AssertionFailedError e) {
 
         };
+        //attempts to fill in values for new task and click save
         onView((withId(R.id.newTaskTaskNameEditText))).perform(typeText("TestTask"));
         onView(withId(R.id.newTaskSourceEditText)).perform(typeText("TestSource"));
         onView(withId(R.id.newTaskWeightSpinner)).perform(click());

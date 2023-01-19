@@ -62,9 +62,9 @@
         android:text="Log Out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.175"
         app:layout_constraintStart_toStartOf="@+id/testText"
         app:layout_constraintTop_toTopOf="@+id/testText"
-        app:layout_constraintVertical_bias="0.976" />
+        app:layout_constraintVertical_bias="0.95" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

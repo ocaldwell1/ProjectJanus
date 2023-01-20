@@ -107,6 +107,16 @@ public class logScreenFragment extends Fragment {
 
     }
 
+    public String getLogInMessage(String message){
+        String msg;
+        if (message.equals("Logged In!")){
+            msg = "Success";
+        }else {
+            msg = "Failed";
+        }
+        return msg;
+    }
+
     public void loginNow() {
         String userEmail = logEmail.getText().toString().trim();
         String userPass = logPass.getText().toString().trim();
@@ -128,13 +138,17 @@ public class logScreenFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(getActivity(), "Logged in!", Toast.LENGTH_SHORT).show();
+                    String message = "Logged in!";
+                    getLogInMessage(message);
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                     // nav to log complete / upcoming assignments
                     MainActivity activity = (MainActivity) requireActivity();
                     activity.user = new User();
                     navController.navigate(R.id.action_logScreenFragment_to_taskFragment);
                 }else{
-                    Toast.makeText(getActivity(), "Error! Invalid Credentials!", Toast.LENGTH_SHORT).show();
+                    String message = "Error! Invalid Credentials!";
+                    getLogInMessage(message);
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                 }
             }
         });

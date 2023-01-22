@@ -162,6 +162,9 @@ public class EditTaskFragment extends Fragment {
         // add task
         //activity.user.addTask(newTask);
         Log.d(TAG, "Success: Modify Task");
+        activity.user.removeTask(currentTask.getTaskID());
+        activity.user.addTask(currentTask);
+        activity.user.sortTaskList();
         // TODO: Fix bug for navigating to details: Bundle Does not exist!
         Navigation.findNavController(view).navigate(R.id.action_editTaskFragment_to_taskFragment);
 

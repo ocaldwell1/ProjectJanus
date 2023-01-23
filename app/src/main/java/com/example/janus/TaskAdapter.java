@@ -41,7 +41,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         holder.name.setText(task.getTaskName());
         holder.name.setTextColor(task.getPriorityColor());
         Log.i("COLORS", "got color " + task.getPriorityColor());
-        holder.note.setText(task.getTaskNote());
+        try {
+            holder.note.setText("" + task.getPriority()); //TODO change this back
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
         holder.dueDate.setText(task.getTaskDueDate());
         holder.source.setText(task.getTaskSource());
     }

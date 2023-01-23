@@ -94,11 +94,24 @@ public class User {
                                 String notes = data.get("taskNote").toString();
                                 Task newTask = new Task(taskName, notes, weight, dueDate, taskSource);
                                 taskList.add(newTask);
+                                sortTaskList();
+                                Log.i("POSITION", "adding " + taskList.size());
                                 newTask.setTaskID(document.getId());
                             }
                         }
                     });
+            Log.i("POSITION", "about to sort");
             sortTaskList();
+            Log.i("POSITION", "test" + taskList.size());
+            try {
+                for (int i = 0; i < taskList.size(); i++) {
+                    Log.i("POSITION", ""+ i);
+                    Log.i("POSITION", "" + taskList.get(i).getPriority());
+                }
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -167,12 +180,9 @@ public class User {
     }
 
     public void addTask(Task task) {
-        Log.d(TAG, "Success: Added to Task FireStore 1 ");
         taskList.add(task);
         sortTaskList();
-        Log.d(TAG, "Success: Added to Task FireStore 2 ");
         task.addTaskToFireStore();
-        Log.d(TAG, "Success: Added to Task FireStore 3 ");
     }
 
     public void removeTask(String id) {

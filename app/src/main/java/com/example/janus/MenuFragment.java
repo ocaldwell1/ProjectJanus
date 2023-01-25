@@ -31,8 +31,8 @@ public class MenuFragment extends Fragment {
     private NavController navController;
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //private String mParam1;
+    //private String mParam2;
 
     public MenuFragment() {
         // Required empty public constructor
@@ -61,10 +61,11 @@ public class MenuFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
 
+        /**
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        } **/
     }
 
     @Override

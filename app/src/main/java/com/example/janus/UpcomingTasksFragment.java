@@ -28,9 +28,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class UpcomingTasksFragment extends Fragment implements ItemClickListener  {
-    //public class UpcomingTasksFragment extends  AppCompatActivity {
     private RecyclerView recyclerView;
-    //DatabaseReference database;
     private TaskAdapter taskAdapter;
     private ArrayList<Task> taskList;
     private NavController navController;
@@ -42,9 +40,6 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private Button addTaskButton;
     private Button logOutButton;
 
@@ -74,11 +69,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth.getInstance();
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        //taskList = new ArrayList<>();
+
         MainActivity activity = (MainActivity) requireActivity();
         taskList = activity.user.getTaskList();
     }
@@ -89,10 +80,6 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
 
         // Send the values of the current card to the next fragemnt
         Bundle bundle = new Bundle();
-        /**bundle.putString("taskName",taskSelected.getTaskName());
-         bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
-         bundle.putString("taskSource",taskSelected.getTaskSource());
-         bundle.putString("taskNotes",taskSelected.getTaskNote());**/
         bundle.putString("taskName",taskSelected.getTaskName());
         bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
         bundle.putString("taskSource",taskSelected.getTaskSource());
@@ -108,7 +95,6 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_task, container, false);
         return inflater.inflate(R.layout.fragment_task, container, false);
     }
 
@@ -123,7 +109,6 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         recyclerView.setAdapter(new TaskAdapter(taskList));
 
         // Add listeners to treat the item cards as buttonss
-
         taskAdapter = new TaskAdapter(taskList);
         recyclerView.setAdapter(taskAdapter);
         taskAdapter.setClickListener(this); // bind the listener

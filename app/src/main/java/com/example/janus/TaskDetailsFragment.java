@@ -26,9 +26,7 @@ public class TaskDetailsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2, taskID;
+    private String taskID;
     TextView titleNameView,taskSourceView,taskDueDateView,taskNotesView ;
 
     public TaskDetailsFragment() {
@@ -56,10 +54,6 @@ public class TaskDetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -105,10 +99,5 @@ public class TaskDetailsFragment extends Fragment {
             }
         });
         MainActivity activity = (MainActivity) requireActivity();
-        /**
-        User user = activity.user;
-        if(!user.isLoggedIn()){
-            navController.navigate(R.id.action_taskFragment_to_menuFragment);
-        }**/
     }
 }

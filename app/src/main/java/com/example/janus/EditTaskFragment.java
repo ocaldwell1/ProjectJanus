@@ -33,10 +33,6 @@ public class EditTaskFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    //private String mParam1;
-    //private String mParam2;
-
     private MainActivity activity;
     int position;
     ArrayList<Task> taskList;
@@ -44,6 +40,7 @@ public class EditTaskFragment extends Fragment {
     TextView titleNameView, taskSourceView,taskDueDateView,taskNotesView, taskWeightView;
     Spinner weightSpinner;
     Button saveButton;
+    User user;
     public EditTaskFragment() {
         // Required empty public constructor
     }
@@ -69,13 +66,6 @@ public class EditTaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /**
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-         **/
     }
 
     @Override
@@ -91,51 +81,36 @@ public class EditTaskFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        //final NavController navController = Navigation.findNavController(view);
         NavController navController = Navigation.findNavController(view);
-
-        /**
-        Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
-        addTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
-            }
-        }); **/
         activity = (MainActivity) requireActivity();
-        User user =  activity.user;
+        //User
+
+        // Get the current selected task
+        user =  activity.user;
         position = activity.user.getPosition();
         taskList = activity.user.getTaskList();
         currentTask = taskList.get(position);
 
-        //currentTask = taskList.get(0);
-
+        // Set title to Task name, Source, Weight, Due Date, Notes, Etc
         titleNameView = (TextView) view.findViewById(R.id.newTaskTaskNameEditText);
         titleNameView.setText(currentTask.getTaskName());
-        //titleNameView.setText(String.valueOf(taskList.size()));
-
         taskSourceView = (TextView) view.findViewById(R.id.newTaskSourceEditText);
         taskSourceView.setText(currentTask.getTaskSource());
-        //taskSourceView.setText(String.valueOf(position));
-             //newTaskWeightText
         taskDueDateView = (TextView) view.findViewById(R.id.newTaskDueDateEditText);
         taskDueDateView.setText(currentTask.getTaskDueDate());
-
         taskNotesView = (TextView) view.findViewById(R.id.newTaskNotesEditText);
         taskNotesView.setText(currentTask.getTaskNote());
-
         weightSpinner = view.findViewById(R.id.newTaskWeightSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.weights, android.R.layout.simple_spinner_item);
         weightSpinner.setAdapter(adapter);
         weightSpinner.setSelection(currentTask.getTaskWeight());
 
+        // Save button
         saveButton = (Button) view.findViewById(R.id.newTaskSaveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -148,28 +123,29 @@ public class EditTaskFragment extends Fragment {
                 }
             }
         });
+
+        // Check user logged in
         if(!user.isLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
         }
     }
-    public void modifyTaskAndNavigateBack(View view) {
-        this.currentTask.setName(titleNameView.getText().toString());
 
+    public void modifyTaskAndNavigateBack(View view) {
+        // Modify the current ask according to the values in the fields
+        this.currentTask.setName(titleNameView.getText().toString());
         this.currentTask.setSource(taskSourceView.getText().toString());
         this.currentTask.setWeight(Integer.parseInt(weightSpinner.getSelectedItem().toString()));
         this.currentTask.setDueDate(taskDueDateView.getText().toString());
         this.currentTask.setNote( taskNotesView.getText().toString());
-        //Task newTask = new Task(taskName, source, weight, dueDate, notes);
-        //Task newTask = new Task(taskName, notes, weight, dueDate,source);
-        //MainActivity activity = (MainActivity) requireActivity();
-        // add task
-        //activity.user.addTask(newTask);
         Log.d(TAG, "Success: Modify Task");
+
+        // [JMS] Why are we deleting the task, even though we have just directly modified it?
         activity.user.removeTask(currentTask.getTaskID());
         activity.user.addTask(currentTask);
         activity.user.sortTaskList();
+
         // TODO: Fix bug for navigating to details: Bundle Does not exist!
         Navigation.findNavController(view).navigate(R.id.action_editTaskFragment_to_taskFragment);
 
-         }
+    }
 }

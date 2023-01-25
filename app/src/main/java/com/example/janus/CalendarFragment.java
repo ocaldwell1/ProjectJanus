@@ -66,11 +66,10 @@ public class CalendarFragment extends Fragment {
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@androidx.annotation.NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                // [JMS] This could be more portable, we can define this
+                // [JMS] This might be more portable, we can define this
                 // somewhere else if it used frequently
                 String [] months = {"Jan.","Feb.","March","April","May","June","July","Aug.","Sept.","Oct.","Nov.","Dec."};
                 m = months[month];
-
                 date = m + " " + dayOfMonth + ", " + year;
 
                 bundle.putString("selectedDay", date);

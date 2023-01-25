@@ -35,9 +35,6 @@ public class ChatPageFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    //private String mParam1;
-    //private String mParam2;
     private RecyclerView recyclerView;
     private ArrayList<User> users;
     private ProgressBar progressBar;
@@ -70,14 +67,6 @@ public class ChatPageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /**
-         * [JMS] removed
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-         **/
     }
 
     @Override

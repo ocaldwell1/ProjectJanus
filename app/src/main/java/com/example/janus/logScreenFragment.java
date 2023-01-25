@@ -33,10 +33,6 @@ public class logScreenFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    //private String mParam1;
-    //private String mParam2;
     private TextView login;
     private TextView forgotPass;
     private EditText logEmail, logPass;
@@ -70,12 +66,6 @@ public class logScreenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-
-        /**
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        } **/
     }
 
     @Override
@@ -125,16 +115,13 @@ public class logScreenFragment extends Fragment {
 
         if(userEmail.isEmpty()){
             logEmail.setError("Email required!");
-            //return;
         }else if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()){
             logEmail.setError("Email is not valid!");
             logEmail.requestFocus();
-            //return;
         }
         if(userPass.isEmpty() || userPass.length() < 8){
             logPass.setError("Password length needs to be at least 8 characters");
             logPass.requestFocus();
-            return;
         }
         mAuth.signInWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

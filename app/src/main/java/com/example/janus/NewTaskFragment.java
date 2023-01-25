@@ -31,9 +31,6 @@ public class NewTaskFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    // private String mParam1;
-    // private String mParam2;
     private EditText taskNameEditText;
     private EditText sourceEditText;
     private Spinner weightSpinner;
@@ -66,12 +63,6 @@ public class NewTaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /**
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        } **/
     }
 
     @Override
@@ -105,6 +96,9 @@ public class NewTaskFragment extends Fragment {
     }
 
     public void saveTaskAndNavigateBack(View view) {
+        /**
+         * Saves the current task filled in the form and returns to the main menu page home
+         */
         String taskName = taskNameEditText.getText().toString();
         String source = sourceEditText.getText().toString();
         int weight = Integer.parseInt(weightSpinner.getSelectedItem().toString());

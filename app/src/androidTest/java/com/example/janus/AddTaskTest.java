@@ -10,6 +10,7 @@ import android.os.SystemClock;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.test.espresso.ViewAssertion;
+import androidx.test.espresso.action.ViewActions;
 import  androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import  androidx.test.filters.LargeTest;
@@ -60,7 +61,7 @@ public class AddTaskTest extends TestCase {
         onView((withId(R.id.newTaskTaskNameEditText))).perform(click()).perform(typeText("TestTask"));
         onView(withId(R.id.newTaskSourceEditText)).perform(click()).perform(typeText("TestSource"));
         onView(withId(R.id.newTaskWeightSpinner)).perform(click());
-        onData(anything()).atPosition(1).perform(click());
+        onData(anything()).atPosition(1).perform(click(), ViewActions.closeSoftKeyboard());
         onView((withId(R.id.newTaskSaveButton))).perform( click());
         SystemClock.sleep(2000);
        // try {

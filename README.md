@@ -11,14 +11,16 @@ In order to build this project, you will have to install:
 TBD
 
 ## Running
-[TBD]
+Run via Android Studio emulator
 
 # Deployment
 .apk Distribution
 
 # Testing
 To run unit tests for a class, open its related test class in Android Studio in "Janus/app/src/test/java/com/example/janus".
+
 Behavioral tests are located in "Janus/app/src/androidTest/java/com/example/janus".
+
 When the test class is open in Android Studio, click the green run button in the top right corner.
 
 ## Testing Technology

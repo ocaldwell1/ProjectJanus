@@ -36,6 +36,9 @@
         android:name="com.example.janus.CalendarDayFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" >
+        <action
+        android:id="@+id/action_calendarDayFragment_to_taskDetailsFragment"
+        app:destination="@id/taskDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"

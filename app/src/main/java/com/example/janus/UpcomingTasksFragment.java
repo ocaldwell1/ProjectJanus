@@ -89,6 +89,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         activity = (MainActivity) requireActivity();
         User user = activity.user;
         activity.user.setPosition(position);
+        //delete these three lines?
     }
 
     @Override
@@ -103,7 +104,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
         logOutButton = (Button) view.findViewById(R.id.taskFragmentLogOutButton);
         recyclerView = view.findViewById(R.id.taskRecyclerView);
-        recyclerView = view.findViewById(R.id.taskRecyclerView);
+        recyclerView = view.findViewById(R.id.taskRecyclerView); //duplicate
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(new TaskAdapter(taskList));

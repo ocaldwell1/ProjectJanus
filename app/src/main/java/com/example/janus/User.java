@@ -32,16 +32,9 @@ public class User {
     private DocumentReference documentReference;
     private ArrayList <Task> taskList;
     private int taskPosition;
+    private static User user;
 
-    public User(String first, String last, String email, String id){
-        this.firstName = first;
-        this.lastName = last;
-        this.email = email;
-        this.id = id;
-        this.taskPosition = 0;
-    }
-
-    public User() {
+    private User() {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         fUser = mAuth.getCurrentUser();
@@ -94,10 +87,10 @@ public class User {
                                 String notes = data.get("taskNote").toString();
                                 Task newTask = new Task(taskName, notes, weight, dueDate, taskSource);
                                 taskList.add(newTask);
-                                sortTaskList();
                                 Log.i("POSITION", "adding " + taskList.size());
                                 newTask.setTaskID(document.getId());
                             }
+                            sortTaskList();
                         }
                     });
             Log.i("POSITION", "about to sort");
@@ -113,6 +106,13 @@ public class User {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static User getInstance() {
+        if(user == null) {
+            user = new User();
+        }
+        return user;
     }
 
     public void sortTaskList() {
@@ -146,22 +146,6 @@ public class User {
     }
     public String getID(){
         return this.id;
-    }
-    public void addUserToFireStore(String firstName, String lastName, String email, String id){
-        db = FirebaseFirestore.getInstance();
-
-        documentReference = db.collection("User").document(id);
-        Map<String, Object> user = new HashMap<>();
-        user.put("userFirstName", firstName);
-        user.put("userLastName", lastName);
-        user.put("userEmail", email);
-        user.put("userID", id);
-        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Log.d(TAG, "Success: Added to FireStore");
-            }
-        });
     }
 
     public void removeUserFromFireStore(User fsUser){

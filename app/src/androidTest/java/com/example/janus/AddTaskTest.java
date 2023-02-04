@@ -8,7 +8,7 @@ import static org.hamcrest.CoreMatchers.anything;
 
 import android.os.SystemClock;
 
-import androidx.fragment.app.testing.FragmentScenario;
+//import androidx.fragment.app.testing.FragmentScenario;
 import androidx.test.espresso.ViewAssertion;
 import  androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;

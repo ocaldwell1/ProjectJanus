@@ -3,7 +3,6 @@ package com.example.janus;
 import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -13,13 +12,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,5 +97,42 @@ public class FireDataReader {
             });
         }
         return userData;
+    }
+
+    public ArrayList<com.example.janus.Task> getTaskList() {
+        ArrayList<com.example.janus.Task> taskList = new ArrayList<>();
+        db.collection("Task").whereEqualTo("userID", fUser.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+                        for(QueryDocumentSnapshot document : task.getResult()) {
+                            Map<String, Object> data = document.getData();
+                            String taskName = data.get("taskName").toString();
+                            String taskSource = data.get("taskSource").toString();
+                            int weight = Math.toIntExact( (Long) data.get("taskWeight"));
+                            String dueDate = data.get("taskDueDate").toString();
+                            String notes = data.get("taskNote").toString();
+                            com.example.janus.Task newTask = new com.example.janus.Task(taskName, notes, weight, dueDate, taskSource);
+                            taskList.add(newTask);
+                            Log.i("POSITION", "adding " + taskList.size());
+                            newTask.setTaskID(document.getId());
+                        }
+                        User.sortTaskList(taskList);
+                    }
+                });
+        Log.i("POSITION", "about to sort");
+        User.sortTaskList(taskList);
+        Log.i("POSITION", "test" + taskList.size());
+        try {
+            for (int i = 0; i < taskList.size(); i++) {
+                Log.i("POSITION", ""+ i);
+                Log.i("POSITION", "" + taskList.get(i).getPriority());
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return taskList;
     }
 }

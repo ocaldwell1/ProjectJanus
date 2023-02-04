@@ -132,7 +132,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
                 navController.navigate(R.id.action_taskFragment_to_menuFragment);
             }
         });
-        if(!user.isLoggedIn()){
+        if(user.isNotLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
         }
     }

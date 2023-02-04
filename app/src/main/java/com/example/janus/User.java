@@ -28,6 +28,7 @@ public class User {
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
     private FirebaseFirestore db;
+    private FireDataReader fireDataReader;
     private CollectionReference dbc;
     private DocumentReference documentReference;
     private ArrayList <Task> taskList;
@@ -38,78 +39,52 @@ public class User {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         fUser = mAuth.getCurrentUser();
-
+        fireDataReader = FireDataReader.getInstance();
         taskList = new ArrayList<Task>();
-        this.taskPosition = 0;
+        Map<String, Object> userData = fireDataReader.getUserData();
+        firstName = (String) userData.get("firstName");
+        lastName = (String) userData.get("firstName");
+        email = (String) userData.get("email");
+        id = (String) userData.get("id");
 
-        if (fUser != null){
-            String userID = fUser.getUid();
-            DocumentReference documentReference = db.collection("User").document(userID);
-            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
-                    if(task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if(document.exists()) {
-                            Map<String, Object> user = document.getData();
-                            firstName = (String) user.get("userFirstName");
-                            lastName = (String) user.get("userLastName");
-                            email = (String) user.get("userEmail");
-                            id = (String) user.get("userID");
-
-                            Log.d(TAG, "Success: " + firstName);
-
-                            // add taskList functions
-                            /* for(QueryDocumentSnapshot document : task.getResult()) {
-                            String taskName = data.get("taskName");
-                            etc
-                            Task newTask = new Task(taskName, taskSource, etc.);
+        //Remove this once we make TaskList class
+        db.collection("Task").whereEqualTo("userID", id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+                        for(QueryDocumentSnapshot document : task.getResult()) {
+                            Map<String, Object> data = document.getData();
+                            String taskName = data.get("taskName").toString();
+                            String taskSource = data.get("taskSource").toString();
+                            int weight = Math.toIntExact( (Long) data.get("taskWeight"));
+                            String dueDate = data.get("taskDueDate").toString();
+                            String notes = data.get("taskNote").toString();
+                            Task newTask = new Task(taskName, notes, weight, dueDate, taskSource);
                             taskList.add(newTask);
-                            }
+                            Log.i("POSITION", "adding " + taskList.size());
+                            newTask.setTaskID(document.getId());
                         }
-                        */
-                        }
+                        sortTaskList();
                     }
-                }
-            });
-
-            db.collection("Task").whereEqualTo("userID", userID)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
-                            for(QueryDocumentSnapshot document : task.getResult()) {
-                                Map<String, Object> data = document.getData();
-                                String taskName = data.get("taskName").toString();
-                                String taskSource = data.get("taskSource").toString();
-                                int weight = Math.toIntExact( (Long) data.get("taskWeight"));
-                                String dueDate = data.get("taskDueDate").toString();
-                                String notes = data.get("taskNote").toString();
-                                Task newTask = new Task(taskName, notes, weight, dueDate, taskSource);
-                                taskList.add(newTask);
-                                Log.i("POSITION", "adding " + taskList.size());
-                                newTask.setTaskID(document.getId());
-                            }
-                            sortTaskList();
-                        }
-                    });
-            Log.i("POSITION", "about to sort");
-            sortTaskList();
-            Log.i("POSITION", "test" + taskList.size());
-            try {
-                for (int i = 0; i < taskList.size(); i++) {
-                    Log.i("POSITION", ""+ i);
-                    Log.i("POSITION", "" + taskList.get(i).getPriority());
-                }
+                });
+        Log.i("POSITION", "about to sort");
+        sortTaskList();
+        Log.i("POSITION", "test" + taskList.size());
+        try {
+            for (int i = 0; i < taskList.size(); i++) {
+                Log.i("POSITION", ""+ i);
+                Log.i("POSITION", "" + taskList.get(i).getPriority());
             }
-            catch(Exception e){
-                e.printStackTrace();
-            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
         }
     }
 
     public static User getInstance() {
-        if(user == null) {
+        FireDataReader fireDataReader = FireDataReader.getInstance();
+        if(fireDataReader.hasUser()) {
             user = new User();
         }
         return user;
@@ -159,8 +134,8 @@ public class User {
         user.remove("userID");
     }
 
-    public boolean isLoggedIn(){
-        return fUser != null;
+    public static boolean isLoggedIn(){
+        return FireDataReader.getInstance().hasUser();
     }
 
     public void addTask(Task task) {

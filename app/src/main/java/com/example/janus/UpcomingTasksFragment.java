@@ -70,8 +70,8 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         super.onCreate(savedInstanceState);
         mAuth.getInstance();
 
-        MainActivity activity = (MainActivity) requireActivity();
-        taskList = activity.user.getTaskList();
+        User user = User.getInstance();
+        taskList = user.getTaskList();
     }
     @Override
     public void onClick(View view, int position) {
@@ -87,8 +87,8 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         bundle.putString("taskID",taskSelected.getTaskID());
         Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_taskDetailsFragment,bundle);
         activity = (MainActivity) requireActivity();
-        User user = activity.user;
-        activity.user.setPosition(position);
+        User user = User.getInstance();
+        user.setPosition(position);
         //delete these three lines?
     }
 
@@ -114,9 +114,8 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         recyclerView.setAdapter(taskAdapter);
         taskAdapter.setClickListener(this); // bind the listener
 
-        activity = (MainActivity) requireActivity();
-        User user = activity.user;
-        activity.user.setPosition(recyclerView.getChildAdapterPosition(recyclerView.getFocusedChild()));
+        User user = User.getInstance();
+        user.setPosition(recyclerView.getChildAdapterPosition(recyclerView.getFocusedChild()));
         //final NavController navController = Navigation.findNavController(view);
         NavController navController = Navigation.findNavController(view);
         addTaskButton.setOnClickListener(new View.OnClickListener() {

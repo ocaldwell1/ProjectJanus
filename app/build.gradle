@@ -28,6 +28,7 @@ android {
         animationsDisabled = true
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -59,6 +60,7 @@ dependencies {
     debugImplementation 'androidx.test:core-ktx:1.5.0'
     debugImplementation 'androidx.fragment:fragment-testing:1.5.5'
     implementation 'com.google.firebase:firebase-database:19.7.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
 }
 configurations.all {
     resolutionStrategy.dependencySubstitution {

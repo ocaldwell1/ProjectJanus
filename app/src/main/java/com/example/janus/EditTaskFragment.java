@@ -35,7 +35,7 @@ public class EditTaskFragment extends Fragment {
 
     private MainActivity activity;
     int position;
-    ArrayList<Task> taskList;
+    TaskList taskList;
     Task currentTask;
     TextView titleNameView, taskSourceView,taskDueDateView,taskNotesView, taskWeightView;
     Spinner weightSpinner;
@@ -93,22 +93,22 @@ public class EditTaskFragment extends Fragment {
         // Get the current selected task
         user = User.getInstance();
         position = user.getPosition();
-        taskList = user.getTaskList();
+        taskList = TaskList.getInstance();
         currentTask = taskList.get(position);
 
         // Set title to Task name, Source, Weight, Due Date, Notes, Etc
         titleNameView = (TextView) view.findViewById(R.id.newTaskTaskNameEditText);
-        titleNameView.setText(currentTask.getTaskName());
+        titleNameView.setText(currentTask.getName());
         taskSourceView = (TextView) view.findViewById(R.id.newTaskSourceEditText);
-        taskSourceView.setText(currentTask.getTaskSource());
+        taskSourceView.setText(currentTask.getSource());
         taskDueDateView = (TextView) view.findViewById(R.id.newTaskDueDateEditText);
-        taskDueDateView.setText(currentTask.getTaskDueDate());
+        taskDueDateView.setText(currentTask.getDueDate());
         taskNotesView = (TextView) view.findViewById(R.id.newTaskNotesEditText);
-        taskNotesView.setText(currentTask.getTaskNote());
+        taskNotesView.setText(currentTask.getNote());
         weightSpinner = view.findViewById(R.id.newTaskWeightSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.weights, android.R.layout.simple_spinner_item);
         weightSpinner.setAdapter(adapter);
-        weightSpinner.setSelection(currentTask.getTaskWeight());
+        weightSpinner.setSelection(currentTask.getWeight());
 
         // Save button
         saveButton = (Button) view.findViewById(R.id.newTaskSaveButton);
@@ -125,24 +125,21 @@ public class EditTaskFragment extends Fragment {
         });
 
         // Check user logged in
-        if(user.isNotLoggedIn()){
+        if(User.isNotLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
         }
     }
 
     public void modifyTaskAndNavigateBack(View view) {
         // Modify the current ask according to the values in the fields
-        this.currentTask.setName(titleNameView.getText().toString());
-        this.currentTask.setSource(taskSourceView.getText().toString());
-        this.currentTask.setWeight(Integer.parseInt(weightSpinner.getSelectedItem().toString()));
-        this.currentTask.setDueDate(taskDueDateView.getText().toString());
-        this.currentTask.setNote( taskNotesView.getText().toString());
+        String newName = titleNameView.getText().toString();
+        String newSource = taskSourceView.getText().toString();
+        int newWeight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
+        String newDueDate = taskDueDateView.getText().toString();
+        String newNote = taskNotesView.getText().toString();
+        TaskList taskList = TaskList.getInstance();
+        taskList.editTask(currentTask.getId(), newName, newSource, newWeight, newDueDate, newNote);
         Log.d(TAG, "Success: Modify Task");
-
-        // [JMS] Why are we deleting the task, even though we have just directly modified it?
-        user.removeTask(currentTask.getTaskID());
-        user.addTask(currentTask);
-        User.sortTaskList(taskList);
 
         // TODO: Fix bug for navigating to details: Bundle Does not exist!
         Navigation.findNavController(view).navigate(R.id.action_editTaskFragment_to_taskFragment);

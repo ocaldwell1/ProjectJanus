@@ -40,7 +40,7 @@ public class ChatFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private String usernameOfRoommate, emailOfRoomate, chatroomId;
+    private String usernameOfRoommate, emailOfRoommate, chatroomId;
     private RecyclerView recyclerView;
     private EditText messageInput;
     private TextView chattingWith;
@@ -80,8 +80,8 @@ public class ChatFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
             Bundle bundle = this.getArguments();
             if(bundle != null) {
-                emailOfRoomate = bundle.getString("email_of_roomate", "unknown");
-                usernameOfRoommate = bundle.getString("name_of_roomate", "unknown");
+                emailOfRoommate = bundle.getString("email_of_roommate", "unknown");
+                usernameOfRoommate = bundle.getString("name_of_roommate", "unknown");
             }
         }
     }
@@ -95,8 +95,6 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //initializes variables to respective xml layout counterparts
-       // usernameOfRoommate = getActivity().getIntent().getStringExtra("username_of_roomate");
-        //emailOfRoomate = getActivity().getIntent().getStringExtra("email_of_roommate");
         recyclerView = view.findViewById(R.id.recyclerchat);
         messageInput = view.findViewById(R.id.editMessageInput);
         chattingWith = view.findViewById(R.id.ChattingWith);
@@ -115,7 +113,7 @@ public class ChatFragment extends Fragment {
             public void onClick(View view) {
                 FirebaseFirestore.getInstance().collection("messages")
                        .document(chatroomId).set(new Message(FirebaseAuth.getInstance().getCurrentUser()
-                                .getEmail(), emailOfRoomate, messageInput.getText().toString()
+                                .getEmail(), emailOfRoommate, messageInput.getText().toString()
                         ));
                 messageInput.setText(""); //clears previous message after send
             }
@@ -134,7 +132,7 @@ public class ChatFragment extends Fragment {
                     @Override
                     public void onEvent(@androidx.annotation.Nullable DocumentSnapshot value,
                                         @androidx.annotation.Nullable FirebaseFirestoreException error) {
-                        String myUsername = value.getString("userFirstName");
+                        String myUsername = FirebaseAuth.getInstance().getCurrentUser().toString();
                         if(usernameOfRoommate == null && myUsername == null)
                             chatroomId = "0";
                         else if(myUsername == null)

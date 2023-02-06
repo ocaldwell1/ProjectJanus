@@ -31,7 +31,6 @@
             android:id="@+id/messageContents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="This is chat bubble , still needs work"
             android:maxWidth="200dp"
             android:padding="8dp"
             android:layout_marginHorizontal="9dp"

@@ -37,7 +37,8 @@ public class ChatPageAdapter extends RecyclerView.Adapter<ChatPageAdapter.ChatPa
 
     @Override
     public void onBindViewHolder(@androidx.annotation.NonNull ChatPageHolder holder, int position) {
-        holder.holder_username.setText(users.get(position).getFirstName());
+            holder.holder_username.setText(users.get(position).getFirstName());
+
     }
 
     @Override

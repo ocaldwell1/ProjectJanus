@@ -97,9 +97,6 @@ public class ChatPageFragment extends Fragment {
                 fragment.setArguments(bundle);
 
                 Navigation.findNavController(view).navigate(R.id.action_chatPageFragment_to_chatFragment) ;
-                //startActivity(new Intent(ChatPageFragment.this, ChatFragment.class).putExtra("name_of" +
-                             //   "_roommate", users.get(position).getFirstName())
-                       // .putExtra("email_of_roommate", users.get(position).getEmail()));
 
             }
         };
@@ -107,16 +104,19 @@ public class ChatPageFragment extends Fragment {
     }
     private void getUsers(){
         //use if arraylist becomes duplicated after each start of app
-        // users.clear();
+        users.clear();
 
         // supposed to get users from database and convert to user class to add to array list of users
         FirebaseFirestore.getInstance().collection("User").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@androidx.annotation.Nullable QuerySnapshot value, @androidx.annotation.Nullable FirebaseFirestoreException error) {
-                for(DocumentSnapshot querySnapshot: value.getDocuments()) {
-                    //appears to get correct # of users for displaying list, but cannot extract user info?
-                    //maybe try new user constructor with .add method?
-                    users.add(querySnapshot.toObject(User.class));
+                assert value != null;
+                for(int i = 0; i < value.getDocuments().size(); i++) {
+                    //first method produced errors, new one seems to solve issues
+                   // users.add(querySnapshot.toObject(User.class));
+                    users.add(new User(value.getDocuments().get(i).getString("userFirstName"),value.getDocuments().get(i).getString("userFirstName")                            ,  value.getDocuments().get(i).getString("userFirstName"),
+                            value.getDocuments().get(i).getString("userFirstName")));
+
                 }
                 chatPageAdapter = new ChatPageAdapter(users,getActivity(), onUserClickListener);
                 recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));

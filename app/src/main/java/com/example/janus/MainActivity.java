@@ -18,7 +18,6 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    public User user;
     private FirebaseAuth mAuth;
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
@@ -50,10 +49,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = new User();
-        if (user != null) {
-            Log.i("MAIN", "" + user.isLoggedIn());
-        }
         setContentView(R.layout.activity_main);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);

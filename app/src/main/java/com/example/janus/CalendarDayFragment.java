@@ -37,7 +37,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     private ArrayList<Task> taskList;
     private NavController navController;
     private MainActivity activity;
-
+    User user;
     public CalendarDayFragment() {
         // Required empty public constructor
     }
@@ -60,8 +60,13 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        activity = (MainActivity) requireActivity();
-        taskList = activity.user.getTaskList();
+       // user = User.getInstance();
+        ////activity = (MainActivity) requireActivity();
+       // taskList = activity.user.getTaskList();
+
+       // user = User.getInstance();
+      //  position = user.getPosition();
+       // taskList = user.getTaskList();
     }
 
     @Override
@@ -100,7 +105,9 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
         bundle.putString("taskNotes",taskSelected.getTaskNote());
         bundle.putString("taskID",taskSelected.getTaskID());
         Navigation.findNavController(view).navigate(R.id.action_calendarDayFragment_to_taskDetailsFragment,bundle);
-        activity = (MainActivity) requireActivity();
-        activity.user.setPosition(position);
+        //activity = (MainActivity) requireActivity();
+        user = User.getInstance();
+        user.setPosition(position);
+        //activity.user.setPosition(position);
     }
 }

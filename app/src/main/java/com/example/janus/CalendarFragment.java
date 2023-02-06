@@ -47,6 +47,8 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private ArrayList<String> taskDates;
     private ArrayList<Integer> colorCodes;
 
+    User user;
+
     public CalendarFragment() {
         // Required empty public constructor
     }
@@ -68,8 +70,11 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MainActivity activity = (MainActivity) requireActivity();
-        taskList = activity.user.getTaskList();
+
+
+        user = User.getInstance();
+        //MainActivity activity = (MainActivity) requireActivity();
+       // taskList = activity.user.getTaskList();
     }
 
     @Override
@@ -107,7 +112,8 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     public ArrayList<String> taskDueDates() {
         // grabbing user task list and adding the due date tasks to array list
         MainActivity activity = (MainActivity) requireActivity();
-        taskList = activity.user.getTaskList();
+        //taskList = activity.user.getTaskList();
+        taskList = user.getTaskList();
         ArrayList<String> dates = new ArrayList<>();
         for (int i = 0; i < taskList.size(); i++) {
             Task task = taskList.get(i);
@@ -120,8 +126,11 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     // creates array of task colors
     public ArrayList<Integer> taskColorCodes() {
         // grabbing user task list and adding the priority color of tasks to array list
+
+        user = User.getInstance();
         MainActivity activity = (MainActivity) requireActivity();
-        taskList = activity.user.getTaskList();
+        //taskList = activity.user.getTaskList();
+        taskList = user.getTaskList();
         ArrayList<Integer> codes = new ArrayList<>();
         for (int i = 0; i < taskList.size(); i++) {
             Task task = taskList.get(i);

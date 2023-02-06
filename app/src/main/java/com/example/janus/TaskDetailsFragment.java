@@ -92,12 +92,11 @@ public class TaskDetailsFragment extends Fragment {
         deleteTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity activity = (MainActivity) requireActivity();
+                User user = User.getInstance();
                 // remove
-                activity.user.removeTask(taskID);
+                user.removeTask(taskID);
                 navController.navigate(R.id.action_taskDetailsFragment_to_taskFragment);
             }
         });
-        MainActivity activity = (MainActivity) requireActivity();
     }
 }

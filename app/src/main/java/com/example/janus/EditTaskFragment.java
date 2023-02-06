@@ -91,9 +91,9 @@ public class EditTaskFragment extends Fragment {
         //User
 
         // Get the current selected task
-        user =  activity.user;
-        position = activity.user.getPosition();
-        taskList = activity.user.getTaskList();
+        user = User.getInstance();
+        position = user.getPosition();
+        taskList = user.getTaskList();
         currentTask = taskList.get(position);
 
         // Set title to Task name, Source, Weight, Due Date, Notes, Etc
@@ -125,7 +125,7 @@ public class EditTaskFragment extends Fragment {
         });
 
         // Check user logged in
-        if(!user.isLoggedIn()){
+        if(user.isNotLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
         }
     }
@@ -140,9 +140,9 @@ public class EditTaskFragment extends Fragment {
         Log.d(TAG, "Success: Modify Task");
 
         // [JMS] Why are we deleting the task, even though we have just directly modified it?
-        activity.user.removeTask(currentTask.getTaskID());
-        activity.user.addTask(currentTask);
-        activity.user.sortTaskList();
+        user.removeTask(currentTask.getTaskID());
+        user.addTask(currentTask);
+        User.sortTaskList(taskList);
 
         // TODO: Fix bug for navigating to details: Bundle Does not exist!
         Navigation.findNavController(view).navigate(R.id.action_editTaskFragment_to_taskFragment);

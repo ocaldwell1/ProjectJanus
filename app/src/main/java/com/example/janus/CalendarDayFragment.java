@@ -1,11 +1,16 @@
 package com.example.janus;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,20 +19,25 @@ import android.widget.TextView;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CalendarDayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CalendarDayFragment extends Fragment {
+public class CalendarDayFragment extends Fragment implements ItemClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private TextView date;
+    private RecyclerView taskView;
+    private ArrayList<Task> taskList;
     private NavController navController;
-
+    private MainActivity activity;
+    User user;
     public CalendarDayFragment() {
         // Required empty public constructor
     }
@@ -49,6 +59,14 @@ public class CalendarDayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+       // user = User.getInstance();
+        ////activity = (MainActivity) requireActivity();
+       // taskList = activity.user.getTaskList();
+
+       // user = User.getInstance();
+      //  position = user.getPosition();
+       // taskList = user.getTaskList();
     }
 
     @Override
@@ -58,11 +76,38 @@ public class CalendarDayFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_calendar_day, container, false);
     }
 
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(view);
         date = (TextView) view.findViewById(R.id.calendarDayTextView);
+        taskView = view.findViewById(R.id.calendarDayTaskRecyclerView);
         // null object ref error
         date.setText(getArguments().getString("selectedDay"));
+        String dateSelected = getArguments().getString("selectedDay");
 
+        taskView.setHasFixedSize(true);
+        taskView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        taskView.setAdapter(new CalendarDayTaskAdapter(taskList, dateSelected));
+
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        // The onClick implementation of the RecyclerView item click
+        final Task taskSelected = taskList.get(position);
+
+        // Send the values of the current card to the next fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("taskName",taskSelected.getTaskName());
+        bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
+        bundle.putString("taskSource",taskSelected.getTaskSource());
+        bundle.putString("taskNotes",taskSelected.getTaskNote());
+        bundle.putString("taskID",taskSelected.getTaskID());
+        Navigation.findNavController(view).navigate(R.id.action_calendarDayFragment_to_taskDetailsFragment,bundle);
+        //activity = (MainActivity) requireActivity();
+        user = User.getInstance();
+        user.setPosition(position);
+        //activity.user.setPosition(position);
     }
 }

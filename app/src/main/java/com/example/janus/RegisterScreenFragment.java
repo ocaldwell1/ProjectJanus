@@ -134,8 +134,8 @@ public class RegisterScreenFragment extends Fragment {
                 Toast.makeText(getActivity(), "Successfully Registered!", Toast.LENGTH_SHORT).show();
                 // add user to fireStore function from User class
                 userID = mAuth.getCurrentUser().getUid();
-                User regUser = new User(userFirst, userLast, userEmail, userID);
-                regUser.addUserToFireStore(userFirst, userLast, userEmail, userID);
+                //User regUser = new User(userFirst, userLast, userEmail, userID); commented out to move functionality to FireDataReader
+                FireDataReader.getInstance().addUserToFireStore(userFirst, userLast, userEmail, userID);
                 navController.navigate(R.id.action_registerScreenFragment_to_regCompleteFragment);
             } else {
                 Toast.makeText(getActivity(), "Error! Cannot register!", Toast.LENGTH_SHORT).show();

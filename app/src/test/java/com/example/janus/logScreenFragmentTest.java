@@ -11,6 +11,7 @@ public class logScreenFragmentTest extends TestCase {
         String message = "Logged In!";
         logScreenFragment user = new logScreenFragment();
         assertEquals("Success", user.getLogInMessage(message));
+
     }
 
     @Test
@@ -18,6 +19,7 @@ public class logScreenFragmentTest extends TestCase {
         String message = "Error! Invalid Credentials!";
         logScreenFragment user = new logScreenFragment();
         assertEquals("Failed", user.getLogInMessage(message));
+
     }
 
 }

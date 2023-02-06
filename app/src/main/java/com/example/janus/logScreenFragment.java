@@ -123,24 +123,20 @@ public class logScreenFragment extends Fragment {
             logPass.setError("Password length needs to be at least 8 characters");
             logPass.requestFocus();
         }
-        mAuth.signInWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    String message = "Logged in!";
-                    getLogInMessage(message);
-                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                    // nav to log complete / upcoming assignments
-                    MainActivity activity = (MainActivity) requireActivity();
-                    activity.user = new User();
-                    navController.navigate(R.id.action_logScreenFragment_to_taskFragment);
-                }else{
-                    String message = "Error! Invalid Credentials!";
-                    getLogInMessage(message);
-                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        FireDataReader fireDataReader = FireDataReader.getInstance();
+        boolean success = fireDataReader.signIn(userEmail, userPass);
+        if(success) {
+            String message = "Logged in!";
+            getLogInMessage(message);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+            // nav to log complete / upcoming assignments
+            navController.navigate(R.id.action_logScreenFragment_to_taskFragment);
+        }
+        else {
+            String message = "Error! Invalid Credentials!";
+            getLogInMessage(message);
+            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void forgotPassword() {

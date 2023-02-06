@@ -1,5 +1,8 @@
 package com.example.janus;
 
+import static com.example.janus.ChatPageFragment.EMAIL_OF_ROOMMATE;
+import static com.example.janus.ChatPageFragment.NAME_OF_ROOMMATE;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -79,10 +82,20 @@ public class ChatFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
             Bundle bundle = this.getArguments();
-            if(bundle != null) {
-                emailOfRoommate = bundle.getString("email_of_roommate", "unknown");
-                usernameOfRoommate = bundle.getString("name_of_roommate", "unknown");
+            if (bundle != null) {
+                // emailOfRoommate = bundle.getString(EMAIL_OF_ROOMMATE, "unknown");
+                //usernameOfRoommate = bundle.getString(EMAIL_OF_ROOMMATE, "unknown");
+
+               // usernameOfRoommate = emailOfRoommate = EMAIL_OF_ROOMMATE = "6";
+
             }
+
+        }Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            emailOfRoommate = bundle.getString(EMAIL_OF_ROOMMATE, "unknown");
+            usernameOfRoommate = bundle.getString(EMAIL_OF_ROOMMATE, "unknown");
+
+
         }
     }
 
@@ -110,10 +123,10 @@ public class ChatFragment extends Fragment {
         // creates doc in messages called chatroom id and sets data to message parameters
         sendIcon.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {//fix receiver null
                 FirebaseFirestore.getInstance().collection("messages")
                        .document(chatroomId).set(new Message(FirebaseAuth.getInstance().getCurrentUser()
-                                .getEmail(), emailOfRoommate, messageInput.getText().toString()
+                                .getEmail(), EMAIL_OF_ROOMMATE, messageInput.getText().toString()
                         ));
                 messageInput.setText(""); //clears previous message after send
             }

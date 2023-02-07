@@ -8,7 +8,7 @@ public class User {
 
     private final String firstName, lastName, email;
     private final FireDataReader fireDataReader;
-    private final ArrayList <Task> taskList;
+    private TaskList taskList;
     private int taskPosition;
     private static User user;
 
@@ -18,25 +18,22 @@ public class User {
         firstName = (String) userData.get("firstName");
         lastName = (String) userData.get("firstName");
         email = (String) userData.get("email");
-        taskList = fireDataReader.getTaskList();
+        taskList = TaskList.getInstance();
     }
 
     public static User getInstance() {
         FireDataReader fireDataReader = FireDataReader.getInstance();
-        if(fireDataReader.hasUser()) {
+        if(fireDataReader.hasUser() && user == null) {
             user = new User();
         }
         return user;
     }
 
-    public static void sortTaskList(ArrayList<Task> taskList) {
-        Collections.sort(taskList, Collections.reverseOrder());
+    public void sortTaskList() {
+        taskList.sort();
     }
 
     // get task list [JMS]
-    public ArrayList<Task> getTaskList() {
-        return this.taskList;
-    }
     public void setPosition(int position){this.taskPosition = position;}
     public int getPosition(){return this.taskPosition;}
     public String getFirstName(){
@@ -54,20 +51,10 @@ public class User {
     }
 
     public void addTask(Task task) {
-        taskList.add(task);
-        sortTaskList(taskList);
-        task.addTaskToFireStore();
+        taskList.addTask(task);
     }
 
     public void removeTask(String id) {
-        Task found = null;
-        for(Task task : taskList){
-            if(task.getTaskID().equals(id)) {
-                found = task;
-                task.removeTaskFromFireStore();
-            }
-        }
-        taskList.remove(found);
-        sortTaskList(taskList);
+        taskList.removeTask(id);
     }
 }

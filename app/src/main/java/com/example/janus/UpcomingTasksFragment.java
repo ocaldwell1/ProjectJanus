@@ -68,10 +68,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth.getInstance();
-
-        User user = User.getInstance();
-        taskList = user.getTaskList();
+        taskList = TaskList.getInstance().getTaskList();
     }
     @Override
     public void onClick(View view, int position) {
@@ -80,11 +77,11 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
 
         // Send the values of the current card to the next fragment
         Bundle bundle = new Bundle();
-        bundle.putString("taskName",taskSelected.getTaskName());
-        bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
-        bundle.putString("taskSource",taskSelected.getTaskSource());
-        bundle.putString("taskNotes",taskSelected.getTaskNote());
-        bundle.putString("taskID",taskSelected.getTaskID());
+        bundle.putString("taskName",taskSelected.getName());
+        bundle.putString("taskDueDate",taskSelected.getDueDate());
+        bundle.putString("taskSource",taskSelected.getSource());
+        bundle.putString("taskNotes",taskSelected.getNote());
+        bundle.putString("taskID",taskSelected.getId());
         Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_taskDetailsFragment,bundle);
         activity = (MainActivity) requireActivity();
         User user = User.getInstance();

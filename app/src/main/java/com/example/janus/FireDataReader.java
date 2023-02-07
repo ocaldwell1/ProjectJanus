@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,12 +20,13 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FireDataReader {
     private FirebaseFirestore db;
-    private FirebaseAuth mAuth;
+    private final FirebaseAuth mAuth;
     private FirebaseUser fUser;
     private static FireDataReader fireDataReader;
 
@@ -32,7 +34,6 @@ public class FireDataReader {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         fUser = mAuth.getCurrentUser();
-        //TODO fill in the rest of the constructor, how do we get mAuth? how do we get fUser?
     }
 
     public static FireDataReader getInstance() {
@@ -116,23 +117,51 @@ public class FireDataReader {
                             com.example.janus.Task newTask = new com.example.janus.Task(taskName, notes, weight, dueDate, taskSource);
                             taskList.add(newTask);
                             Log.i("POSITION", "adding " + taskList.size());
-                            newTask.setTaskID(document.getId());
+                            newTask.setId(document.getId());
                         }
-                        User.sortTaskList(taskList);
+                        Collections.sort(taskList, Collections.reverseOrder());
                     }
                 });
-        Log.i("POSITION", "about to sort");
-        User.sortTaskList(taskList);
-        Log.i("POSITION", "test" + taskList.size());
-        try {
-            for (int i = 0; i < taskList.size(); i++) {
-                Log.i("POSITION", ""+ i);
-                Log.i("POSITION", "" + taskList.get(i).getPriority());
-            }
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
         return taskList;
+    }
+
+    public void addTaskToFireStore(com.example.janus.Task task) {
+        String id = mAuth.getCurrentUser().getUid();
+        db = FirebaseFirestore.getInstance();
+
+        DocumentReference documentReference = db.collection("Task").document();
+        Map<String, Object> taskMap = new HashMap<>();
+        taskMap.put("taskName", task.getName());
+        taskMap.put("taskDueDate", task.getDueDate());
+        taskMap.put("taskNote", task.getNote());
+        taskMap.put("taskWeight", task.getWeight());
+        taskMap.put("taskSource", task.getSource());
+        taskMap.put("userID", id);
+        task.setId(documentReference.getId());
+        documentReference.set(task).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG, "Success: Added Task to FireStore");
+            }
+        });
+    }
+
+    public void removeTaskFromFireStore(com.example.janus.Task task) {
+
+        db = FirebaseFirestore.getInstance();
+        db.collection("Task").document(task.getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
     }
 }

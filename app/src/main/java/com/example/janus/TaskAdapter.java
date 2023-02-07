@@ -38,7 +38,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         // add task
         //activity.user.setPosition(position);
         Task task = taskList.get(position);
-        holder.name.setText(task.getTaskName());
+        holder.name.setText(task.getName());
         holder.name.setTextColor(task.getPriorityColor());
         Log.i("COLORS", "got color " + task.getPriorityColor());
         try {
@@ -47,8 +47,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         catch(Exception e) {
             e.printStackTrace();
         }
-        holder.dueDate.setText(task.getTaskDueDate());
-        holder.source.setText(task.getTaskSource());
+        holder.dueDate.setText(task.getDueDate());
+        holder.source.setText(task.getSource());
     }
 
     @Override

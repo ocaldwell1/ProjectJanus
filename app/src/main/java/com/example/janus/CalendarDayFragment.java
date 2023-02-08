@@ -36,7 +36,6 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     private RecyclerView taskView;
     private ArrayList<Task> taskList;
     private NavController navController;
-    private MainActivity activity;
     User user;
     public CalendarDayFragment() {
         // Required empty public constructor
@@ -59,14 +58,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-       // user = User.getInstance();
-        ////activity = (MainActivity) requireActivity();
-       // taskList = activity.user.getTaskList();
-
-       // user = User.getInstance();
-      //  position = user.getPosition();
-       // taskList = user.getTaskList();
+        taskList = TaskList.getInstance().getTaskList();
     }
 
     @Override
@@ -99,15 +91,13 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
 
         // Send the values of the current card to the next fragment
         Bundle bundle = new Bundle();
-        bundle.putString("taskName",taskSelected.getTaskName());
-        bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
-        bundle.putString("taskSource",taskSelected.getTaskSource());
-        bundle.putString("taskNotes",taskSelected.getTaskNote());
-        bundle.putString("taskID",taskSelected.getTaskID());
+        bundle.putString("taskName",taskSelected.getName());
+        bundle.putString("taskDueDate",taskSelected.getDueDate());
+        bundle.putString("taskSource",taskSelected.getSource());
+        bundle.putString("taskNotes",taskSelected.getNote());
+        bundle.putString("taskID",taskSelected.getId());
         Navigation.findNavController(view).navigate(R.id.action_calendarDayFragment_to_taskDetailsFragment,bundle);
-        //activity = (MainActivity) requireActivity();
         user = User.getInstance();
         user.setPosition(position);
-        //activity.user.setPosition(position);
     }
 }

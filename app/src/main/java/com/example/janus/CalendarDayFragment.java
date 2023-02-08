@@ -36,6 +36,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     private RecyclerView taskView;
     private ArrayList<Task> taskList;
     private NavController navController;
+    private CalendarDayTaskAdapter calendarDayTaskAdapter;
     User user;
     public CalendarDayFragment() {
         // Required empty public constructor
@@ -68,6 +69,75 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
         return inflater.inflate(R.layout.fragment_calendar_day, container, false);
     }
 
+    // generates a new task arraylist with due dates matching the selected date
+    public ArrayList<Task> getNewTaskList(ArrayList<Task> taskLists, String dueDate){
+        ArrayList<Task> newTask = new ArrayList<>();
+
+        for(int i = 0; i < taskList.size(); i++) {
+            Task task = taskLists.get(i);
+            if (eventDate(task.getDueDate(), dueDate).equals(dueDate)) {
+                newTask.add(task);
+            }
+        }
+        return newTask;
+    }
+    public String eventDate(String taskDate, String selectedDate){
+        String day, month, year;
+        String newDate = "x";
+        day = taskDate.substring(0,2);
+        month = taskDate.substring(3,5);
+        year = taskDate.substring(6,10);
+        // converting numerical month to word
+        switch (month) {
+            case "01":
+                month = "January";
+                break;
+            case "02":
+                month = "February";
+                break;
+            case "03":
+                month = "March";
+                break;
+            case "04":
+                month = "April";
+                break;
+            case "05":
+                month = "May";
+                break;
+            case "06":
+                month = "June";
+                break;
+            case "07":
+                month = "July";
+                break;
+            case "08":
+                month = "August";
+                break;
+            case "09":
+                month = "September";
+                break;
+            case "10":
+                month = "October";
+                break;
+            case "11":
+                month = "November";
+                break;
+            case "12":
+                month = "December";
+                break;
+            default:
+                break;
+        }
+        newDate = month + " " + day + ", " + year;
+        //Log.d(TAG, "newDate: "+newDate);
+        //Log.d(TAG, "selectedDate: "+selectedDate);
+        if(newDate.equals(selectedDate)){
+            newDate = selectedDate;
+        }
+        //Log.d(TAG, "Task day is " + eventDay(dates.get(i)));
+        return newDate;
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -77,11 +147,11 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
         // null object ref error
         date.setText(getArguments().getString("selectedDay"));
         String dateSelected = getArguments().getString("selectedDay");
-
+        calendarDayTaskAdapter = new CalendarDayTaskAdapter(getNewTaskList(taskList, dateSelected), dateSelected);
         taskView.setHasFixedSize(true);
         taskView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        taskView.setAdapter(new CalendarDayTaskAdapter(taskList, dateSelected));
-
+        taskView.setAdapter(calendarDayTaskAdapter);
+        calendarDayTaskAdapter.setClickListener(this);
     }
 
     @Override

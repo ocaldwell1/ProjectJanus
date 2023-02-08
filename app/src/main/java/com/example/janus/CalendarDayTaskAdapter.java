@@ -46,7 +46,6 @@ public class CalendarDayTaskAdapter extends RecyclerView.Adapter<CalendarDayTask
             holder.name.setText(task.getName());
             holder.name.setTextColor(task.getPriorityColor());
         }
-
     }
 
     // converting numerical date to word date, (from 01/01/2023 to Jan 1, 2023)

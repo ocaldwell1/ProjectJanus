@@ -34,9 +34,9 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     private static final String ARG_PARAM2 = "param2";
     private TextView date;
     private RecyclerView taskView;
-    private ArrayList<Task> taskList;
+    private ArrayList<Task> taskList, newList;
     private NavController navController;
-    private MainActivity activity;
+    private CalendarDayTaskAdapter calendarDayTaskAdapter;
     User user;
     public CalendarDayFragment() {
         // Required empty public constructor
@@ -59,14 +59,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-       // user = User.getInstance();
-        ////activity = (MainActivity) requireActivity();
-       // taskList = activity.user.getTaskList();
-
-       // user = User.getInstance();
-      //  position = user.getPosition();
-       // taskList = user.getTaskList();
+        taskList = TaskList.getInstance().getTaskList();
     }
 
     @Override
@@ -74,6 +67,75 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_calendar_day, container, false);
+    }
+
+    // generates a new task arraylist with due dates matching the selected date
+    public ArrayList<Task> getNewTaskList(ArrayList<Task> taskLists, String dueDate){
+        ArrayList<Task> newTask = new ArrayList<>();
+
+        for(int i = 0; i < taskList.size(); i++) {
+            Task task = taskLists.get(i);
+            if (eventDate(task.getDueDate(), dueDate).equals(dueDate)) {
+                newTask.add(task);
+            }
+        }
+        return newTask;
+    }
+    public String eventDate(String taskDate, String selectedDate){
+        String day, month, year;
+        String newDate = "x";
+        day = taskDate.substring(0,2);
+        month = taskDate.substring(3,5);
+        year = taskDate.substring(6,10);
+        // converting numerical month to word
+        switch (month) {
+            case "01":
+                month = "January";
+                break;
+            case "02":
+                month = "February";
+                break;
+            case "03":
+                month = "March";
+                break;
+            case "04":
+                month = "April";
+                break;
+            case "05":
+                month = "May";
+                break;
+            case "06":
+                month = "June";
+                break;
+            case "07":
+                month = "July";
+                break;
+            case "08":
+                month = "August";
+                break;
+            case "09":
+                month = "September";
+                break;
+            case "10":
+                month = "October";
+                break;
+            case "11":
+                month = "November";
+                break;
+            case "12":
+                month = "December";
+                break;
+            default:
+                break;
+        }
+        newDate = month + " " + day + ", " + year;
+        //Log.d(TAG, "newDate: "+newDate);
+        //Log.d(TAG, "selectedDate: "+selectedDate);
+        if(newDate.equals(selectedDate)){
+            newDate = selectedDate;
+        }
+        //Log.d(TAG, "Task day is " + eventDay(dates.get(i)));
+        return newDate;
     }
 
 
@@ -85,29 +147,28 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
         // null object ref error
         date.setText(getArguments().getString("selectedDay"));
         String dateSelected = getArguments().getString("selectedDay");
-
+        newList = getNewTaskList(taskList, dateSelected);
+        calendarDayTaskAdapter = new CalendarDayTaskAdapter(newList, dateSelected);
         taskView.setHasFixedSize(true);
         taskView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        taskView.setAdapter(new CalendarDayTaskAdapter(taskList, dateSelected));
-
+        taskView.setAdapter(calendarDayTaskAdapter);
+        calendarDayTaskAdapter.setClickListener(this);
     }
 
     @Override
     public void onClick(View view, int position) {
         // The onClick implementation of the RecyclerView item click
-        final Task taskSelected = taskList.get(position);
+        final Task taskSelected = newList.get(position);
 
         // Send the values of the current card to the next fragment
         Bundle bundle = new Bundle();
-        bundle.putString("taskName",taskSelected.getTaskName());
-        bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
-        bundle.putString("taskSource",taskSelected.getTaskSource());
-        bundle.putString("taskNotes",taskSelected.getTaskNote());
-        bundle.putString("taskID",taskSelected.getTaskID());
+        bundle.putString("taskName",taskSelected.getName());
+        bundle.putString("taskDueDate",taskSelected.getDueDate());
+        bundle.putString("taskSource",taskSelected.getSource());
+        bundle.putString("taskNotes",taskSelected.getNote());
+        bundle.putString("taskID",taskSelected.getId());
         Navigation.findNavController(view).navigate(R.id.action_calendarDayFragment_to_taskDetailsFragment,bundle);
-        //activity = (MainActivity) requireActivity();
         user = User.getInstance();
         user.setPosition(position);
-        //activity.user.setPosition(position);
     }
 }

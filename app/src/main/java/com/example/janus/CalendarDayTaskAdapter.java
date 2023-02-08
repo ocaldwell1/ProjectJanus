@@ -40,15 +40,12 @@ public class CalendarDayTaskAdapter extends RecyclerView.Adapter<CalendarDayTask
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Task task = taskList.get(position);
-        //holder.name.setText(task.getTaskName());
-        //holder.name.setTextColor(task.getPriorityColor());
         Log.d(TAG, "thisDueDate: " + this.dueDate);
-        Log.d(TAG, "getTaskDue: " + task.getTaskDueDate());
-        if(eventDate(task.getTaskDueDate(),this.dueDate).equals(this.dueDate)){
-            holder.name.setText(task.getTaskName());
+        Log.d(TAG, "getTaskDue: " + task.getDueDate());
+        if(eventDate(task.getDueDate(),this.dueDate).equals(this.dueDate)){
+            holder.name.setText(task.getName());
             holder.name.setTextColor(task.getPriorityColor());
         }
-
     }
 
     // converting numerical date to word date, (from 01/01/2023 to Jan 1, 2023)

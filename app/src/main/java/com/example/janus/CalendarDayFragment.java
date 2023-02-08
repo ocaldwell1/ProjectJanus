@@ -34,7 +34,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     private static final String ARG_PARAM2 = "param2";
     private TextView date;
     private RecyclerView taskView;
-    private ArrayList<Task> taskList;
+    private ArrayList<Task> taskList, newList;
     private NavController navController;
     private CalendarDayTaskAdapter calendarDayTaskAdapter;
     User user;
@@ -69,7 +69,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
         return inflater.inflate(R.layout.fragment_calendar_day, container, false);
     }
 
-    // generates a new task arraylist with due dates matching the selected date
+    // generates a new task arraylist with due dates matching the calendar selected date
     public ArrayList<Task> getNewTaskList(ArrayList<Task> taskLists, String dueDate){
         ArrayList<Task> newTask = new ArrayList<>();
 
@@ -81,6 +81,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
         }
         return newTask;
     }
+    // function used to compare task due date to calendar selected date
     public String eventDate(String taskDate, String selectedDate){
         String day, month, year;
         String newDate = "x";
@@ -147,7 +148,8 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
         // null object ref error
         date.setText(getArguments().getString("selectedDay"));
         String dateSelected = getArguments().getString("selectedDay");
-        calendarDayTaskAdapter = new CalendarDayTaskAdapter(getNewTaskList(taskList, dateSelected), dateSelected);
+        newList = getNewTaskList(taskList, dateSelected);
+        calendarDayTaskAdapter = new CalendarDayTaskAdapter(newList, dateSelected);
         taskView.setHasFixedSize(true);
         taskView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         taskView.setAdapter(calendarDayTaskAdapter);
@@ -157,7 +159,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     @Override
     public void onClick(View view, int position) {
         // The onClick implementation of the RecyclerView item click
-        final Task taskSelected = taskList.get(position);
+        final Task taskSelected = newList.get(position);
 
         // Send the values of the current card to the next fragment
         Bundle bundle = new Bundle();

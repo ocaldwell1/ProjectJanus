@@ -97,12 +97,11 @@ public class CalendarDayTaskAdapter extends RecyclerView.Adapter<CalendarDayTask
                 break;
         }
         newDate = month + " " + day + ", " + year;
-        //Log.d(TAG, "newDate: "+newDate);
-        //Log.d(TAG, "selectedDate: "+selectedDate);
+
         if(newDate.equals(selectedDate)){
             newDate = selectedDate;
         }
-        //Log.d(TAG, "Task day is " + eventDay(dates.get(i)));
+
     return newDate;
 }
 

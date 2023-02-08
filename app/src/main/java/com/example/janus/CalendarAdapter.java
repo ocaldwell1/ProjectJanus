@@ -52,6 +52,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarView>
     // this function compares the event date to the date and position on the calendar
     public void checkEvent(@NonNull CalendarView holder, ArrayList<String> days, ArrayList<String> eventDates, String currentMonth, String currentYear,ArrayList<Integer> colorCodes, int position) {
         // changing color of text that will show event day on the calendar
+        int currentColor = 0;
         for (int m = 0; m < eventDates.size(); m++) {
             for (int i = 0; i < days.size(); i++) {
                 // first compares calendar day to event day
@@ -59,9 +60,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarView>
                     // compares calendar month to event month
                     if (eventDates.get(m).substring(3, 5).equals(currentMonth)) {
                         // compares calendar year to event year
-                        if (eventDates.get(m).substring(6, 10).equals(currentYear)) {
+                        if (eventDates.get(m).substring(6, 10).equals(currentYear) && currentColor != 0xFFFF0000) {
                             // if all match, then change number for that day to the task color
                             holder.calendarDay.setTextColor(colorCodes.get(m));
+                            currentColor = holder.calendarDay.getCurrentTextColor();
                        }
                     }
                 }

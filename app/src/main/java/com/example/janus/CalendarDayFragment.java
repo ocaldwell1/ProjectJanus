@@ -34,7 +34,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     private static final String ARG_PARAM2 = "param2";
     private TextView date;
     private RecyclerView taskView;
-    private ArrayList<Task> taskList;
+    private ArrayList<Task> taskList, newList;
     private NavController navController;
     private CalendarDayTaskAdapter calendarDayTaskAdapter;
     User user;
@@ -147,7 +147,8 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
         // null object ref error
         date.setText(getArguments().getString("selectedDay"));
         String dateSelected = getArguments().getString("selectedDay");
-        calendarDayTaskAdapter = new CalendarDayTaskAdapter(getNewTaskList(taskList, dateSelected), dateSelected);
+        newList = getNewTaskList(taskList, dateSelected);
+        calendarDayTaskAdapter = new CalendarDayTaskAdapter(newList, dateSelected);
         taskView.setHasFixedSize(true);
         taskView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         taskView.setAdapter(calendarDayTaskAdapter);
@@ -157,7 +158,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     @Override
     public void onClick(View view, int position) {
         // The onClick implementation of the RecyclerView item click
-        final Task taskSelected = taskList.get(position);
+        final Task taskSelected = newList.get(position);
 
         // Send the values of the current card to the next fragment
         Bundle bundle = new Bundle();

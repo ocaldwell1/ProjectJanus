@@ -36,8 +36,6 @@ public class ChatPageFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    public static String EMAIL_OF_ROOMMATE = "";
-    public static String NAME_OF_ROOMMATE = "";
     private String mParam1;
     private String mParam2;
     private RecyclerView recyclerView;
@@ -92,14 +90,13 @@ public class ChatPageFragment extends Fragment {
         onUserClickListener = new ChatPageAdapter.OnUserClickListener() {
             public void OnUserClicked(int position) {
                 //bundle is supposed to pass data to ChatFragment
-                ChatFragment fragment = new ChatFragment();
                 Bundle bundle = new Bundle();
                 //bundle.putString(NAME_OF_ROOMMATE,users.get(position).getEmail());
-                bundle.putString(NAME_OF_ROOMMATE,"5");
-                bundle.putString(EMAIL_OF_ROOMMATE, "5");
+                bundle.putString("NAME_OF_ROOMMATE","5");
+                bundle.putString("EMAIL_OF_ROOMMATE", "5");
                 //EMAIL_OF_ROOMMATE = "5";
                 //NAME_OF_ROOMMATE = "5";
-                fragment.setArguments(bundle);
+                setArguments(bundle);
 
                 Navigation.findNavController(view).navigate(R.id.action_chatPageFragment_to_chatFragment) ;
 
@@ -121,8 +118,8 @@ public class ChatPageFragment extends Fragment {
                    // users.add(querySnapshot.toObject(User.class));
                     users.add(new User(value.getDocuments().get(i).getString("userFirstName"),value.
                             getDocuments().get(i).getString("userLastName"),
-                            value.getDocuments().get(i).getString("userEmil"),
-                            value.getDocuments().get(i).getString("userID")));
+                            value.getDocuments().get(i).getString("userEmail"),
+                            value.getDocuments().get(i).getString("userID"))); 
 
                 }
                 chatPageAdapter = new ChatPageAdapter(users,getActivity(), onUserClickListener);

@@ -37,7 +37,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
 
         @Override
         public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
-            holder.textMessage.setText(messages.get(position).getContent());
+            holder.textMessage.setText(messages.get(position).getContent() );
 
             ConstraintLayout constraintLayout = holder.constraintLayout;
             if (messages.get(position).getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
@@ -49,7 +49,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
                 constraintSet.connect(R.id.profileCardview, ConstraintSet.RIGHT, R.id.constraintLayout,
                         ConstraintSet.RIGHT, 0);
                 constraintSet.connect(R.id.messageContents, ConstraintSet.RIGHT, R.id.profileCardview,
-                        ConstraintSet.RIGHT, 0);
+                        ConstraintSet.LEFT, 0);
                 constraintSet.applyTo(constraintLayout);
             } else {
                 ConstraintSet constraintSet = new ConstraintSet();

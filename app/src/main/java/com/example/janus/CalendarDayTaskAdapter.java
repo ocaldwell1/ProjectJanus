@@ -31,7 +31,6 @@ public class CalendarDayTaskAdapter extends RecyclerView.Adapter<CalendarDayTask
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_task,parent, false);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_day_task_display,parent, false);
 
         return new MyViewHolder(v);

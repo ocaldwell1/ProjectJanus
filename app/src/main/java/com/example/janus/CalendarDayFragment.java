@@ -69,7 +69,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
         return inflater.inflate(R.layout.fragment_calendar_day, container, false);
     }
 
-    // generates a new task arraylist with due dates matching the selected date
+    // generates a new task arraylist with due dates matching the calendar selected date
     public ArrayList<Task> getNewTaskList(ArrayList<Task> taskLists, String dueDate){
         ArrayList<Task> newTask = new ArrayList<>();
 
@@ -81,6 +81,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
         }
         return newTask;
     }
+    // function used to compare task due date to calendar selected date
     public String eventDate(String taskDate, String selectedDate){
         String day, month, year;
         String newDate = "x";
@@ -129,12 +130,9 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
                 break;
         }
         newDate = month + " " + day + ", " + year;
-        //Log.d(TAG, "newDate: "+newDate);
-        //Log.d(TAG, "selectedDate: "+selectedDate);
         if(newDate.equals(selectedDate)){
             newDate = selectedDate;
         }
-        //Log.d(TAG, "Task day is " + eventDay(dates.get(i)));
         return newDate;
     }
 

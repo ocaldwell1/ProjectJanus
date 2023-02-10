@@ -222,7 +222,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
                 // i - dayOfWeek = day in month
                 String dateString = String.valueOf(i - dayOfWeek);
                 if ((i - dayOfWeek) < 10) {
-                    // single digit days will have a 0 added
+                    // single digit days will have a 0 added, this is to compare to dueDate
                     dateString = "0" + (i - dayOfWeek);
                 }
                 daysInMonthArray.add(dateString);

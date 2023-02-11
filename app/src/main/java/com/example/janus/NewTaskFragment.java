@@ -129,9 +129,9 @@ public class NewTaskFragment extends Fragment {
                 String notes = notesEditText.getText().toString();
                 //Task newTask = new Task(taskName, source, weight, dueDate, notes);
                 Task newTask = new Task(taskName, notes, weight, dueDate,source);
-                User user = User.getInstance();
+                TaskList taskList = TaskList.getInstance();
                 // add task
-                user.addTask(newTask);
+                taskList.addTask(newTask);
                 Log.d(TAG, "Success: Add Task");
                 Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
             }

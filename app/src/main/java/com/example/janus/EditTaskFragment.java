@@ -33,17 +33,14 @@ public class EditTaskFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private MainActivity activity;
     int position;
-    ArrayList<Task> taskList;
+    TaskList taskList;
     Task currentTask;
     TextView titleNameView, taskSourceView,taskDueDateView,taskNotesView, taskWeightView;
     Spinner weightSpinner;
     Button saveButton;
+    User user;
     public EditTaskFragment() {
         // Required empty public constructor
     }
@@ -69,10 +66,6 @@ public class EditTaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -88,51 +81,36 @@ public class EditTaskFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        //final NavController navController = Navigation.findNavController(view);
         NavController navController = Navigation.findNavController(view);
-
-        /**
-        Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
-        addTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
-            }
-        }); **/
         activity = (MainActivity) requireActivity();
-        User user =  activity.user;
-        position = activity.user.getPosition();
-        taskList = activity.user.getTaskList();
+        //User
+
+        // Get the current selected task
+        user = User.getInstance();
+        position = user.getPosition();
+        taskList = TaskList.getInstance();
         currentTask = taskList.get(position);
 
-        //currentTask = taskList.get(0);
-
+        // Set title to Task name, Source, Weight, Due Date, Notes, Etc
         titleNameView = (TextView) view.findViewById(R.id.newTaskTaskNameEditText);
-        titleNameView.setText(currentTask.getTaskName());
-        //titleNameView.setText(String.valueOf(taskList.size()));
-
+        titleNameView.setText(currentTask.getName());
         taskSourceView = (TextView) view.findViewById(R.id.newTaskSourceEditText);
-        taskSourceView.setText(currentTask.getTaskSource());
-        //taskSourceView.setText(String.valueOf(position));
-             //newTaskWeightText
+        taskSourceView.setText(currentTask.getSource());
         taskDueDateView = (TextView) view.findViewById(R.id.newTaskDueDateEditText);
-        taskDueDateView.setText(currentTask.getTaskDueDate());
-
+        taskDueDateView.setText(currentTask.getDueDate());
         taskNotesView = (TextView) view.findViewById(R.id.newTaskNotesEditText);
-        taskNotesView.setText(currentTask.getTaskNote());
-
+        taskNotesView.setText(currentTask.getNote());
         weightSpinner = view.findViewById(R.id.newTaskWeightSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.weights, android.R.layout.simple_spinner_item);
         weightSpinner.setAdapter(adapter);
-        weightSpinner.setSelection(currentTask.getTaskWeight());
+        weightSpinner.setSelection(currentTask.getWeight());
 
+        // Save button
         saveButton = (Button) view.findViewById(R.id.newTaskSaveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -145,25 +123,26 @@ public class EditTaskFragment extends Fragment {
                 }
             }
         });
-        if(!user.isLoggedIn()){
+
+        // Check user logged in
+        if(User.isNotLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
         }
     }
-    public void modifyTaskAndNavigateBack(View view) {
-        this.currentTask.setName(titleNameView.getText().toString());
 
-        this.currentTask.setSource(taskSourceView.getText().toString());
-        this.currentTask.setWeight(Integer.parseInt(weightSpinner.getSelectedItem().toString()));
-        this.currentTask.setDueDate(taskDueDateView.getText().toString());
-        this.currentTask.setNote( taskNotesView.getText().toString());
-        //Task newTask = new Task(taskName, source, weight, dueDate, notes);
-        //Task newTask = new Task(taskName, notes, weight, dueDate,source);
-        //MainActivity activity = (MainActivity) requireActivity();
-        // add task
-        //activity.user.addTask(newTask);
+    public void modifyTaskAndNavigateBack(View view) {
+        // Modify the current ask according to the values in the fields
+        String newName = titleNameView.getText().toString();
+        String newSource = taskSourceView.getText().toString();
+        int newWeight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
+        String newDueDate = taskDueDateView.getText().toString();
+        String newNote = taskNotesView.getText().toString();
+        TaskList taskList = TaskList.getInstance();
+        taskList.editTask(currentTask.getId(), newName, newSource, newWeight, newDueDate, newNote);
         Log.d(TAG, "Success: Modify Task");
+
         // TODO: Fix bug for navigating to details: Bundle Does not exist!
         Navigation.findNavController(view).navigate(R.id.action_editTaskFragment_to_taskFragment);
 
-         }
+    }
 }

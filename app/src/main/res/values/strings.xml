@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Janus</string>
     <string name="addTaskNewTaskButtonText">New Task</string>
     <string name="addTaskImportTaskButtonText">Import Task</string>
     <!-- TODO: Remove or change this placeholder text -->

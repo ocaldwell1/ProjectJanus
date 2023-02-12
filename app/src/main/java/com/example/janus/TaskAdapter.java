@@ -38,12 +38,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         // add task
         //activity.user.setPosition(position);
         Task task = taskList.get(position);
-        holder.name.setText(task.getTaskName());
+        holder.name.setText(task.getName());
         holder.name.setTextColor(task.getPriorityColor());
         Log.i("COLORS", "got color " + task.getPriorityColor());
-        holder.note.setText(task.getTaskNote());
-        holder.dueDate.setText(task.getTaskDueDate());
-        holder.source.setText(task.getTaskSource());
+        try {
+            holder.note.setText("" + task.getPriority()); //TODO change this back
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        holder.dueDate.setText(task.getDueDate());
+        holder.source.setText(task.getSource());
     }
 
     @Override

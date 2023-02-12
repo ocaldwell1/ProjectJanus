@@ -32,45 +32,6 @@ public class Task implements Comparable<Task>{
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public void addTaskToFireStore(){
-        String id = mAuth.getCurrentUser().getUid();
-        db = FirebaseFirestore.getInstance();
-
-        DocumentReference documentReference = db.collection("Task").document();
-        Map<String, Object> task = new HashMap<>();
-        task.put("taskName", name);
-        task.put("taskDueDate", dueDate);
-        task.put("taskNote", note);
-        task.put("taskWeight", weight);
-        task.put("taskSource", source);
-        task.put("userID", id);
-        taskID = documentReference.getId();
-        documentReference.set(task).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Log.d(TAG, "Success: Added Task to FireStore");
-            }
-        });
-    }
-    public void removeTaskFromFireStore(){
-
-        db = FirebaseFirestore.getInstance();
-        db.collection("Task").document(taskID)
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error deleting document", e);
-                    }
-                });
-    }
-
     public int getPriorityColor() {
         double priority = 0;
         try {
@@ -125,25 +86,33 @@ public class Task implements Comparable<Task>{
         return result;
     }
 
-    public String getTaskName(){
+    public void edit(String newName, String newSource, int newWeight, String newDueDate, String newNote) {
+        name = newName;
+        source = newSource;
+        weight = newWeight;
+        dueDate = newDueDate;
+        note = newNote;
+    }
+
+    public String getName(){
         return this.name;
     }
-    public String getTaskNote(){
+    public String getNote(){
         return this.note;
     }
-    public String getTaskDueDate(){
+    public String getDueDate(){
         return this.dueDate;
     }
-    public String getTaskSource(){
+    public String getSource(){
         return this.source;
     }
-    public String getTaskID(){
+    public String getId(){
         return this.taskID;
     }
-    public int getTaskWeight(){
+    public int getWeight(){
         return this.weight;
     }
-    public void setTaskID(String id){
+    public void setId(String id){
         this.taskID = id;
     }
     public void setName(String name) {

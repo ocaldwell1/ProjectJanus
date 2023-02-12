@@ -28,9 +28,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class UpcomingTasksFragment extends Fragment implements ItemClickListener  {
-    //public class UpcomingTasksFragment extends  AppCompatActivity {
     private RecyclerView recyclerView;
-    //DatabaseReference database;
     private TaskAdapter taskAdapter;
     private ArrayList<Task> taskList;
     private NavController navController;
@@ -42,9 +40,6 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private Button addTaskButton;
     private Button logOutButton;
 
@@ -73,42 +68,31 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth.getInstance();
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        //taskList = new ArrayList<>();
-        MainActivity activity = (MainActivity) requireActivity();
-        taskList = activity.user.getTaskList();
+        taskList = TaskList.getInstance().getTaskList();
     }
     @Override
     public void onClick(View view, int position) {
         // The onClick implementation of the RecyclerView item click
         final Task taskSelected = taskList.get(position);
 
-        // Send the values of the current card to the next fragemnt
+        // Send the values of the current card to the next fragment
         Bundle bundle = new Bundle();
-        /**bundle.putString("taskName",taskSelected.getTaskName());
-         bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
-         bundle.putString("taskSource",taskSelected.getTaskSource());
-         bundle.putString("taskNotes",taskSelected.getTaskNote());**/
-        bundle.putString("taskName",taskSelected.getTaskName());
-        bundle.putString("taskDueDate",taskSelected.getTaskDueDate());
-        bundle.putString("taskSource",taskSelected.getTaskSource());
-        bundle.putString("taskNotes",taskSelected.getTaskNote());
-        bundle.putString("taskID",taskSelected.getTaskID());
+        bundle.putString("taskName",taskSelected.getName());
+        bundle.putString("taskDueDate",taskSelected.getDueDate());
+        bundle.putString("taskSource",taskSelected.getSource());
+        bundle.putString("taskNotes",taskSelected.getNote());
+        bundle.putString("taskID",taskSelected.getId());
         Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_taskDetailsFragment,bundle);
         activity = (MainActivity) requireActivity();
-        User user = activity.user;
-        activity.user.setPosition(position);
+        User user = User.getInstance();
+        user.setPosition(position);
+        //delete these three lines?
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_task, container, false);
         return inflater.inflate(R.layout.fragment_task, container, false);
     }
 
@@ -117,20 +101,18 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
         logOutButton = (Button) view.findViewById(R.id.taskFragmentLogOutButton);
         recyclerView = view.findViewById(R.id.taskRecyclerView);
-        recyclerView = view.findViewById(R.id.taskRecyclerView);
+        recyclerView = view.findViewById(R.id.taskRecyclerView); //duplicate
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(new TaskAdapter(taskList));
 
         // Add listeners to treat the item cards as buttonss
-
         taskAdapter = new TaskAdapter(taskList);
         recyclerView.setAdapter(taskAdapter);
         taskAdapter.setClickListener(this); // bind the listener
 
-        activity = (MainActivity) requireActivity();
-        User user = activity.user;
-        activity.user.setPosition(recyclerView.getChildAdapterPosition(recyclerView.getFocusedChild()));
+        User user = User.getInstance();
+        user.setPosition(recyclerView.getChildAdapterPosition(recyclerView.getFocusedChild()));
         //final NavController navController = Navigation.findNavController(view);
         NavController navController = Navigation.findNavController(view);
         addTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +129,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
                 navController.navigate(R.id.action_taskFragment_to_menuFragment);
             }
         });
-        if(!user.isLoggedIn()){
+        if(user.isNotLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
         }
     }

@@ -8,7 +8,6 @@ public class User {
 
     private final String firstName, lastName, email;
     private final FireDataReader fireDataReader;
-    private TaskList taskList;
     private int taskPosition;
     private static User user;
 
@@ -18,7 +17,6 @@ public class User {
         firstName = (String) userData.get("firstName");
         lastName = (String) userData.get("firstName");
         email = (String) userData.get("email");
-        taskList = TaskList.getInstance();
     }
 
     public static User getInstance() {
@@ -27,10 +25,6 @@ public class User {
             user = new User();
         }
         return user;
-    }
-
-    public void sortTaskList() {
-        taskList.sort();
     }
 
     // get task list [JMS]
@@ -50,11 +44,4 @@ public class User {
         return !FireDataReader.getInstance().hasUser();
     }
 
-    public void addTask(Task task) {
-        taskList.addTask(task);
-    }
-
-    public void removeTask(String id) {
-        taskList.removeTask(id);
-    }
 }

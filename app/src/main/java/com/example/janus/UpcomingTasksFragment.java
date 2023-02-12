@@ -76,13 +76,14 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         final Task taskSelected = taskList.get(position);
 
         // Send the values of the current card to the next fragment
-        Bundle bundle = new Bundle();
+        /**Bundle bundle = new Bundle();
         bundle.putString("taskName",taskSelected.getName());
         bundle.putString("taskDueDate",taskSelected.getDueDate());
         bundle.putString("taskSource",taskSelected.getSource());
         bundle.putString("taskNotes",taskSelected.getNote());
-        bundle.putString("taskID",taskSelected.getId());
-        Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_taskDetailsFragment,bundle);
+        bundle.putString("taskID",taskSelected.getId());**/
+        //Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_taskDetailsFragment,bundle);
+        Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_taskDetailsFragment);
         activity = (MainActivity) requireActivity();
         User user = User.getInstance();
         user.setPosition(position);

@@ -109,11 +109,16 @@ public class ChatPageFragment extends Fragment {
                 for(int i = 0; i < value.getDocuments().size(); i++) {
                     //first method produced errors, new one seems to solve issues
                    // users.add(querySnapshot.toObject(User.class));
-                    users.add(new User(value.getDocuments().get(i).getString("userFirstName"),value.
+                    /**users.add(new User(value.getDocuments().get(i).getString("userFirstName"),value.
                             getDocuments().get(i).getString("userLastName"),
                             value.getDocuments().get(i).getString("userEmail"),
                             value.getDocuments().get(i).getString("userID")));
 
+                     users.add((new User(value.getDocuments().get(i).getString("userFirstName"),value.
+                            getDocuments().get(i).getString("userLastName"),
+                            value.getDocuments().get(i).getString("userEmail"),
+                            value.getDocuments().get(i).getString("userID"))));
+                     **/
                 }
                 chatPageAdapter = new ChatPageAdapter(users,getActivity(), onUserClickListener);
                 recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));

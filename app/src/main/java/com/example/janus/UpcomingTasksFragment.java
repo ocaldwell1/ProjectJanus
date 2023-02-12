@@ -83,21 +83,24 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         User user = User.getInstance();
         user.setPosition(position);
         //delete these three lines?
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_task, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
         logOutButton = (Button) view.findViewById(R.id.taskFragmentLogOutButton);
         recyclerView = view.findViewById(R.id.taskRecyclerView);
-        recyclerView = view.findViewById(R.id.taskRecyclerView); //duplicate
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(new TaskAdapter(taskList));
@@ -128,5 +131,6 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         if(user.isNotLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
         }
+
     }
 }

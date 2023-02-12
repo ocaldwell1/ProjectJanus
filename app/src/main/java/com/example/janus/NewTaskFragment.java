@@ -115,16 +115,43 @@ public class NewTaskFragment extends Fragment {
          * Saves the current task filled in the form and returns to the main menu page home
          */
 
+        // [jms] check for blank tasks
+        String taskName = taskNameEditText.getText().toString();
+
+        // [jms] check for blank task source
+        String source = sourceEditText.getText().toString();
+
+        // Check due-date
+        //String dueDate = dueDateEditText.getText().toString();
         String dueDate = dueDateEditText.getText().toString();
+        Log.d(TAG, dueDate);
+
+        int weight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
+        String notes = notesEditText.getText().toString();
+        Task newTask = new Task(taskName, notes, weight, dueDate,source);
+        TaskList taskList = TaskList.getInstance();
+
         try {
-            Date due = new SimpleDateFormat("MM/dd/yyyy").parse(dueDate);
+            //Date due = new SimpleDateFormat("MM/dd/yyyy").parse(dueDate);
+            Date due = new SimpleDateFormat("MM/DD/YYYY").parse(dueDate);
+            Log.d(TAG, dueDate);
+            Log.d(TAG, due.toString());
             Date now = new Date();
-            if(due.compareTo(now) < 0) {
+
+            if (taskName.equals("")) {
+                Toast.makeText(getActivity(), "Please enter a task name", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "No title in task");
+                throw new Exception("No title in task");
+            }
+            else if (source.equals("")) {
+                Toast.makeText(getActivity(), "Please enter a task source. (e.g., CSCE411", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "No task source  in task");
+            }
+            else if (due.compareTo(now) < 0) {
                 Toast.makeText(getActivity(), "Due date has passed!", Toast.LENGTH_SHORT).show();
             }
-            else {
-                String taskName = taskNameEditText.getText().toString();
-                String source = sourceEditText.getText().toString();
+           /** else {
+                Log.d(TAG, "Here");
                 int weight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
                 String notes = notesEditText.getText().toString();
                 //Task newTask = new Task(taskName, source, weight, dueDate, notes);
@@ -133,11 +160,22 @@ public class NewTaskFragment extends Fragment {
                 // add task
                 taskList.addTask(newTask);
                 Log.d(TAG, "Success: Add Task");
+                //Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
                 Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
-            }
+
+            }**/
+            Log.d(TAG, "Here");
+
+            // add task
+            taskList.addTask(newTask);
+            Log.d(TAG, "Success: Add Task");
+            //Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
+            Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
+
         }
-        catch (ParseException e) {
-            Toast.makeText(getActivity(), "Invalid date!", Toast.LENGTH_SHORT).show();
+        catch (Exception e) {
+           // Toast.makeText(getActivity(), "Invalid date!", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getActivity(), "Invalid entry!", Toast.LENGTH_SHORT).show();
         }
     }
 }

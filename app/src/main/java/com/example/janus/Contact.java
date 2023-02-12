@@ -4,17 +4,13 @@ public class Contact {
     private final String firstName;
     private final String lastName;
     private final String email;
+    private boolean friend;
 
-    public Contact() {
-        firstName = "none";
-        lastName = "none";
-        email = "none";
-    }
-
-    public Contact(String firstName, String lastName, String email) {
+    public Contact(String firstName, String lastName, String email, boolean isFriend) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.friend = isFriend;
     }
 
     public String getFirstName() {
@@ -27,5 +23,13 @@ public class Contact {
 
     public String getEmail() {
         return email;
+    }
+
+    public boolean isFriend() {
+        return friend;
+    }
+
+    public void setFriend(boolean isFriend) {
+        this.friend = isFriend;
     }
 }

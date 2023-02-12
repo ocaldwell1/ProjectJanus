@@ -119,7 +119,7 @@ public class ChatPageFragment extends Fragment {
                     users.add(new User(value.getDocuments().get(i).getString("userFirstName"),value.
                             getDocuments().get(i).getString("userLastName"),
                             value.getDocuments().get(i).getString("userEmail"),
-                            value.getDocuments().get(i).getString("userID"))); 
+                            value.getDocuments().get(i).getString("userID")));
 
                 }
                 chatPageAdapter = new ChatPageAdapter(users,getActivity(), onUserClickListener);

@@ -31,7 +31,6 @@ public class CalendarDayTaskAdapter extends RecyclerView.Adapter<CalendarDayTask
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_task,parent, false);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_day_task_display,parent, false);
 
         return new MyViewHolder(v);
@@ -40,15 +39,12 @@ public class CalendarDayTaskAdapter extends RecyclerView.Adapter<CalendarDayTask
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Task task = taskList.get(position);
-        //holder.name.setText(task.getTaskName());
-        //holder.name.setTextColor(task.getPriorityColor());
         Log.d(TAG, "thisDueDate: " + this.dueDate);
-        Log.d(TAG, "getTaskDue: " + task.getTaskDueDate());
-        if(eventDate(task.getTaskDueDate(),this.dueDate).equals(this.dueDate)){
-            holder.name.setText(task.getTaskName());
+        Log.d(TAG, "getTaskDue: " + task.getDueDate());
+        if(eventDate(task.getDueDate(),this.dueDate).equals(this.dueDate)){
+            holder.name.setText(task.getName());
             holder.name.setTextColor(task.getPriorityColor());
         }
-
     }
 
     // converting numerical date to word date, (from 01/01/2023 to Jan 1, 2023)
@@ -100,12 +96,11 @@ public class CalendarDayTaskAdapter extends RecyclerView.Adapter<CalendarDayTask
                 break;
         }
         newDate = month + " " + day + ", " + year;
-        //Log.d(TAG, "newDate: "+newDate);
-        //Log.d(TAG, "selectedDate: "+selectedDate);
+
         if(newDate.equals(selectedDate)){
             newDate = selectedDate;
         }
-        //Log.d(TAG, "Task day is " + eventDay(dates.get(i)));
+
     return newDate;
 }
 

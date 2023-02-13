@@ -72,6 +72,7 @@ public class EditTaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Edit Task");
         View view = inflater.inflate(R.layout.fragment_edit_task, container, false);
         Button newTaskSaveButton = (Button) view.findViewById(R.id.newTaskSaveButton);
         newTaskSaveButton.setOnClickListener(new View.OnClickListener() {

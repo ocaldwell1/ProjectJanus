@@ -84,6 +84,7 @@ public class NewTaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("New Task");
         return inflater.inflate(R.layout.fragment_new_task, container, false);
     }
 

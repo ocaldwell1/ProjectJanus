@@ -33,8 +33,6 @@ public class EditTaskFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private MainActivity activity;
-    int position;
     TaskList taskList;
     Task currentTask;
     TextView titleNameView, taskSourceView,taskDueDateView,taskNotesView, taskWeightView;
@@ -87,14 +85,12 @@ public class EditTaskFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         NavController navController = Navigation.findNavController(view);
-        activity = (MainActivity) requireActivity();
         //User
 
         // Get the current selected task
-        user = User.getInstance();
-        position = user.getPosition();
+        String taskId = savedInstanceState.getString("taskId");
         taskList = TaskList.getInstance();
-        currentTask = taskList.get(position);
+        currentTask = taskList.getTaskById(taskId);
 
         // Set title to Task name, Source, Weight, Due Date, Notes, Etc
         titleNameView = (TextView) view.findViewById(R.id.newTaskTaskNameEditText);

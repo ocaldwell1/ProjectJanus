@@ -164,4 +164,8 @@ public class FireDataReader {
                     }
                 });
     }
+
+    public void signOut() {
+        mAuth.signOut();
+    }
 }

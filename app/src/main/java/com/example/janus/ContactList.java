@@ -12,7 +12,8 @@ public class ContactList {
     }
 
     public static ContactList getInstance() {
-        if(instance == null) {
+        FireDataReader fireDataReader = FireDataReader.getInstance();
+        if(fireDataReader.hasUser() && instance == null) {
             instance = new ContactList();
         }
         return instance;

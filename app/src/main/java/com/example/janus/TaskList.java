@@ -6,13 +6,14 @@ import java.util.Collections;
 public class TaskList {
     private ArrayList<Task> taskList;
     private FireDataReader fireDataReader;
-    private static TaskList taskListInstance;
+    private static TaskList instance;
 
     public static TaskList getInstance() {
-        if(taskListInstance == null) {
-            taskListInstance = new TaskList();
+        FireDataReader fireDataReader = FireDataReader.getInstance();
+        if(fireDataReader.hasUser() && instance == null) {
+            instance = new TaskList();
         }
-        return taskListInstance;
+        return instance;
     }
 
     private TaskList() {
@@ -26,9 +27,8 @@ public class TaskList {
 
     public void addTask(Task task) {
         taskList.add(task);
-        //sort();
-        this.sort();
-        //fireDataReader.addTaskToFireStore(task);
+        sort();
+        fireDataReader.addTaskToFireStore(task);
     }
 
     public void removeTask(String id) {

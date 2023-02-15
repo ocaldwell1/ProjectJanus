@@ -38,6 +38,11 @@ public class TaskList {
         sort();
     }
 
+    public int size()
+    {
+        return taskList.size();
+    }
+
     public Task get(int pos) {
         return taskList.get(pos);
     }

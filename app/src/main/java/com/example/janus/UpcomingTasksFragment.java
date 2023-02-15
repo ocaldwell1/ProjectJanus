@@ -1,11 +1,14 @@
 package com.example.janus;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +47,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public void onClick(View view, int position) {
         // The onClick implementation of the RecyclerView item click
@@ -66,7 +70,9 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
             Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_menuFragment);
         }
         else {
+            Log.d(TAG, "Looking at the tasks.");
             taskList = TaskList.getInstance().getTaskList();
+            Log.d(TAG, String.valueOf(taskList.size()));
             Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
             logOutButton = (Button) view.findViewById(R.id.taskFragmentLogOutButton);
             recyclerView = view.findViewById(R.id.taskRecyclerView);

@@ -43,21 +43,8 @@ public class EditTaskFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddTaskFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static EditTaskFragment newInstance(String param1, String param2) {
         EditTaskFragment fragment = new EditTaskFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -85,10 +72,10 @@ public class EditTaskFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         NavController navController = Navigation.findNavController(view);
-        //User
 
         // Get the current selected task
-        String taskId = savedInstanceState.getString("taskId");
+        Bundle bundle = getArguments();
+        String taskId = bundle.getString("taskId");
         taskList = TaskList.getInstance();
         currentTask = taskList.getTaskById(taskId);
 

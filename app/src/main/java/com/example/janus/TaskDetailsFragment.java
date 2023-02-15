@@ -70,7 +70,7 @@ public class TaskDetailsFragment extends Fragment {
         editTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.action_taskDetailsFragment_to_editTaskFragment);
+                navController.navigate(R.id.action_taskDetailsFragment_to_editTaskFragment,bundle);
             }
         });
 

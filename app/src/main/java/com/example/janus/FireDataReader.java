@@ -191,7 +191,8 @@ public class FireDataReader {
                                 String firstName = data.get("userFirstName").toString();
                                 String lastName = data.get("userLastName").toString();
                                 String email = data.get("userEmail").toString();
-                                contactList.add(new Contact(firstName, lastName, email));
+                                boolean isBlocked = Boolean.parseBoolean(data.get("isBlocked").toString());
+                                contactList.add(new Contact(firstName, lastName, email, isBlocked));
                             }
                         }
                     });

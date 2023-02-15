@@ -47,8 +47,6 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private ArrayList<String> taskDates;
     private ArrayList<Integer> colorCodes;
 
-    User user;
-
     public CalendarFragment() {
         // Required empty public constructor
     }
@@ -70,17 +68,14 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        user = User.getInstance();
-        //MainActivity activity = (MainActivity) requireActivity();
-       // taskList = activity.user.getTaskList();
+        taskList = TaskList.getInstance().getTaskList();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Calendar View");
         return inflater.inflate(R.layout.fragment_calendar, container, false);
     }
 
@@ -111,13 +106,11 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     // creates array of task due date
     public ArrayList<String> taskDueDates() {
         // grabbing user task list and adding the due date tasks to array list
-        MainActivity activity = (MainActivity) requireActivity();
-        //taskList = activity.user.getTaskList();
-        taskList = user.getTaskList();
+        //taskList = TaskList.getInstance().getTaskList();
         ArrayList<String> dates = new ArrayList<>();
         for (int i = 0; i < taskList.size(); i++) {
             Task task = taskList.get(i);
-            dates.add(task.getTaskDueDate());
+            dates.add(task.getDueDate());
            //Log.d(TAG, "Task day is " + eventDay(dates.get(i)));
         }
         return dates;
@@ -126,11 +119,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     // creates array of task colors
     public ArrayList<Integer> taskColorCodes() {
         // grabbing user task list and adding the priority color of tasks to array list
-
-        user = User.getInstance();
-        MainActivity activity = (MainActivity) requireActivity();
-        //taskList = activity.user.getTaskList();
-        taskList = user.getTaskList();
+        //taskList = TaskList.getInstance().getTaskList();
         ArrayList<Integer> codes = new ArrayList<>();
         for (int i = 0; i < taskList.size(); i++) {
             Task task = taskList.get(i);
@@ -234,7 +223,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
                 // i - dayOfWeek = day in month
                 String dateString = String.valueOf(i - dayOfWeek);
                 if ((i - dayOfWeek) < 10) {
-                    // single digit days will have a 0 added
+                    // single digit days will have a 0 added, this is to compare to dueDate
                     dateString = "0" + (i - dayOfWeek);
                 }
                 daysInMonthArray.add(dateString);
@@ -243,17 +232,6 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         }
 
         return daysInMonthArray;
-    }
-
-
-    private String monthYearFromDate(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-        return date.format(formatter);
-    }
-
-    private String dateSelected(LocalDate date, String day) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM " + day + ", yyyy");
-        return date.format(formatter);
     }
 
     public void previousMonth(View view) {
@@ -268,6 +246,18 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         setCalendarView();
     }
 
+    private String monthYearFromDate(LocalDate date) {
+        // Formatting Calendar date MMMM yyyy
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+        return date.format(formatter);
+    }
+
+    private String dateSelected(LocalDate date, String day) {
+        // Formatting Calendar date MMMM day yyyy
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM " + day + ", yyyy");
+        return date.format(formatter);
+    }
+
     @Override
     public void onItemClick(int position, String dayText) {
         Bundle bun = new Bundle();
@@ -275,8 +265,8 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         if (!(dayText.equals(""))) {
             // this is the message that shows on CalendarDay Fragment
             message = dateSelected(currentDate, dayText);
-            //Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
             bun.putString("selectedDay", message);
+
             //Log.d(TAG, "Selected Day: " + message);
             navController.navigate(R.id.action_calendarFragment_to_calendarDayFragment, bun);
         }

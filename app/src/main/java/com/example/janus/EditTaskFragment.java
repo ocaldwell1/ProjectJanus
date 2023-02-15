@@ -12,12 +12,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -33,9 +37,7 @@ public class EditTaskFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private MainActivity activity;
-    int position;
-    ArrayList<Task> taskList;
+    TaskList taskList;
     Task currentTask;
     TextView titleNameView, taskSourceView,taskDueDateView,taskNotesView, taskWeightView;
     Spinner weightSpinner;
@@ -45,21 +47,8 @@ public class EditTaskFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddTaskFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static EditTaskFragment newInstance(String param1, String param2) {
         EditTaskFragment fragment = new EditTaskFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -72,6 +61,7 @@ public class EditTaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Edit Task");
         View view = inflater.inflate(R.layout.fragment_edit_task, container, false);
         Button newTaskSaveButton = (Button) view.findViewById(R.id.newTaskSaveButton);
         newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
@@ -87,28 +77,26 @@ public class EditTaskFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         NavController navController = Navigation.findNavController(view);
-        activity = (MainActivity) requireActivity();
-        //User
 
         // Get the current selected task
-        user = User.getInstance();
-        position = user.getPosition();
-        taskList = user.getTaskList();
-        currentTask = taskList.get(position);
+        Bundle bundle = getArguments();
+        String taskId = bundle.getString("taskId");
+        taskList = TaskList.getInstance();
+        currentTask = taskList.getTaskById(taskId);
 
         // Set title to Task name, Source, Weight, Due Date, Notes, Etc
         titleNameView = (TextView) view.findViewById(R.id.newTaskTaskNameEditText);
-        titleNameView.setText(currentTask.getTaskName());
+        titleNameView.setText(currentTask.getName());
         taskSourceView = (TextView) view.findViewById(R.id.newTaskSourceEditText);
-        taskSourceView.setText(currentTask.getTaskSource());
+        taskSourceView.setText(currentTask.getSource());
         taskDueDateView = (TextView) view.findViewById(R.id.newTaskDueDateEditText);
-        taskDueDateView.setText(currentTask.getTaskDueDate());
+        taskDueDateView.setText(currentTask.getDueDate());
         taskNotesView = (TextView) view.findViewById(R.id.newTaskNotesEditText);
-        taskNotesView.setText(currentTask.getTaskNote());
+        taskNotesView.setText(currentTask.getNote());
         weightSpinner = view.findViewById(R.id.newTaskWeightSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.weights, android.R.layout.simple_spinner_item);
         weightSpinner.setAdapter(adapter);
-        weightSpinner.setSelection(currentTask.getTaskWeight());
+        weightSpinner.setSelection(currentTask.getWeight());
 
         // Save button
         saveButton = (Button) view.findViewById(R.id.newTaskSaveButton);
@@ -125,24 +113,65 @@ public class EditTaskFragment extends Fragment {
         });
 
         // Check user logged in
-        if(user.isNotLoggedIn()){
+        if(User.isNotLoggedIn()){
             navController.navigate(R.id.action_taskFragment_to_menuFragment);
         }
     }
 
     public void modifyTaskAndNavigateBack(View view) {
-        // Modify the current ask according to the values in the fields
-        this.currentTask.setName(titleNameView.getText().toString());
-        this.currentTask.setSource(taskSourceView.getText().toString());
-        this.currentTask.setWeight(Integer.parseInt(weightSpinner.getSelectedItem().toString()));
-        this.currentTask.setDueDate(taskDueDateView.getText().toString());
-        this.currentTask.setNote( taskNotesView.getText().toString());
-        Log.d(TAG, "Success: Modify Task");
+        TaskList taskList = TaskList.getInstance();
 
-        // [JMS] Why are we deleting the task, even though we have just directly modified it?
-        user.removeTask(currentTask.getTaskID());
-        user.addTask(currentTask);
-        User.sortTaskList(taskList);
+        /**
+         * Saves the current task filled in the form and returns to the main menu page home
+         */
+
+        // [jms] check for blank tasks
+        String taskName = titleNameView.getText().toString();
+
+        // [jms] check for blank task source
+        String source = taskSourceView.getText().toString();
+
+        // Check due-date
+        String dueDate = taskDueDateView.getText().toString();
+
+        int weight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
+        String notes =  taskNotesView.getText().toString();
+
+        Date now = new Date();
+        Date due;
+        // Check the date format
+        try {
+            due = new SimpleDateFormat("MM/dd/yyyy").parse(dueDate);
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Please enter a valid date following MM/DD/YYYY", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Date could not be parsed. ");
+            return;
+        }
+
+        // Check for invalid input
+        if (taskName.equals("")) {
+            Toast.makeText(getActivity(), "Please enter a task name", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "No title in task");
+            return;
+        }
+        else if (source.equals("")) {
+            Toast.makeText(getActivity(), "Please enter a task source. (e.g., CSCE411", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "No task source  in task");
+            return;
+        }
+        else if (due.compareTo(now) < 0) {
+            Toast.makeText(getActivity(), "Due date has passed!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Invalid time");
+            Log.d(TAG,String.valueOf(due.compareTo(now)));
+            return;
+        }
+
+        // TODO: Check for duplicate assignment title/class? Make distinction between due dates?
+
+        // If all other checks pass, navigate back to the Home screen
+        Log.d(TAG, "Here");
+        taskList.editTask(currentTask.getId(), taskName, notes, weight, dueDate,source);
+        Log.d(TAG, "Success: Modify Task");
 
         // TODO: Fix bug for navigating to details: Bundle Does not exist!
         Navigation.findNavController(view).navigate(R.id.action_editTaskFragment_to_taskFragment);

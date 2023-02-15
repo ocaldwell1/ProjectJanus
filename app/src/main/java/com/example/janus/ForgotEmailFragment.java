@@ -58,6 +58,7 @@ public class ForgotEmailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Forgot Password");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_forgot_email, container, false);
     }

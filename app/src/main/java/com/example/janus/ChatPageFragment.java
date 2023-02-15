@@ -73,6 +73,7 @@ public class ChatPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Chat Page");
         return inflater.inflate(R.layout.fragment_chat_page, container, false);
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -83,16 +84,15 @@ public class ChatPageFragment extends Fragment {
         onUserClickListener = new ChatPageAdapter.OnUserClickListener() {
             public void OnUserClicked(int position) {
                 //bundle is supposed to pass data to ChatFragment
-                ChatFragment fragment = new ChatFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("name_of_roomate", users.get(position).getFirstName());
-                bundle.putString("email_of_roomate", users.get(position).getEmail());
-                fragment.setArguments(bundle);
+                //bundle.putString(NAME_OF_ROOMMATE,users.get(position).getEmail());
+                bundle.putString("NAME_OF_ROOMMATE","5");
+                bundle.putString("EMAIL_OF_ROOMMATE", "5");
+                //EMAIL_OF_ROOMMATE = "5";
+                //NAME_OF_ROOMMATE = "5";
+                setArguments(bundle);
 
                 Navigation.findNavController(view).navigate(R.id.action_chatPageFragment_to_chatFragment) ;
-                //startActivity(new Intent(ChatPageFragment.this, ChatFragment.class).putExtra("name_of" +
-                             //   "_roommate", users.get(position).getFirstName())
-                       // .putExtra("email_of_roommate", users.get(position).getEmail()));
 
             }
         };
@@ -100,16 +100,26 @@ public class ChatPageFragment extends Fragment {
     }
     private void getUsers(){
         //use if arraylist becomes duplicated after each start of app
-        // users.clear();
+        users.clear();
 
         // supposed to get users from database and convert to user class to add to array list of users
         FirebaseFirestore.getInstance().collection("User").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@androidx.annotation.Nullable QuerySnapshot value, @androidx.annotation.Nullable FirebaseFirestoreException error) {
-                for(DocumentSnapshot querySnapshot: value.getDocuments()) {
-                    //appears to get correct # of users for displaying list, but cannot extract user info?
-                    //maybe try new user constructor with .add method?
-                    users.add(querySnapshot.toObject(User.class));
+                assert value != null;
+                for(int i = 0; i < value.getDocuments().size(); i++) {
+                    //first method produced errors, new one seems to solve issues
+                   // users.add(querySnapshot.toObject(User.class));
+                    /**users.add(new User(value.getDocuments().get(i).getString("userFirstName"),value.
+                            getDocuments().get(i).getString("userLastName"),
+                            value.getDocuments().get(i).getString("userEmail"),
+                            value.getDocuments().get(i).getString("userID")));
+
+                     users.add((new User(value.getDocuments().get(i).getString("userFirstName"),value.
+                            getDocuments().get(i).getString("userLastName"),
+                            value.getDocuments().get(i).getString("userEmail"),
+                            value.getDocuments().get(i).getString("userID"))));
+                     **/
                 }
                 chatPageAdapter = new ChatPageAdapter(users,getActivity(), onUserClickListener);
                 recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));

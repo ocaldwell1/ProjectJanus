@@ -13,6 +13,7 @@ public class TaskList {
         if(fireDataReader.hasUser() && instance == null) {
             instance = new TaskList();
         }
+
         return instance;
     }
 
@@ -28,7 +29,7 @@ public class TaskList {
     public void addTask(Task task) {
         taskList.add(task);
         sort();
-        fireDataReader.addTaskToFireStore(task);
+        //fireDataReader.addTaskToFireStore(task);
     }
 
     public void removeTask(String id) {
@@ -36,6 +37,11 @@ public class TaskList {
         taskList.remove(found);
         fireDataReader.removeTaskFromFireStore(found);
         sort();
+    }
+
+    public int size()
+    {
+        return taskList.size();
     }
 
     public Task get(int pos) {

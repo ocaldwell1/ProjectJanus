@@ -13,6 +13,7 @@ public class TaskList {
         if(fireDataReader.hasUser() && instance == null) {
             instance = new TaskList();
         }
+
         return instance;
     }
 

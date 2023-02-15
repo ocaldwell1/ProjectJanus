@@ -70,14 +70,15 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
             Navigation.findNavController(view).navigate(R.id.action_taskFragment_to_menuFragment);
         }
         else {
-            Log.d(TAG, "Looking at the tasks.");
-            taskList = TaskList.getInstance().getTaskList();
-            Log.d(TAG, String.valueOf(taskList.size()));
             Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
             logOutButton = (Button) view.findViewById(R.id.taskFragmentLogOutButton);
             recyclerView = view.findViewById(R.id.taskRecyclerView);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+            Log.d(TAG, "Looking at the tasks.");
+            taskList = TaskList.getInstance().getTaskList();
+            Log.d(TAG, String.valueOf(taskList.size()));
             recyclerView.setAdapter(new TaskAdapter(taskList));
 
             // Add listeners to treat the item cards as buttons

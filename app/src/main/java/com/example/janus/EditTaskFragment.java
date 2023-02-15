@@ -12,12 +12,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -114,14 +118,57 @@ public class EditTaskFragment extends Fragment {
     }
 
     public void modifyTaskAndNavigateBack(View view) {
-        // Modify the current ask according to the values in the fields
-        String newName = titleNameView.getText().toString();
-        String newSource = taskSourceView.getText().toString();
-        int newWeight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
-        String newDueDate = taskDueDateView.getText().toString();
-        String newNote = taskNotesView.getText().toString();
         TaskList taskList = TaskList.getInstance();
-        taskList.editTask(currentTask.getId(), newName, newSource, newWeight, newDueDate, newNote);
+
+        /**
+         * Saves the current task filled in the form and returns to the main menu page home
+         */
+
+        // [jms] check for blank tasks
+        String taskName = titleNameView.getText().toString();
+
+        // [jms] check for blank task source
+        String source = taskSourceView.getText().toString();
+
+        // Check due-date
+        String dueDate = taskDueDateView.getText().toString();
+
+        int weight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
+        String notes =  taskNotesView.getText().toString();
+
+        Date now = new Date();
+        Date due;
+        // Check the date format
+        try {
+            due = new SimpleDateFormat("MM/DD/YYYY").parse(dueDate);
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Please enter a valid date following MM/DD/YYYY", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Date could not be parsed. ");
+            return;
+        }
+
+        // Check for invalid input
+        if (taskName.equals("")) {
+            Toast.makeText(getActivity(), "Please enter a task name", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "No title in task");
+            return;
+        }
+        else if (source.equals("")) {
+            Toast.makeText(getActivity(), "Please enter a task source. (e.g., CSCE411", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "No task source  in task");
+            return;
+        }
+        else if (due.compareTo(now) < 0) {
+            Toast.makeText(getActivity(), "Due date has passed!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Invalid time");
+            return;
+        }
+
+        // TODO: Check for duplicate assignment title/class? Make distinction between due dates?
+
+        // If all other checks pass, navigate back to the Home screen
+        Log.d(TAG, "Here");
+        taskList.editTask(currentTask.getId(), taskName, notes, weight, dueDate,source);
         Log.d(TAG, "Success: Modify Task");
 
         // TODO: Fix bug for navigating to details: Bundle Does not exist!

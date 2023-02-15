@@ -61,8 +61,8 @@ public class TaskList {
     public void editTask(String taskId, String newName, String newSource, int newWeight, String newDueDate, String newNote) {
         Task task = getTaskById(taskId);
         task.edit(newName, newSource, newWeight, newDueDate, newNote);
-        fireDataReader.removeTaskFromFireStore(task);
-        fireDataReader.addTaskToFireStore(task);
+        //fireDataReader.removeTaskFromFireStore(task);
+        //fireDataReader.addTaskToFireStore(task);
         sort();
     }
 

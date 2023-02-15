@@ -111,7 +111,7 @@ public class NewTaskFragment extends Fragment {
         Date due;
         // Check the date format
         try {
-            due = new SimpleDateFormat("MM/DD/YYYY").parse(dueDate);
+            due = new SimpleDateFormat("MM/dd/yyyy").parse(dueDate);
         } catch (Exception e) {
             Toast.makeText(getActivity(), "Please enter a valid date following MM/DD/YYYY", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Date could not be parsed. ");

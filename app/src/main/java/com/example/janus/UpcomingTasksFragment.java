@@ -66,6 +66,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Upcoming Tasks");
         return inflater.inflate(R.layout.fragment_task, container, false);
     }
 

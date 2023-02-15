@@ -36,6 +36,7 @@ public class StartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Start");
         View view = inflater.inflate(R.layout.fragment_start, container, false);
         Button startFragmentStartButton = (Button) view.findViewById(R.id.startFragmentStartButton);
         startFragmentStartButton.setOnClickListener(new View.OnClickListener() {

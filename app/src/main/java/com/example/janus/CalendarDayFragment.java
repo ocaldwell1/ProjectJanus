@@ -161,13 +161,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
 
         // Send the values of the current card to the next fragment
         Bundle bundle = new Bundle();
-        bundle.putString("taskName",taskSelected.getName());
-        bundle.putString("taskDueDate",taskSelected.getDueDate());
-        bundle.putString("taskSource",taskSelected.getSource());
-        bundle.putString("taskNotes",taskSelected.getNote());
-        bundle.putString("taskID",taskSelected.getId());
+        bundle.putString("taskId",taskSelected.getId());
         Navigation.findNavController(view).navigate(R.id.action_calendarDayFragment_to_taskDetailsFragment,bundle);
-        user = User.getInstance();
-        user.setPosition(position);
     }
 }

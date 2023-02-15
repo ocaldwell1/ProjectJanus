@@ -63,6 +63,7 @@ public class RegCompleteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Register Complete");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_reg_complete, container, false);
     }

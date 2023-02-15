@@ -140,7 +140,7 @@ public class EditTaskFragment extends Fragment {
         Date due;
         // Check the date format
         try {
-            due = new SimpleDateFormat("MM/DD/YYYY").parse(dueDate);
+            due = new SimpleDateFormat("MM/dd/yyyy").parse(dueDate);
         } catch (Exception e) {
             Toast.makeText(getActivity(), "Please enter a valid date following MM/DD/YYYY", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Date could not be parsed. ");
@@ -161,6 +161,7 @@ public class EditTaskFragment extends Fragment {
         else if (due.compareTo(now) < 0) {
             Toast.makeText(getActivity(), "Due date has passed!", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Invalid time");
+            Log.d(TAG,String.valueOf(due.compareTo(now)));
             return;
         }
 

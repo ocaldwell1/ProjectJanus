@@ -122,60 +122,48 @@ public class NewTaskFragment extends Fragment {
         String source = sourceEditText.getText().toString();
 
         // Check due-date
-        //String dueDate = dueDateEditText.getText().toString();
         String dueDate = dueDateEditText.getText().toString();
-        Log.d(TAG, dueDate);
 
         int weight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
         String notes = notesEditText.getText().toString();
         Task newTask = new Task(taskName, notes, weight, dueDate,source);
         TaskList taskList = TaskList.getInstance();
 
+        Date now = new Date();
+        Date due;
+        // Check the date format
         try {
-            //Date due = new SimpleDateFormat("MM/dd/yyyy").parse(dueDate);
-            Date due = new SimpleDateFormat("MM/DD/YYYY").parse(dueDate);
-            Log.d(TAG, dueDate);
-            Log.d(TAG, due.toString());
-            Date now = new Date();
-
-            if (taskName.equals("")) {
-                Toast.makeText(getActivity(), "Please enter a task name", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "No title in task");
-                throw new Exception("No title in task");
-            }
-            else if (source.equals("")) {
-                Toast.makeText(getActivity(), "Please enter a task source. (e.g., CSCE411", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "No task source  in task");
-            }
-            else if (due.compareTo(now) < 0) {
-                Toast.makeText(getActivity(), "Due date has passed!", Toast.LENGTH_SHORT).show();
-            }
-           /** else {
-                Log.d(TAG, "Here");
-                int weight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
-                String notes = notesEditText.getText().toString();
-                //Task newTask = new Task(taskName, source, weight, dueDate, notes);
-                Task newTask = new Task(taskName, notes, weight, dueDate,source);
-                TaskList taskList = TaskList.getInstance();
-                // add task
-                taskList.addTask(newTask);
-                Log.d(TAG, "Success: Add Task");
-                //Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
-                Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
-
-            }**/
-            Log.d(TAG, "Here");
-
-            // add task
-            taskList.addTask(newTask);
-            Log.d(TAG, "Success: Add Task");
-            //Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
-            Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
-
+            due = new SimpleDateFormat("MM/DD/YYYY").parse(dueDate);
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Please enter a valid date following MM/DD/YYYY", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Date could not be parsed. ");
+            return;
         }
-        catch (Exception e) {
-           // Toast.makeText(getActivity(), "Invalid date!", Toast.LENGTH_SHORT).show();
-            // Toast.makeText(getActivity(), "Invalid entry!", Toast.LENGTH_SHORT).show();
+
+        // Check for invalid input
+        if (taskName.equals("")) {
+            Toast.makeText(getActivity(), "Please enter a task name", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "No title in task");
+            return;
         }
+        else if (source.equals("")) {
+            Toast.makeText(getActivity(), "Please enter a task source. (e.g., CSCE411", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "No task source  in task");
+            return;
+        }
+        else if (due.compareTo(now) < 0) {
+            Toast.makeText(getActivity(), "Due date has passed!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Invalid time");
+            return;
+        }
+
+        // TODO: Check for duplicate assignment title/class? Make distinction between due dates?
+
+        // If all other checks pass, navigate back to the Home screen
+        Log.d(TAG, "Here");
+        taskList.addTask(newTask);
+        Log.d(TAG, "Success: Add Task");
+        Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
+
     }
 }

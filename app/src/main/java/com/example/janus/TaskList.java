@@ -28,7 +28,7 @@ public class TaskList {
     public void addTask(Task task) {
         taskList.add(task);
         sort();
-        fireDataReader.addTaskToFireStore(task);
+        //fireDataReader.addTaskToFireStore(task);
     }
 
     public void removeTask(String id) {

@@ -4,7 +4,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,7 +57,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarView>
             for (int i = 0; i < days.size(); i++) {
                 if ((daysOfMonth.get(position) != "")) {
                     // as loop goes through each day of month, get the date and compare to event due date
-                    currentDate = currentMonth+ "/" + daysOfMonth.get(position) + "/" + currentYear;
+                    currentDate = currentMonth + "/" + daysOfMonth.get(position) + "/" + currentYear;
                     if (currentDate.equals(eventDates.get(m))) {
                         // if current date matches event due date
                         // change color to highest priority color for that day
@@ -77,18 +76,21 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarView>
                                     } else {
                                         holder.calendarDay.setTextColor(currentColor);
                                     }
+                                    break;
                                 case 0xFFFFFF00:  // yellow
                                     if (colorCodes.get(m) == 0xFFFF0000 || colorCodes.get(m) == 0xFFFF8000) {
                                         holder.calendarDay.setTextColor(colorCodes.get(m));
                                     } else {
                                         holder.calendarDay.setTextColor(currentColor);
                                     }
+                                    break;
                                 case 0xFFC5FF00:  // lime
                                     if (colorCodes.get(m) == 0xFFFF0000 || colorCodes.get(m) == 0xFFFFFF00 || colorCodes.get(m) == 0xFFFF8000) {
                                         holder.calendarDay.setTextColor(colorCodes.get(m));
                                     } else {
                                         holder.calendarDay.setTextColor(currentColor);
                                     }
+                                    break;
                                 case 0xFF00FF00:  // green
                                     if (colorCodes.get(m) == 0xFFFF0000 || colorCodes.get(m) == 0xFFFFFF00 || colorCodes.get(m) == 0xFFC5FF00 || colorCodes.get(m) == 0xFFFF8000) {
                                         holder.calendarDay.setTextColor(colorCodes.get(m));

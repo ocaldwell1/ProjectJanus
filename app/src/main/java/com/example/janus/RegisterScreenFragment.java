@@ -33,10 +33,6 @@ public class RegisterScreenFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private String userFirst;
     private String userLast;
     private String userEmail;
@@ -76,12 +72,6 @@ public class RegisterScreenFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -144,8 +134,8 @@ public class RegisterScreenFragment extends Fragment {
                 Toast.makeText(getActivity(), "Successfully Registered!", Toast.LENGTH_SHORT).show();
                 // add user to fireStore function from User class
                 userID = mAuth.getCurrentUser().getUid();
-                User regUser = new User(userFirst, userLast, userEmail, userID);
-                regUser.addUserToFireStore(userFirst, userLast, userEmail, userID);
+                //User regUser = new User(userFirst, userLast, userEmail, userID); commented out to move functionality to FireDataReader
+                FireDataReader.getInstance().addUserToFireStore(userFirst, userLast, userEmail, userID);
                 navController.navigate(R.id.action_registerScreenFragment_to_regCompleteFragment);
             } else {
                 Toast.makeText(getActivity(), "Error! Cannot register!", Toast.LENGTH_SHORT).show();

@@ -45,8 +45,6 @@ public class ChatFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private String myUsername, usernameOfRoommate, emailOfRoommate, chatroomId;
     private RecyclerView recyclerView;
     private EditText messageInput;
@@ -82,11 +80,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //emailOfRoommate = getArguments().getString("EMAIL_OF_ROOMMATE", "unknown");
-       // usernameOfRoommate = getArguments().getString("EMAIL_OF_ROOMMATE", "unknown");
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        if (getArguments() != null) {
             Bundle bundle = this.getArguments();
             if (bundle != null) {
                 // emailOfRoommate = bundle.getString(EMAIL_OF_ROOMMATE, "unknown");

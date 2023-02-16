@@ -2,9 +2,13 @@ package com.example.janus;
 
 import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -13,11 +17,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,9 +46,6 @@ public class NewTaskFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private EditText taskNameEditText;
     private EditText sourceEditText;
     private Spinner weightSpinner;
@@ -66,10 +78,6 @@ public class NewTaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -103,17 +111,33 @@ public class NewTaskFragment extends Fragment {
     }
 
     public void saveTaskAndNavigateBack(View view) {
-        String taskName = taskNameEditText.getText().toString();
-        String source = sourceEditText.getText().toString();
-        int weight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
+        /**
+         * Saves the current task filled in the form and returns to the main menu page home
+         */
+
         String dueDate = dueDateEditText.getText().toString();
-        String notes = notesEditText.getText().toString();
-        //Task newTask = new Task(taskName, source, weight, dueDate, notes);
-        Task newTask = new Task(taskName, notes, weight, dueDate,source);
-        MainActivity activity = (MainActivity) requireActivity();
-        // add task
-        activity.user.addTask(newTask);
-        Log.d(TAG, "Success: Add Task");
-        Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
+        try {
+            Date due = new SimpleDateFormat("MM/dd/yyyy").parse(dueDate);
+            Date now = new Date();
+            if(due.compareTo(now) < 0) {
+                Toast.makeText(getActivity(), "Due date has passed!", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                String taskName = taskNameEditText.getText().toString();
+                String source = sourceEditText.getText().toString();
+                int weight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
+                String notes = notesEditText.getText().toString();
+                //Task newTask = new Task(taskName, source, weight, dueDate, notes);
+                Task newTask = new Task(taskName, notes, weight, dueDate,source);
+                TaskList taskList = TaskList.getInstance();
+                // add task
+                taskList.addTask(newTask);
+                Log.d(TAG, "Success: Add Task");
+                Navigation.findNavController(view).navigate(R.id.action_newTaskFragment_to_taskFragment);
+            }
+        }
+        catch (ParseException e) {
+            Toast.makeText(getActivity(), "Invalid date!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

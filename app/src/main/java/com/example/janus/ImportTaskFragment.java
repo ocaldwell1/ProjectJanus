@@ -25,7 +25,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 public class ImportTaskFragment extends Fragment {
     Button saveButton;
     EditText taskLinkText;
@@ -105,11 +104,11 @@ public class ImportTaskFragment extends Fragment {
             }
 
             // If all other checks pass, navigate back to the Edit screen for final confirmation
-            Log.d(TAG, "Here");
             taskList.addTask(newTask);
             Bundle bundle = new Bundle();
             bundle.putString("taskId", newTask.getId());
             Navigation.findNavController(view).navigate(R.id.action_importTaskFragment_to_taskDetailsFragment,bundle);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

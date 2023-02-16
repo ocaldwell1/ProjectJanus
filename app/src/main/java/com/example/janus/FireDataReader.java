@@ -116,10 +116,10 @@ public class FireDataReader {
                             String notes = data.get("taskNote").toString();
                             com.example.janus.Task newTask = new com.example.janus.Task(taskName, notes, weight, dueDate, taskSource);
                             taskList.add(newTask);
-                            Log.i("POSITION", "adding " + taskList.size());
                             newTask.setId(document.getId());
                         }
                         Collections.sort(taskList, Collections.reverseOrder());
+                        Log.d("SYNC", "populated task list");
                     }
                 });
         return taskList;

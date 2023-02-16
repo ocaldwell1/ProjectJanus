@@ -20,7 +20,6 @@ public class TaskDetailsFragment extends Fragment {
     TaskList taskList;
     Task currentTask;
     Spinner weightSpinner;
-    private String taskID;
     TextView titleNameView,taskSourceView,taskDueDateView,taskNotesView ;
 
     public TaskDetailsFragment() {
@@ -80,7 +79,7 @@ public class TaskDetailsFragment extends Fragment {
             public void onClick(View view) {
                 TaskList taskList = TaskList.getInstance();
                 // remove
-                taskList.removeTask(taskID);
+                taskList.removeTask(taskId);
                 navController.navigate(R.id.action_taskDetailsFragment_to_taskFragment);
             }
         });

@@ -28,7 +28,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarView>
         this.currentYear = currentYear;
         this.colorCodes = colorCodes;
         this.onItemListener = onItemListener;
-
     }
 
     @NonNull
@@ -59,7 +58,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarView>
             for (int i = 0; i < days.size(); i++) {
                 if ((daysOfMonth.get(position) != "")) {
                     // as loop goes through each day of month, get the date and compare to event due date
-                    currentDate = daysOfMonth.get(position) + "/" + currentMonth + "/" + currentYear;
+                    currentDate = currentMonth+ "/" + daysOfMonth.get(position) + "/" + currentYear;
                     if (currentDate.equals(eventDates.get(m))) {
                         // if current date matches event due date
                         // change color to highest priority color for that day

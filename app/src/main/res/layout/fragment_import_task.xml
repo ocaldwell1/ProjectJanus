@@ -6,13 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ImportTaskFragment">
 
-    <TextView
-        android:id="@+id/textView5"
+    <Button
+        android:id="@+id/importTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Import Task Shim"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Add Task"
+        tools:layout_editor_absoluteX="147dp"
+        tools:layout_editor_absoluteY="408dp" />
+
+    <EditText
+        android:id="@+id/taskLinkText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Insert Link Here."
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="339dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

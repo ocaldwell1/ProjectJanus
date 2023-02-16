@@ -100,7 +100,14 @@
         android:id="@+id/importTaskFragment"
         android:name="com.example.janus.ImportTaskFragment"
         android:label="fragment_import_task"
-        tools:layout="@layout/fragment_import_task" />
+        tools:layout="@layout/fragment_import_task" >
+        <action
+            android:id="@+id/action_importTaskFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment" />
+        <action
+            android:id="@+id/action_importTaskFragment_to_taskDetailsFragment"
+            app:destination="@id/taskDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/logScreenFragment"
         android:name="com.example.janus.logScreenFragment"

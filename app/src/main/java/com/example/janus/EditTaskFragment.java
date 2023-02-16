@@ -1,7 +1,6 @@
 package com.example.janus;
 
 import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,32 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditTaskFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EditTaskFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     TaskList taskList;
     Task currentTask;

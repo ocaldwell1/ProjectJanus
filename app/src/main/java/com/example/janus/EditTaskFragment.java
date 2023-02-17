@@ -155,7 +155,7 @@ public class EditTaskFragment extends Fragment {
 
         // If all other checks pass, navigate back to the Home screen
         Log.d(TAG, "Here");
-        taskList.editTask(currentTask.getId(),  taskName, source,weight,dueDate,notes);
+        taskList.editTask(currentTask.getId(), taskName, source, weight, dueDate, notes);
         Log.d(TAG, "Success: Modify Task");
 
         // TODO: Fix bug for navigating to details: Bundle Does not exist!

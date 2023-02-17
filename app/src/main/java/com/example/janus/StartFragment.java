@@ -28,11 +28,15 @@ public class StartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TaskList.getInstance().getTaskList();
-
         // Inflate the layout for this fragment
         getActivity().setTitle("Start");
         View view = inflater.inflate(R.layout.fragment_start, container, false);
+
+        // If the user is logged in, pre-load the task list
+        if(!User.isNotLoggedIn()){
+            TaskList.getInstance().getTaskList();
+        }
+
         Button startFragmentStartButton = (Button) view.findViewById(R.id.startFragmentStartButton);
         startFragmentStartButton.setOnClickListener(new View.OnClickListener() {
             @Override

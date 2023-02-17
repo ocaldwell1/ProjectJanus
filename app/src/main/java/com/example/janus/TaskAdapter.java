@@ -15,11 +15,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     //Context context;
     ArrayList<Task> taskList;
     ItemClickListener clickListener;
-    /**
-    public TaskAdapter(UpcomingTasksFragment context, ArrayList<Task> task) {
-        this.context = context;
-        this.taskList = task;
-    }**/
+
     public TaskAdapter( ArrayList<Task> task) {
       this.taskList=task;
     }
@@ -41,12 +37,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         holder.name.setText(task.getName());
         holder.name.setTextColor(task.getPriorityColor());
         Log.i("COLORS", "got color " + task.getPriorityColor());
+
+        /**
         try {
             holder.note.setText("" + task.getPriority()); //TODO change this back
         }
         catch(Exception e) {
             e.printStackTrace();
         }
+         **/
         holder.dueDate.setText(task.getDueDate());
         holder.source.setText(task.getSource());
     }
@@ -64,7 +63,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             this.name = itemView.findViewById(R.id.taskTitleName);
-            this.note = itemView.findViewById(R.id.taskNotes);
+            //this.note = itemView.findViewById(R.id.taskNotes);
             this.dueDate = itemView.findViewById(R.id.taskDueDate);
             this.source = itemView.findViewById(R.id.taskSource);
 

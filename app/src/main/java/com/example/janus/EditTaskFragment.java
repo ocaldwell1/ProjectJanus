@@ -140,7 +140,7 @@ public class EditTaskFragment extends Fragment {
             return;
         }
         else if (source.equals("")) {
-            Toast.makeText(getActivity(), "Please enter a task source. (e.g., CSCE411", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please enter a task source. (e.g., CSCE411)", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "No task source  in task");
             return;
         }
@@ -155,7 +155,7 @@ public class EditTaskFragment extends Fragment {
 
         // If all other checks pass, navigate back to the Home screen
         Log.d(TAG, "Here");
-        taskList.editTask(currentTask.getId(), taskName, notes, weight, dueDate,source);
+        taskList.editTask(currentTask.getId(),  taskName, source,weight,dueDate,notes);
         Log.d(TAG, "Success: Modify Task");
 
         // TODO: Fix bug for navigating to details: Bundle Does not exist!

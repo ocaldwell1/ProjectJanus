@@ -56,7 +56,7 @@ public class Task implements Comparable<Task>{
         Date now = new Date(System.currentTimeMillis());
         Date due = new SimpleDateFormat("MM/dd/yyyy").parse(dueDate); //duedate - now
         double timeDiff = due.getTime() - now.getTime();
-        double priority = weight * Math.pow(2, (-timeDiff + 1));
+        double priority = weight * Math.pow(2, (-(timeDiff/8.64e+7) + 1));
         if(priority > 2 || timeDiff < 0) {
             return 2;
         }

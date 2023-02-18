@@ -81,7 +81,7 @@ public class EditTaskFragment extends Fragment {
         weightSpinner = view.findViewById(R.id.newTaskWeightSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(), R.array.weights, android.R.layout.simple_spinner_item);
         weightSpinner.setAdapter(adapter);
-        weightSpinner.setSelection(currentTask.getWeight());
+        weightSpinner.setSelection(currentTask.getWeight() - 1);
 
         // Save button
         saveButton = (Button) view.findViewById(R.id.newTaskSaveButton);

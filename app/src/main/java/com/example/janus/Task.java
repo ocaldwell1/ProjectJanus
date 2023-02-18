@@ -55,8 +55,14 @@ public class Task implements Comparable<Task>{
     public double getPriority() throws ParseException {
         Date now = new Date(System.currentTimeMillis());
         Date due = new SimpleDateFormat("MM/dd/yyyy").parse(dueDate); //duedate - now
-        double timeDiff = Math.abs(due.getTime() - now.getTime());
-        return weight/(timeDiff/8.64e+7);
+        double timeDiff = due.getTime() - now.getTime();
+        double priority = weight * Math.pow(2, (-timeDiff + 1));
+        if(priority > 2 || timeDiff < 0) {
+            return 2;
+        }
+        else {
+            return priority;
+        }
     }
 
     public int compareTo(Task task) {

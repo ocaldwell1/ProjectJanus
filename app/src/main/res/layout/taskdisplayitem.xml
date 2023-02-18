@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="110dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="8dp"
     app:cardCornerRadius="8dp"
@@ -19,14 +19,16 @@
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
 
-            // This is a field
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Task Title: "
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                android:textStyle="bold"/>
+            <!--
+           <TextView
+
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Task Title: "
+               android:textColor="@color/black"
+               android:textSize="26sp"
+               android:textStyle="bold"/>
+               -->
             <TextView
                 android:id="@+id/taskTitleName"
                 android:layout_width="wrap_content"
@@ -36,15 +38,15 @@
                 android:textColor="@color/black"
                 android:textSize="26sp"
                 android:textStyle="bold"/>
-        </LinearLayout>
+     <!--   </LinearLayout>
 
-        // This is a field
-        <LinearLayout
+           <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal">-->
 
+            <!--
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,57 +54,7 @@
                 android:textColor="@color/black"
                 android:textSize="26sp"
                 android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/taskSource"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="CSCE 310 "
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <!--/** [TODO] Implement priority
-        // This is a field
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Priority : "
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/taskPriority"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layot_marginLeft="8dp"
-                android:text= "0"
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-        -->
-        // This is a field
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Due Date : "
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                android:textStyle="bold"/>
+                -->
             <TextView
                 android:id="@+id/taskDueDate"
                 android:layout_width="wrap_content"
@@ -114,7 +66,23 @@
                 android:textStyle="bold"/>
         </LinearLayout>
 
-        // This is a field
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!--
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Due Date : "
+                android:textColor="@color/black"
+                android:textSize="26sp"
+                android:textStyle="bold"/>
+                -->
+
+        <!--
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -138,6 +106,18 @@
                 android:textSize="26sp"
                 android:textStyle="bold"/>
         </LinearLayout>
+        -->
+
+        <TextView
+            android:id="@+id/taskSource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="CSCE 310 "
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

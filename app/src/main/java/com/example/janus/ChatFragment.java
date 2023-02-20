@@ -190,6 +190,7 @@ public class ChatFragment extends Fragment {
                     //  @Override
                    // public void onEvent(@androidx.annotation.Nullable DocumentSnapshot value,
                                       //  @androidx.annotation.Nullable FirebaseFirestoreException error) {
+                        // may need if other chatrooms messages still show after bundle fix
                         //messages.clear();
                         //int size for debug purposes
                         int size =0;

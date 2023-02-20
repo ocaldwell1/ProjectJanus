@@ -1,19 +1,9 @@
 package com.example.janus;
-import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
 import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -59,14 +49,21 @@ public class Task implements Comparable<Task>{
         }
 
         //TODO replace
+        //[wmenkus] this will probably never be replaced, good luck to us all
         return colorInt;
     }
 
     public double getPriority() throws ParseException {
         Date now = new Date(System.currentTimeMillis());
-        Date due = new SimpleDateFormat("dd/MM/yyyy").parse(dueDate); //duedate - now
-        double timeDiff = Math.abs(due.getTime() - now.getTime());
-        return weight/(timeDiff/8.64e+7);
+        Date due = new SimpleDateFormat("MM/dd/yyyy").parse(dueDate); //duedate - now
+        double timeDiff = due.getTime() - now.getTime();
+        double priority = weight * Math.pow(2, (-(timeDiff/8.64e+7) + 1));
+        if(priority > 2) {
+            return 2;
+        }
+        else {
+            return priority;
+        }
     }
 
     public int compareTo(Task task) {

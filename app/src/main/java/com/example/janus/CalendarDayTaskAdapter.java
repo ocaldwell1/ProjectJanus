@@ -51,8 +51,8 @@ public class CalendarDayTaskAdapter extends RecyclerView.Adapter<CalendarDayTask
     public String eventDate(String taskDate, String selectedDate){
         String day, month, year;
         String newDate = "x";
-        day = taskDate.substring(0,2);
-        month = taskDate.substring(3,5);
+        month = taskDate.substring(0,2);
+        day = taskDate.substring(3,5);
         year = taskDate.substring(6,10);
         // converting numerical month to word
         switch (month) {

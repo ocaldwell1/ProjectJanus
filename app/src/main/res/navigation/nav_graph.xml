@@ -23,6 +23,12 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.janus.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings">
+    </fragment>
+    <fragment
         android:id="@+id/calendarFragment"
         android:name="com.example.janus.CalendarFragment"
         android:label="fragment_calendar"
@@ -100,7 +106,14 @@
         android:id="@+id/importTaskFragment"
         android:name="com.example.janus.ImportTaskFragment"
         android:label="fragment_import_task"
-        tools:layout="@layout/fragment_import_task" />
+        tools:layout="@layout/fragment_import_task" >
+        <action
+            android:id="@+id/action_importTaskFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment" />
+        <action
+            android:id="@+id/action_importTaskFragment_to_taskDetailsFragment"
+            app:destination="@id/taskDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/logScreenFragment"
         android:name="com.example.janus.logScreenFragment"
@@ -178,6 +191,9 @@
             app:destination="@id/taskFragment"
             app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_startFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatInstanceFragment"

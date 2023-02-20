@@ -200,9 +200,26 @@ public class FireDataReader {
         return contactList;
     }
 
+    /**
+     * [wmenkus] getFriendRequests may require some significant refactoring on the database side, as current
+     * implementation uses emails in the database which are harder to extract than the readily available User ID and require
+     * an instance of the user. FriendRequestList must be constructed *after* the user but *before* the FriendRequestsFragment is reached.
+     */
     public ArrayList<FriendRequest> getFriendRequests() {
         ArrayList<FriendRequest> requestList = new ArrayList<>();
-
+        String userEmail = User.getInstance().getEmail();
+        db.collection("FriendRequest/" + userEmail + "/friendRequestList")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String sender = document.get("sender").toString();
+                            FriendRequest newRequest = new FriendRequest(userEmail, sender);
+                            requestList.add(newRequest);
+                        }
+                    }
+                });
         return requestList;
     }
 

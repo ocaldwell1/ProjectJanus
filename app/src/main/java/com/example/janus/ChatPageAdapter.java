@@ -16,17 +16,17 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.ArrayList;
 
 public class ChatPageAdapter extends RecyclerView.Adapter<ChatPageAdapter.ChatPageHolder> {
-    private ArrayList<User> users;
+    private ArrayList<Contact> contacts;
     private Context context;
-    private OnUserClickListener onUserClickListener;
-    public ChatPageAdapter(ArrayList<User> users, Context context, OnUserClickListener onUserClickListener) {
-        this.users = users;
+    private OnContactClickListener onContactClickListener;
+    public ChatPageAdapter(ArrayList<Contact> contacts, Context context, OnContactClickListener onContactClickListener) {
+        this.contacts = contacts;
         this.context = context;
-        this.onUserClickListener = onUserClickListener;
+        this.onContactClickListener = onContactClickListener;
     }
 
-    interface OnUserClickListener{
-        void OnUserClicked(int position);
+    interface OnContactClickListener{
+        void OnContactClicked(int position);
     }
 
     @Override
@@ -37,13 +37,13 @@ public class ChatPageAdapter extends RecyclerView.Adapter<ChatPageAdapter.ChatPa
 
     @Override
     public void onBindViewHolder(@androidx.annotation.NonNull ChatPageHolder holder, int position) {
-            holder.holder_username.setText(users.get(position).getEmail());
+            holder.holder_username.setText(contacts.get(position).getEmail());
 
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return contacts.size();
     }
 
     class ChatPageHolder extends RecyclerView.ViewHolder{
@@ -54,7 +54,7 @@ public class ChatPageAdapter extends RecyclerView.Adapter<ChatPageAdapter.ChatPa
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View view){
-                    onUserClickListener.OnUserClicked(getAdapterPosition());
+                    onContactClickListener.OnContactClicked(getAdapterPosition());
                 }
             });
             holder_username = itemView.findViewById(R.id.holder_username);

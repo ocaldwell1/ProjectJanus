@@ -24,4 +24,14 @@ public class FriendRequestList {
     public ArrayList<FriendRequest> getFriendRequests() {
         return requestList;
     }
+
+    public void accept(String sender) {
+        ContactList contactList = ContactList.getInstance();
+        contactList.add(sender);
+        fireDataReader.acceptFriendRequest(sender);
+    }
+
+    public void deny(String sender) {
+        fireDataReader.denyFriendRequest(sender);
+    }
 }

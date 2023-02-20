@@ -141,7 +141,7 @@ public class ChatPageFragment extends Fragment {
                 for(int i = 0; i < value.getDocuments().size(); i++) {
                     //first method produced errors, new one seems to solve issues
                    // contacts.add(querySnapshot.toObject(Contact.class));
-                    //change to contact, change parameters
+                    
                     contacts.add(new Contact(value.getDocuments().get(i).getString("firstName"),value.
                             getDocuments().get(i).getString("lastName"),
                             value.getDocuments().get(i).getString("email")));

@@ -200,6 +200,12 @@ public class FireDataReader {
         return contactList;
     }
 
+    public ArrayList<FriendRequest> getFriendRequests() {
+        ArrayList<FriendRequest> requestList = new ArrayList<>();
+
+        return requestList;
+    }
+
     public void signOut() {
         mAuth.signOut();
     }

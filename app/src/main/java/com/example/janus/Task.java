@@ -49,6 +49,7 @@ public class Task implements Comparable<Task>{
         }
 
         //TODO replace
+        //[wmenkus] this will probably never be replaced, good luck to us all
         return colorInt;
     }
 

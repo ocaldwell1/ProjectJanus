@@ -11,7 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,6 +28,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,11 +43,15 @@ public class ChatPageFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private RecyclerView recyclerView;
-    private ArrayList<User> users;
+    private String queryEmail;
+    private ArrayList<Contact> contacts;
     private ProgressBar progressBar;
     private ChatPageAdapter chatPageAdapter;
-    ChatPageAdapter.OnUserClickListener onUserClickListener;
+    ChatPageAdapter.OnContactClickListener onContactClickListener;
     private NavController navController;
+    private Button addFriendButton;
+    private EditText typeFriendEmail;
+    private ImageView sendIcon;
 
     public ChatPageFragment() {
         // Required empty public constructor
@@ -79,13 +90,29 @@ public class ChatPageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.recyclerview);
-        users = new ArrayList<>();
+        sendIcon = view.findViewById(R.id.sendIconForChatPage);
+        addFriendButton = view.findViewById((R.id.addFriendButton));
+        contacts = new ArrayList<>();
+        typeFriendEmail = view.findViewById(R.id.typeFriendEmail);
+        sendIcon = view.findViewById(R.id.sendIconForChatPage);
         navController = Navigation.findNavController(view);
-        onUserClickListener = new ChatPageAdapter.OnUserClickListener() {
-            public void OnUserClicked(int position) {
+
+        addFriendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            //attempts to set typeFriendEmail input to visible on click as well as give focus to it
+            public void onClick(View view) {
+                sendIcon.setVisibility(View.VISIBLE);
+                typeFriendEmail.setVisibility(View.VISIBLE);
+                typeFriendEmail.requestFocus();
+                sendIcon.setVisibility(View.VISIBLE);
+                sendIconListener();
+            }
+        });
+        onContactClickListener = new ChatPageAdapter.OnContactClickListener() {
+            public void OnContactClicked(int position) {
                 //bundle is supposed to pass data to ChatFragment
                 Bundle bundle = new Bundle();
-                //bundle.putString(NAME_OF_ROOMMATE,users.get(position).getEmail());
+                //bundle.putString(NAME_OF_ROOMMATE,contacts.get(position).getEmail());
                 bundle.putString("NAME_OF_ROOMMATE","5");
                 bundle.putString("EMAIL_OF_ROOMMATE", "5");
                 //EMAIL_OF_ROOMMATE = "5";
@@ -96,24 +123,30 @@ public class ChatPageFragment extends Fragment {
 
             }
         };
-        getUsers();
-    }
-    private void getUsers(){
-        //use if arraylist becomes duplicated after each start of app
-        users.clear();
+        getContacts();
 
-        // supposed to get users from database and convert to user class to add to array list of users
-        FirebaseFirestore.getInstance().collection("User").addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+
+    }
+    private void getContacts(){
+        //use if arraylist becomes duplicated after each start of app
+        contacts.clear();
+
+        // supposed to get contacts from database and convert to user class to add to array list of contacts
+        FirebaseFirestore.getInstance().collection("Contacts/"
+                +FirebaseAuth.getInstance().getCurrentUser().getEmail()+"/" +
+        "ContactList").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@androidx.annotation.Nullable QuerySnapshot value, @androidx.annotation.Nullable FirebaseFirestoreException error) {
                 assert value != null;
                 for(int i = 0; i < value.getDocuments().size(); i++) {
                     //first method produced errors, new one seems to solve issues
-                   // users.add(querySnapshot.toObject(User.class));
-                    /**users.add(new User(value.getDocuments().get(i).getString("userFirstName"),value.
-                            getDocuments().get(i).getString("userLastName"),
-                            value.getDocuments().get(i).getString("userEmail"),
-                            value.getDocuments().get(i).getString("userID")));
+
+                   // contacts.add(querySnapshot.toObject(Contact.class));
+                    //change to contact, change parameters
+                    contacts.add(new Contact(value.getDocuments().get(i).getString("firstName"),value.
+                            getDocuments().get(i).getString("lastName"),
+                            value.getDocuments().get(i).getString("email")));
 
                      users.add((new User(value.getDocuments().get(i).getString("userFirstName"),value.
                             getDocuments().get(i).getString("userLastName"),
@@ -121,7 +154,7 @@ public class ChatPageFragment extends Fragment {
                             value.getDocuments().get(i).getString("userID"))));
                      **/
                 }
-                chatPageAdapter = new ChatPageAdapter(users,getActivity(), onUserClickListener);
+                chatPageAdapter = new ChatPageAdapter(contacts,getActivity(), onContactClickListener);
                 recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
                 recyclerView.setAdapter((chatPageAdapter));
                 progressBar.setVisibility(View.GONE);
@@ -129,5 +162,58 @@ public class ChatPageFragment extends Fragment {
             }
 
         });
+    }
+    private void sendIconListener(){
+        //in case send icon doesnt work, try to listen for enter key
+        //if()
+        // if add friend was clicked, listen for send icon press
+
+            sendIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    queryEmail = typeFriendEmail.getText().toString();
+                    typeFriendEmail.setText("");
+                    if (Objects.equals(queryEmail, FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
+                        Toast toast = Toast.makeText(getActivity(), "This is your email", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } else {
+
+                        FirebaseFirestore.getInstance().collection("User").
+                                whereEqualTo("userEmail", queryEmail).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@androidx.annotation.Nullable QuerySnapshot value,
+                                                        @androidx.annotation.Nullable FirebaseFirestoreException error) {
+                                        //query search showed no such email, return no user w/ this email
+                                        if (value.isEmpty()) {
+                                            Toast toast = Toast.makeText(getActivity(), "Unknown email", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        } else {// checks if previous request was already sent
+                                            FirebaseFirestore.getInstance().collection("FriendRequest/" + queryEmail + "/" +
+                                                            "friendRequestList").whereEqualTo("receiver", queryEmail).whereEqualTo
+                                                            ("sender", FirebaseAuth.getInstance().getCurrentUser().getEmail()).
+                                                    addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onEvent(@androidx.annotation.Nullable QuerySnapshot value2,
+                                                                            @androidx.annotation.Nullable FirebaseFirestoreException error) {
+                                                            if (value2.isEmpty()) {
+                                                                Toast toast = Toast.makeText(getActivity(), "Request sent", Toast.LENGTH_SHORT);
+                                                                toast.show();
+                                                                FirebaseFirestore.getInstance().collection("FriendRequest/" + queryEmail
+                                                                        + "/friendRequestList").add(new FriendRequest(
+                                                                        FirebaseAuth.getInstance().getCurrentUser().getEmail(), queryEmail));
+                                                            } else {
+                                                                Toast toast = Toast.makeText(getActivity(), "Request previously sent",
+                                                                        Toast.LENGTH_SHORT);
+                                                                toast.show();
+                                                            }
+                                                        }
+                                                    });
+                                        }
+                                    }
+                                });
+                    }
+                }
+            });
+
     }
 }

@@ -8,7 +8,8 @@ public class ContactList {
     private static ContactList instance;
 
     private ContactList() {
-        //TODO make FireDataReader call to fill in contactList
+        fireDataReader = FireDataReader.getInstance();
+        contactList = fireDataReader.getContactList();
     }
 
     public static ContactList getInstance() {

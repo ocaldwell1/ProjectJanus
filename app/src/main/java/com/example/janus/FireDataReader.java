@@ -116,10 +116,10 @@ public class FireDataReader {
                             String notes = data.get("taskNote").toString();
                             com.example.janus.Task newTask = new com.example.janus.Task(taskName, notes, weight, dueDate, taskSource);
                             taskList.add(newTask);
-                            Log.i("POSITION", "adding " + taskList.size());
                             newTask.setId(document.getId());
                         }
                         Collections.sort(taskList, Collections.reverseOrder());
+                        Log.d("SYNC", "populated task list");
                     }
                 });
         return taskList;
@@ -138,7 +138,7 @@ public class FireDataReader {
         taskMap.put("taskSource", task.getSource());
         taskMap.put("userID", id);
         task.setId(documentReference.getId());
-        documentReference.set(task).addOnSuccessListener(new OnSuccessListener<Void>() {
+        documentReference.set(taskMap).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Log.d(TAG, "Success: Added Task to FireStore");
@@ -163,6 +163,41 @@ public class FireDataReader {
                         Log.w(TAG, "Error deleting document", e);
                     }
                 });
+    }
+
+    public ArrayList<Contact> getContactList() {
+        ArrayList<String> contactIds = new ArrayList<>();
+        //[wmenkus] Compound query, first gets a list of ids of contacts
+        db.collection("Contact").whereEqualTo("user1", mAuth.getCurrentUser())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for(QueryDocumentSnapshot document : task.getResult()) {
+                            contactIds.add(document.getString("user2"));
+                        }
+                    }
+                });
+        //[wmenkus] then gets the info from each user with an id on that list
+        ArrayList<Contact> contactList = new ArrayList<>();
+        for(String id : contactIds) {
+            db.collection("User").whereEqualTo("userID", id)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            for(QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> data = document.getData();
+                                String firstName = data.get("userFirstName").toString();
+                                String lastName = data.get("userLastName").toString();
+                                String email = data.get("userEmail").toString();
+                                boolean isBlocked = Boolean.parseBoolean(data.get("isBlocked").toString());
+                                contactList.add(new Contact(firstName, lastName, email, isBlocked));
+                            }
+                        }
+                    });
+        }
+        return contactList;
     }
 
     public void signOut() {

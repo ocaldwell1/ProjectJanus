@@ -29,13 +29,13 @@ public class TaskList {
     public void addTask(Task task) {
         taskList.add(task);
         sort();
-        //fireDataReader.addTaskToFireStore(task);
+        fireDataReader.addTaskToFireStore(task);
     }
 
     public void removeTask(String id) {
         Task found = getTaskById(id);
-        taskList.remove(found);
         fireDataReader.removeTaskFromFireStore(found);
+        taskList.remove(found);
         sort();
     }
 
@@ -61,8 +61,8 @@ public class TaskList {
     public void editTask(String taskId, String newName, String newSource, int newWeight, String newDueDate, String newNote) {
         Task task = getTaskById(taskId);
         task.edit(newName, newSource, newWeight, newDueDate, newNote);
-        //fireDataReader.removeTaskFromFireStore(task);
-        //fireDataReader.addTaskToFireStore(task);
+        fireDataReader.removeTaskFromFireStore(task);
+        fireDataReader.addTaskToFireStore(task);
         sort();
     }
 

@@ -36,6 +36,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recyclerview"
-        app:layout_constraintVertical_bias="0.976"></Button>
+        app:layout_constraintVertical_bias="0.878"></Button>
+
+    <EditText
+        android:id="@+id/typeFriendEmail"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/chat_input_color"
+        android:hint="Type Friend Email"
+        android:imeOptions="actionDone"
+        app:layout_constraintBottom_toTopOf="@id/addFriendButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/sendIconForChatPage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="12dp"
+        android:visibility="gone"
+        android:src="@drawable/sent_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

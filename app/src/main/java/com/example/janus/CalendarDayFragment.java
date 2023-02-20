@@ -66,6 +66,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Calendar Day");
         return inflater.inflate(R.layout.fragment_calendar_day, container, false);
     }
 
@@ -85,8 +86,8 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     public String eventDate(String taskDate, String selectedDate){
         String day, month, year;
         String newDate = "x";
-        day = taskDate.substring(0,2);
-        month = taskDate.substring(3,5);
+        month = taskDate.substring(0,2);
+        day = taskDate.substring(3,5);
         year = taskDate.substring(6,10);
         // converting numerical month to word
         switch (month) {
@@ -160,13 +161,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
 
         // Send the values of the current card to the next fragment
         Bundle bundle = new Bundle();
-        bundle.putString("taskName",taskSelected.getName());
-        bundle.putString("taskDueDate",taskSelected.getDueDate());
-        bundle.putString("taskSource",taskSelected.getSource());
-        bundle.putString("taskNotes",taskSelected.getNote());
-        bundle.putString("taskID",taskSelected.getId());
+        bundle.putString("taskId",taskSelected.getId());
         Navigation.findNavController(view).navigate(R.id.action_calendarDayFragment_to_taskDetailsFragment,bundle);
-        user = User.getInstance();
-        user.setPosition(position);
     }
 }

@@ -84,6 +84,7 @@ public class ChatPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Chat Page");
         return inflater.inflate(R.layout.fragment_chat_page, container, false);
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -140,12 +141,18 @@ public class ChatPageFragment extends Fragment {
                 assert value != null;
                 for(int i = 0; i < value.getDocuments().size(); i++) {
                     //first method produced errors, new one seems to solve issues
+
                    // contacts.add(querySnapshot.toObject(Contact.class));
                     //change to contact, change parameters
                     contacts.add(new Contact(value.getDocuments().get(i).getString("firstName"),value.
                             getDocuments().get(i).getString("lastName"),
                             value.getDocuments().get(i).getString("email")));
 
+                     users.add((new User(value.getDocuments().get(i).getString("userFirstName"),value.
+                            getDocuments().get(i).getString("userLastName"),
+                            value.getDocuments().get(i).getString("userEmail"),
+                            value.getDocuments().get(i).getString("userID"))));
+                     **/
                 }
                 chatPageAdapter = new ChatPageAdapter(contacts,getActivity(), onContactClickListener);
                 recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));

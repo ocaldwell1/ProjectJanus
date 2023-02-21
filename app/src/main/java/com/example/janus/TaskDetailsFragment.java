@@ -16,6 +16,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.text.ParseException;
+
 public class TaskDetailsFragment extends Fragment {
     TaskList taskList;
     Task currentTask;
@@ -61,7 +63,11 @@ public class TaskDetailsFragment extends Fragment {
         taskDueDateView = (TextView) view.findViewById(R.id.taskDueDate);
         taskDueDateView.setText(currentTask.getDueDate());
         taskNotesView = (TextView) view.findViewById(R.id.taskNotes);
-        taskNotesView.setText(currentTask.getNote());
+        try {
+            taskNotesView.setText("" + currentTask.getPriority()); //TODO [wmenkus] replace this with currentTask.getNote(), this has been replaced with getPriority() temporarily for debugging
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
         Button editTaskButton = (Button) view.findViewById(R.id.editTaskButton);
         Button deleteTaskButton = (Button) view.findViewById(R.id.deleteTaskButton);

@@ -50,6 +50,7 @@ public class ChatPageFragment extends Fragment {
     ChatPageAdapter.OnContactClickListener onContactClickListener;
     private NavController navController;
     private Button addFriendButton;
+    private Button friendRequestsButton;
     private EditText typeFriendEmail;
     private ImageView sendIcon;
 
@@ -91,11 +92,19 @@ public class ChatPageFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.recyclerview);
         sendIcon = view.findViewById(R.id.sendIconForChatPage);
-        addFriendButton = view.findViewById((R.id.addFriendButton));
+        addFriendButton = view.findViewById(R.id.addFriendButton);
+        friendRequestsButton = view.findViewById(R.id.chatPageFriendRequestsButton);
         contacts = new ArrayList<>();
         typeFriendEmail = view.findViewById(R.id.typeFriendEmail);
         sendIcon = view.findViewById(R.id.sendIconForChatPage);
         navController = Navigation.findNavController(view);
+
+        friendRequestsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_chatPageFragment_to_friendRequestsFragment);
+            }
+        });
 
         addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override

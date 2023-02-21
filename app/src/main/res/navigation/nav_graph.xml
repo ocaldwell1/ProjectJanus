@@ -61,6 +61,9 @@
         <action
             android:id="@+id/action_chatPageFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_chatPageFragment_to_friendRequestsFragment"
+            app:destination="@id/friendRequestsFragment" />
     </fragment>
 
     <action
@@ -211,4 +214,9 @@
             android:id="@+id/action_editTaskFragment_to_taskFragment"
             app:destination="@id/taskFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/friendRequestsFragment"
+        android:name="com.example.janus.FriendRequestsFragment"
+        android:label="fragment_friend_requests"
+        tools:layout="@layout/fragment_friend_requests" />
 </navigation>

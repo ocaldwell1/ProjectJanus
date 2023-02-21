@@ -139,26 +139,23 @@ public class ChatPageFragment extends Fragment {
             @Override
             public void onEvent(@androidx.annotation.Nullable QuerySnapshot value, @androidx.annotation.Nullable FirebaseFirestoreException error) {
                 assert value != null;
-                for(int i = 0; i < value.getDocuments().size(); i++) {
+                for (int i = 0; i < value.getDocuments().size(); i++) {
                     //first method produced errors, new one seems to solve issues
 
-                   // contacts.add(querySnapshot.toObject(Contact.class));
-                    
-                    contacts.add(new Contact(value.getDocuments().get(i).getString("firstName"),value.
-                            getDocuments().get(i).getString("lastName"),
-                            value.getDocuments().get(i).getString("email")));
+                    // contacts.add(querySnapshot.toObject(Contact.class));
 
-                     users.add((new User(value.getDocuments().get(i).getString("userFirstName"),value.
-                            getDocuments().get(i).getString("userLastName"),
-                            value.getDocuments().get(i).getString("userEmail"),
-                            value.getDocuments().get(i).getString("userID"))));
-                     **/
+                    contacts.add(new Contact(value.getDocuments().get(i).getString("firstName"), value.
+                            getDocuments().get(i).getString("lastName"),
+                            value.getDocuments().get(i).getString("email"),
+                            value.getDocuments().get(i).getBoolean("isBlocked")));
                 }
-                chatPageAdapter = new ChatPageAdapter(contacts,getActivity(), onContactClickListener);
-                recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
-                recyclerView.setAdapter((chatPageAdapter));
-                progressBar.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+
+                    chatPageAdapter = new ChatPageAdapter(contacts, getActivity(), onContactClickListener);
+                    recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
+                    recyclerView.setAdapter((chatPageAdapter));
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+
             }
 
         });

@@ -35,6 +35,7 @@ public class StartFragment extends Fragment {
         // If the user is logged in, pre-load the task list
         if(!User.isNotLoggedIn()){
             TaskList.getInstance().getTaskList();
+            User.getInstance();
         }
 
         Button startFragmentStartButton = (Button) view.findViewById(R.id.startFragmentStartButton);

@@ -84,23 +84,29 @@ public class FireDataReader {
         Map<String, Object> userData = new HashMap<>();
         if (hasUser()) {
             String userID = fUser.getUid();
-            DocumentReference documentReference = db.collection("User").document(userID);
-            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Map<String, Object> user = document.getData();
-                            userData.put("firstName", user.get("userFirstName"));
-                            userData.put("lastName", user.get("userLastName"));
-                            userData.put("email", user.get("userEmail"));
-                            userData.put("id", user.get("userID"));
+            db.collection("User").document(userID)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    Map<String, Object> user = document.getData();
+                                    userData.put("firstName", user.get("userFirstName"));
+                                    userData.put("lastName", user.get("userLastName"));
+                                    userData.put("email", user.get("userEmail"));
+                                    userData.put("id", user.get("userID"));
+                                    Log.d("REQUESTS", "user email from database: " + userData.get("email").toString());
+                                }
+                            }
+                            Log.d("REQUESTS", "here1");
                         }
-                    }
-                }
-            });
+                    });
+            Log.d("REQUESTS", "here2");
         }
+        Log.d("REQUESTS", "returning function");
+        Log.d("REQUESTS", "userData size: " + userData.size());
         return userData;
     }
 
@@ -215,17 +221,19 @@ public class FireDataReader {
      * implementation uses emails in the database which are harder to extract than the readily available User ID and require
      * an instance of the user. FriendRequestList must be constructed *after* the user but *before* the FriendRequestsFragment is reached.
      */
-    public ArrayList<FriendRequest> getFriendRequests() {
+    public ArrayList<FriendRequest> getFriendRequests() { //TODO remove logs after debugging
         ArrayList<FriendRequest> requestList = new ArrayList<>();
         String userEmail = User.getInstance().getEmail();
+        Log.d("REQUESTS", "User email: " + userEmail);
         db.collection("FriendRequest/" + userEmail + "/friendRequestList")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.d("REQUESTS", "database query results: " + task.getResult().size());
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String sender = document.get("sender").toString();
-                            FriendRequest newRequest = new FriendRequest(userEmail, sender);
+                            FriendRequest newRequest = new FriendRequest(sender, userEmail);
                             requestList.add(newRequest);
                         }
                     }

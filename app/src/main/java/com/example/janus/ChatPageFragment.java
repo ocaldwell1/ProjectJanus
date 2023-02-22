@@ -169,6 +169,7 @@ public class ChatPageFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     queryEmail = typeFriendEmail.getText().toString();
+                    if (!queryEmail.isEmpty()) {
                     typeFriendEmail.setText("");
                     if (Objects.equals(queryEmail, FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
                         Toast toast = Toast.makeText(getActivity(), "This is your email", Toast.LENGTH_SHORT);
@@ -209,7 +210,9 @@ public class ChatPageFragment extends Fragment {
                                     }
                                 });
                     }
-                }
+                    typeFriendEmail.setVisibility(View.GONE);
+                    sendIcon.setVisibility(View.GONE);
+                }}
             });
 
     }

@@ -62,7 +62,9 @@
     <EditText
         android:id="@+id/editMessageInput"
         android:hint="type message"
+        android:textColorHint="@color/white"
         android:layout_width="0dp"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"

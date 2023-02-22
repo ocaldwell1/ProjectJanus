@@ -72,7 +72,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
         }
         else {
             Button addTaskButton = (Button) view.findViewById(R.id.taskFragmentAddTaskButton);
-            logOutButton = (Button) view.findViewById(R.id.taskFragmentLogOutButton);
+            //logOutButton = (Button) view.findViewById(R.id.taskFragmentLogOutButton);
             recyclerView = view.findViewById(R.id.taskRecyclerView);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -94,14 +94,14 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
                     navController.navigate(R.id.action_taskFragment_to_addTaskFragment);
                 }
             });
-            logOutButton.setOnClickListener(new View.OnClickListener() {
+            /*logOutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     FireDataReader.getInstance().signOut();
                     Toast.makeText(getActivity(), "Logged out!", Toast.LENGTH_SHORT).show();
                     navController.navigate(R.id.action_taskFragment_to_menuFragment);
                 }
-            });
+            });*/
         }
     }
 }

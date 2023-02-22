@@ -169,6 +169,12 @@ public class FireDataReader {
                 });
     }
 
+    /**
+     * [wmenkus] This is not right at the moment (2/20/2023), it's currently trying to get isBlocked
+     * from the User database, and queries Contact using user IDs. Solve that issue (Maybe
+     * User.getInstance.getEmail?) and figure out a way to store tuples of contactEmail,
+     * isBlocked in the contactIds list
+     */
     public ArrayList<Contact> getContactList() {
         ArrayList<String> contactIds = new ArrayList<>();
         //[wmenkus] Compound query, first gets a list of ids of contacts

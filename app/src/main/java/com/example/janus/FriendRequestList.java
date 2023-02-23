@@ -26,12 +26,22 @@ public class FriendRequestList {
     }
 
     public void accept(String sender) {
+        for(FriendRequest req : requestList) {
+            if(req.getSender().equals(sender)) {
+                requestList.remove(req);
+            }
+        }
         ContactList contactList = ContactList.getInstance();
         contactList.add(sender);
         fireDataReader.acceptFriendRequest(sender);
     }
 
     public void deny(String sender) {
+        for(FriendRequest req : requestList) {
+            if(req.getSender().equals(sender)) {
+                requestList.remove(req);
+            }
+        }
         fireDataReader.denyFriendRequest(sender);
     }
 }

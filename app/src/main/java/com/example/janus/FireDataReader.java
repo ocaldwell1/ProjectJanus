@@ -184,7 +184,7 @@ public class FireDataReader {
     public ArrayList<Contact> getContactList() {
         ArrayList<String> contactIds = new ArrayList<>();
         //[wmenkus] Compound query, first gets a list of ids of contacts
-        db.collection("Contact").whereEqualTo("user1", mAuth.getCurrentUser())
+        db.collection("Contact").whereEqualTo("user1", mAuth.getCurrentUser().getUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -197,7 +197,7 @@ public class FireDataReader {
         //[wmenkus] then gets the info from each user with an id on that list
         ArrayList<Contact> contactList = new ArrayList<>();
         for(String id : contactIds) {
-            db.collection("User").whereEqualTo("userID", id)
+            db.collection("Contact").whereEqualTo("userID", id)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -243,41 +243,48 @@ public class FireDataReader {
 
     public void acceptFriendRequest(String sender) {
         //[wmenkus] first, adds information to the Contact database so that both users are registered as friends of each other
-        String userEmail = User.getInstance().getEmail();
-        //[wmenkus] adds a document with user first and then sender, read as "current user is now friends with sender"
-        DocumentReference documentReference = db.collection("Contact").document();
-        Map<String, Object> contactMap = new HashMap<>();
-        contactMap.put("user1", userEmail);
-        contactMap.put("user2", sender);
-        contactMap.put("isBlocked", false);
-        documentReference.set(contactMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Log.d(TAG, "Success: current user is now friends with sender");
-            }
-        });
-        //[wmenkus] then adds a document with sender first and then user, read as "sender is now friends with current user"
-        documentReference = db.collection("Contact").document();
-        contactMap = new HashMap<>();
-        contactMap.put("user1", sender);
-        contactMap.put("user2", userEmail);
-        contactMap.put("isBlocked", false);
-        documentReference.set(contactMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Log.d(TAG, "Success: sender is now friends with current user");
-            }
-        });
-
-        //[wmenkus] finally, removes the friend request from the database
-        db.collection("FriendRequest/" + userEmail + "/friendRequestList").whereEqualTo("sender", sender)
+        User user = User.getInstance();
+        Map<String, Object> senderData = new HashMap<>();
+        db.collection("User").whereEqualTo("userEmail", sender)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            document.getReference().delete();
+                        for(QueryDocumentSnapshot document : task.getResult()) {
+                            Map<String, Object> data = document.getData();
+                            senderData.put("firstName", data.get("userFirstName").toString());
+                            senderData.put("lastName", data.get("userLastName").toString());
+                            senderData.put("email", data.get("userEmail").toString());
+                            senderData.put("blocked", "false");
                         }
+                        String firstName = senderData.get("firstName").toString();
+                        String lastName = senderData.get("lastName").toString();
+                        String email = senderData.get("email").toString();
+                        boolean blocked = Boolean.parseBoolean(senderData.get("blocked").toString());
+                        Contact contact = new Contact(firstName, lastName, email, blocked);
+
+                        //[wmenkus] adds a document with user, read as "current user is now friends with sender"
+                        db.collection("Contact/" + user.getEmail() + "/ContactList").add(contact);
+
+                        firstName = user.getFirstName();
+                        lastName = user.getLastName();
+                        email = user.getEmail();
+                        blocked = false;
+                        contact = new Contact(firstName, lastName, email, blocked);
+
+                        //[wmenkus] adds a document with sender, read as "sender is now friends with current user"
+                        db.collection("Contact/" + sender + "/ContactList").add(contact);
+                        //[wmenkus] finally, removes the friend request from the database
+                        db.collection("FriendRequest/" + user.getEmail() + "/friendRequestList").whereEqualTo("sender", sender)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            document.getReference().delete();
+                                        }
+                                    }
+                                });
                     }
                 });
     }
@@ -304,17 +311,17 @@ public class FireDataReader {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult().getDocuments().get(0);
-                    if (document.exists()) {
-                        Map<String, Object> user = document.getData();
-                        contactData.put("firstName", user.get("userFirstName"));
-                        contactData.put("lastName", user.get("userLastName"));
-                        contactData.put("email", user.get("userEmail"));
-                    }
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Map<String, Object> user = document.getData();
+                    contactData.put("firstName", user.get("userFirstName"));
+                    contactData.put("lastName", user.get("userLastName"));
+                    contactData.put("email", user.get("userEmail"));
+                    Log.d("REQUESTS", "returning contactData of size " + contactData.size());
+                    ContactList.getInstance().addContactFromData(contactData);
                 }
             }
         });
+        Log.d("REQUESTS", "returning contactData of size " + contactData.size());
         return contactData;
     }
 

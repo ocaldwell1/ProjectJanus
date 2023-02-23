@@ -6,15 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".TaskDetailsFragment">
 
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:orientation="vertical">
+        android:layout_marginRight="16dp"
+        android:orientation="vertical"
+        android:id="@+id/textOutput">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
@@ -29,17 +30,17 @@
 
             <TextView
                 android:id="@+id/taskTitleName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:text="First Name : "
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold" />
+                android:gravity="right"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
@@ -54,17 +55,17 @@
 
             <TextView
                 android:id="@+id/taskSource"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:text="CSCE 310 "
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold" />
+                android:gravity="right"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
@@ -79,20 +80,21 @@
 
             <TextView
                 android:id="@+id/taskDueDate"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:text="10/24 "
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold" />
+                android:gravity="right" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/notesView">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -104,42 +106,38 @@
 
             <TextView
                 android:id="@+id/taskNotes"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:text="Task Notes "
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold" />
+                android:gravity="right"/>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/editTaskButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Task"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:id="@+id/deleteTaskButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Task/Mark Completed"
+            android:layout_weight="1"
+            app:layout_constraintTop_toBottomOf="@+id/editTaskButton" />
+
+        <Button
+            android:id="@+id/shareTaskButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share Task via Link"
+            android:layout_weight="1"
+            app:layout_constraintTop_toBottomOf="@+id/deleteTaskButton" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/editTaskButton"
-        android:layout_width="122dp"
-     android:layout_height="wrap_content"
-      android:layout_marginTop="350dp"
-      android:text="Edit Task" />
-
-  <Button
-      android:id="@+id/deleteTaskButton"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="400dp"
-      android:text="Delete Task/Mark Completed"
-    app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskNotes" />
-
-
-    <Button
-        android:id="@+id/shareTaskButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="450dp"
-        android:text="Share Task via Link"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/deleteTaskButton" />
 
 </FrameLayout>

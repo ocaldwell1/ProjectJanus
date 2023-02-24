@@ -53,6 +53,7 @@ public class FriendRequestsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         friendRequestList = FriendRequestList.getInstance().getFriendRequests();
+        Log.d("REQUESTS", "friendRequestList size: " + friendRequestList.size());
         recyclerView.setAdapter(new FriendRequestAdapter(friendRequestList));
     }
 }

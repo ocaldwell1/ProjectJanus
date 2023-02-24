@@ -27,7 +27,20 @@
         android:name="com.example.janus.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPassFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/menuFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
+    <fragment
+        android:id="@+id/resetPassFragment"
+        android:name="com.example.janus.ResetPasswordFragment"
+        android:label="fragment_reset_password"
+        tools:layout="@layout/fragment_reset_password"/>
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.example.janus.CalendarFragment"
@@ -61,6 +74,9 @@
         <action
             android:id="@+id/action_chatPageFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_chatPageFragment_to_friendRequestsFragment"
+            app:destination="@id/friendRequestsFragment" />
     </fragment>
 
     <action
@@ -211,4 +227,9 @@
             android:id="@+id/action_editTaskFragment_to_taskFragment"
             app:destination="@id/taskFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/friendRequestsFragment"
+        android:name="com.example.janus.FriendRequestsFragment"
+        android:label="fragment_friend_requests"
+        tools:layout="@layout/fragment_friend_requests" />
 </navigation>

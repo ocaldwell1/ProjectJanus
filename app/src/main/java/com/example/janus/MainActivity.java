@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu( Menu menu ) {
         // inflates the menu item onto action bar
         getMenuInflater().inflate(R.menu.settings_menu, menu);
+        getMenuInflater().inflate(R.menu.profile_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
     @Override

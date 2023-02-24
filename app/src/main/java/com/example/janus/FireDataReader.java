@@ -3,6 +3,7 @@ package com.example.janus;
 import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -10,7 +11,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -80,23 +84,29 @@ public class FireDataReader {
         Map<String, Object> userData = new HashMap<>();
         if (hasUser()) {
             String userID = fUser.getUid();
-            DocumentReference documentReference = db.collection("User").document(userID);
-            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Map<String, Object> user = document.getData();
-                            userData.put("firstName", user.get("userFirstName"));
-                            userData.put("lastName", user.get("userLastName"));
-                            userData.put("email", user.get("userEmail"));
-                            userData.put("id", user.get("userID"));
+            db.collection("User").document(userID)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    Map<String, Object> user = document.getData();
+                                    userData.put("firstName", user.get("userFirstName"));
+                                    userData.put("lastName", user.get("userLastName"));
+                                    userData.put("email", user.get("userEmail"));
+                                    userData.put("id", user.get("userID"));
+                                    Log.d("REQUESTS", "user email from database: " + userData.get("email").toString());
+                                }
+                            }
+                            Log.d("REQUESTS", "here1");
                         }
-                    }
-                }
-            });
+                    });
+            Log.d("REQUESTS", "here2");
         }
+        Log.d("REQUESTS", "returning function");
+        Log.d("REQUESTS", "userData size: " + userData.size());
         return userData;
     }
 
@@ -165,6 +175,12 @@ public class FireDataReader {
                 });
     }
 
+    /**
+     * [wmenkus] This is not right at the moment (2/20/2023), it's currently trying to get isBlocked
+     * from the User database, and queries Contact using user IDs. Solve that issue (Maybe
+     * User.getInstance.getEmail?) and figure out a way to store tuples of contactEmail,
+     * isBlocked in the contactIds list
+     */
     public ArrayList<Contact> getContactList() {
         ArrayList<String> contactIds = new ArrayList<>();
         //[wmenkus] Compound query, first gets a list of ids of contacts
@@ -205,17 +221,19 @@ public class FireDataReader {
      * implementation uses emails in the database which are harder to extract than the readily available User ID and require
      * an instance of the user. FriendRequestList must be constructed *after* the user but *before* the FriendRequestsFragment is reached.
      */
-    public ArrayList<FriendRequest> getFriendRequests() {
+    public ArrayList<FriendRequest> getFriendRequests() { //TODO remove logs after debugging
         ArrayList<FriendRequest> requestList = new ArrayList<>();
         String userEmail = User.getInstance().getEmail();
+        Log.d("REQUESTS", "User email: " + userEmail);
         db.collection("FriendRequest/" + userEmail + "/friendRequestList")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.d("REQUESTS", "database query results: " + task.getResult().size());
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String sender = document.get("sender").toString();
-                            FriendRequest newRequest = new FriendRequest(userEmail, sender);
+                            FriendRequest newRequest = new FriendRequest(sender, userEmail);
                             requestList.add(newRequest);
                         }
                     }
@@ -298,6 +316,35 @@ public class FireDataReader {
             }
         });
         return contactData;
+    }
+
+    // forgot password reset email function
+    public void forgotPassword(){
+
+    }
+
+    // reset/update Password function
+    public void resetPassword(String email, String oldPass, String newPass){
+        fUser = mAuth.getCurrentUser();
+        AuthCredential credential = EmailAuthProvider.getCredential(email, oldPass);
+        // asks user for credential
+        fUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    fUser.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()) {
+                                Log.d(TAG, "Password reset success.");
+                            }else{
+                                Log.d(TAG, "Password reset failed.");
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void signOut() {

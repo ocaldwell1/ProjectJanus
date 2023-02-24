@@ -205,29 +205,44 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         LocalDate firstDay = currentDate.withDayOfMonth(1);
         //Log.d(TAG, "firstDay: " + firstDay);
 
-        // this returns the day of the week which the 1st of the month will be, range 0-6
+        // this returns the day of the week which the 1st of the month will be, range 0-7
         int dayOfWeek = firstDay.getDayOfWeek().getValue();
-       // Log.d(TAG, "dayOfWeek: " + dayOfWeek);
+       Log.d(TAG, "dayOfWeek: " + dayOfWeek);
        // Log.d(TAG, "daysInMonth+dayOfWeek: " + (daysInMonth + dayOfWeek));
 
         // creating daysInMonthArray
-        for (int i = 1; i <= 38; i++) {
+        // 6 rows of 7 days = 42
+        for (int i = 1; i <= 42; i++) {
             // if i is outside range
             if (i <= dayOfWeek || i > daysInMonth + dayOfWeek) {
 
                 //Log.d(TAG, "not added: " + i);
                 // on calendar, this is the blank spaces before 1st of month and after last day of month
-                daysInMonthArray.add("");
+                if(dayOfWeek == 7 && !(i>daysInMonth+dayOfWeek)){
+                    daysInMonthArray.add("0"+i);
+                    //Log.d(TAG, "7dayofweek added: " + i);
+                }else {
+                    daysInMonthArray.add("");
+                }
             } else {
                 // if i is inside the range, begin adding day to daysInMonthArray
                 // i - dayOfWeek = day in month
+                if(dayOfWeek == 7 && i <= 31){
+                    if(i < 10){
+                        daysInMonthArray.add("0"+i);
+                    }else if(i <= 31) {
+                        daysInMonthArray.add(String.valueOf(i));
+                        //Log.d(TAG, "else if added: " + i);
+                    }
+                    continue;
+                }
                 String dateString = String.valueOf(i - dayOfWeek);
                 if ((i - dayOfWeek) < 10) {
                     // single digit days will have a 0 added, this is to compare to dueDate
                     dateString = "0" + (i - dayOfWeek);
                 }
                 daysInMonthArray.add(dateString);
-                //Log.d(TAG, "added: " + i + ", i-dayOfWeek: " + dateString);
+                Log.d(TAG, "added: " + i + ", i-dayOfWeek: " + dateString);
             }
         }
 

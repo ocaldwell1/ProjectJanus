@@ -4,66 +4,46 @@
     android:layout_height="110dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="8dp"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="30dp"
     android:layout_margin="16dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop = "8dp"
+        android:layout_marginBottom = "8dp"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!--
-           <TextView
-
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Task Title: "
-               android:textColor="@color/black"
-               android:textSize="26sp"
-               android:textStyle="bold"/>
-               -->
             <TextView
                 android:id="@+id/taskTitleName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="First Name : "
+                android:text="Task Title"
                 android:textColor="@color/black"
                 android:textSize="26sp"
                 android:textStyle="bold"/>
-     <!--   </LinearLayout>
 
-           <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">-->
-
-            <!--
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Source : "
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                android:textStyle="bold"/>
-                -->
             <TextView
                 android:id="@+id/taskDueDate"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:gravity="right"
                 android:layout_marginLeft="8dp"
-                android:text="10/24 "
+                android:text="Task Due Date"
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:textStyle="bold"/>
+                android:textStyle="italic"
+
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -71,52 +51,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
-
-            <!--
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Due Date : "
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                android:textStyle="bold"/>
-                -->
-
-        <!--
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Additional Notes : "
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/taskNotes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="Task Notes "
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-        -->
 
         <TextView
             android:id="@+id/taskSource"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="CSCE 310 "
+            android:text="Task Class/Source"
             android:textColor="@color/black"
-            android:textSize="26sp"
-            android:textStyle="bold"/>
+            android:textSize="20sp"/>
     </LinearLayout>
     </LinearLayout>
 

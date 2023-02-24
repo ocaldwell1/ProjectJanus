@@ -94,7 +94,6 @@ public class ResetPasswordFragment extends Fragment {
 
     // reset password function, will execute reset function in FireDataReader class
     public void resetPassAction(String uEmail, String oldP, String newP) {
-        User user = User.getInstance();
         // Having trouble grabbing user Data.
         Log.d(TAG, "getUserData: " + FireDataReader.getInstance().getUserData());
         // if there is no change in passwords
@@ -102,7 +101,8 @@ public class ResetPasswordFragment extends Fragment {
         Log.d(TAG, "input old: " + oldP);
         Log.d(TAG, "input new: " + newP);
         // checks if user is logged in
-        if(!User.isNotLoggedIn() && user != null) {
+        if(!User.isNotLoggedIn()) {
+            User user = User.getInstance();
             FireDataReader fireDataReader = FireDataReader.getInstance();
             if (!(uEmail.equals(user.getEmail())) || uEmail.equals("")) {
                 //Toast.makeText(getActivity(), "Error! Enter your current email.", Toast.LENGTH_LONG).show();
@@ -128,7 +128,7 @@ public class ResetPasswordFragment extends Fragment {
 
                 Toast.makeText(getActivity(), "Password has been reset!", Toast.LENGTH_SHORT).show();
                 // Navigate back to settings after resetting.
-                navController.navigate(R.id.action_resetPasswordFragment_to_settingsFragment);
+                //navController.navigate(R.id.action_resetPasswordFragment_to_settingsFragment);
             }
         }
     }

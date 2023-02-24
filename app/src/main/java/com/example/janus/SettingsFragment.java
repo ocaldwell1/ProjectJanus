@@ -82,6 +82,7 @@ public class SettingsFragment extends Fragment {
         resetPassTV = view.findViewById(R.id.settingsResetPassTV);
         logOutTV = view.findViewById(R.id.settingsLogOutTV);
 
+
         logOutTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,6 +111,10 @@ public class SettingsFragment extends Fragment {
         navController.navigate(R.id.action_settingsFragment_to_menuFragment);
         Toast.makeText(getActivity(), "Logged out!", Toast.LENGTH_SHORT).show();
 
+    }
+
+    public void changeProfileAction(){
+        navController.navigate(R.id.action_settingsFragment_to_changeProfileFragment);
     }
 
     public void openDialog() {

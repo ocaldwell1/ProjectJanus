@@ -23,6 +23,12 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
+        android:id="@+id/changePicFragment"
+        android:name="com.example.janus.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings">
+    </fragment>
+    <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.janus.SettingsFragment"
         android:label="fragment_settings"
@@ -30,6 +36,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_resetPasswordFragment"
             app:destination="@id/resetPassFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_changeProfileFragment"
+            app:destination="@id/changePicFragment" />
         <action
             android:id="@+id/action_settingsFragment_to_menuFragment"
             app:destination="@id/menuFragment"

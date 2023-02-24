@@ -1,5 +1,7 @@
 package com.example.janus;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,7 +106,10 @@ public class logScreenFragment extends Fragment {
         }
         FireDataReader fireDataReader = FireDataReader.getInstance();
         boolean success = fireDataReader.signIn(userEmail, userPass);
-        if(success) {
+        Log.d(TAG, "Logged in boolean: " + success);
+
+        //if(success) {
+        if(!User.isNotLoggedIn()){
             String message = "Logged in!";
             getLogInMessage(message);
             Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();

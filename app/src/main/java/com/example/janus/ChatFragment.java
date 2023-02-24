@@ -4,6 +4,7 @@ package com.example.janus;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,10 +43,9 @@ public class ChatFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String myUsername, usernameOfRoommate, emailOfRoommate, chatroomId;
+    private String myUsername, emailOfRoommate, chatroomId;
     private RecyclerView recyclerView;
     private EditText messageInput;
     private TextView chattingWith;
@@ -54,6 +54,7 @@ public class ChatFragment extends Fragment {
     private ImageView imageToolbar;
     private ArrayList<Message> messages;
     private MessageAdapter messageAdapter;
+    private Bundle args;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -63,55 +64,48 @@ public class ChatFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ChatFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChatFragment newInstance(String param1, String param2) {
+    /*public static ChatFragment newInstance(String email) {
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+
         ChatFragment fragment = new ChatFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        fragment.setArguments(bundle);
+
         return fragment;
     }
+    private void readBundle(Bundle bundle) {
+        if (bundle != null) {
+            emailOfRoommate = bundle.getString("email");
+        }
+    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            Bundle bundle = this.getArguments();
-            if (bundle != null) {
-                // emailOfRoommate = bundle.getString(EMAIL_OF_ROOMMATE, "unknown");
-                //usernameOfRoommate = bundle.getString(EMAIL_OF_ROOMMATE, "unknown");
-
-               // usernameOfRoommate = emailOfRoommate = EMAIL_OF_ROOMMATE = "6";
-
-            }
-
         }
-        //if (bundle != null) {
-            //emailOfRoommate = bundle.getString("EMAIL_OF_ROOMMATE", "unknown");
-            //usernameOfRoommate = bundle.getString("EMAIL_OF_ROOMMATE", "unknown");
 
 
-        //} */
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getParentFragmentManager().setFragmentResultListener("EMAIL_OF_ROOMMATE", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@androidx.annotation.NonNull String requestKey, @androidx.annotation.NonNull Bundle result) {
+                emailOfRoommate = result.getString("EMAIL_OF_ROOMMATE");
+            }
+        });
         return inflater.inflate(R.layout.fragment_chat, container, false);
+
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //initializes variables to respective xml layout counterparts
         myUsername = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        usernameOfRoommate = "test@test.com";
-        //emailOfRoommate = getArguments().getString("EMAIL_OF_ROOMMATE", "unknown");
-       // usernameOfRoommate = getArguments().getString("EMAIL_OF_ROOMMATE", "unknown");
         recyclerView = view.findViewById(R.id.recyclerchat);
         messageInput = view.findViewById(R.id.editMessageInput);
         chattingWith = view.findViewById(R.id.ChattingWith);
@@ -129,7 +123,7 @@ public class ChatFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FirebaseFirestore.getInstance().collection("messages/"+chatroomId+"/messageList").add(new Message(FirebaseAuth.getInstance().getCurrentUser()
-                                .getEmail(), usernameOfRoommate, messageInput.getText().toString()
+                                .getEmail(), emailOfRoommate, messageInput.getText().toString()
 
                         ));
                 //messages.add(new Message(FirebaseAuth.getInstance().getCurrentUser()
@@ -162,14 +156,15 @@ public class ChatFragment extends Fragment {
                         else{
                             chatroomId = "4";
                         }*/
-                        if(usernameOfRoommate.compareTo(myUsername) > 0) {
-                            chatroomId = myUsername + usernameOfRoommate;
+
+                        if(emailOfRoommate.compareTo(myUsername) > 0) {
+                            chatroomId = myUsername + emailOfRoommate;
                         }
-                        else if(usernameOfRoommate.compareTo(myUsername) == 0) {
-                            chatroomId = myUsername + usernameOfRoommate;
+                        else if(emailOfRoommate.compareTo(myUsername) == 0) {
+                            chatroomId = myUsername + emailOfRoommate;
                         }
                         else{
-                            chatroomId = usernameOfRoommate + myUsername;
+                            chatroomId = emailOfRoommate + myUsername;
                         }
                         attachMessageListener(chatroomId);
                     }

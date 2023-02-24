@@ -1,8 +1,11 @@
 package com.example.janus;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -102,6 +105,10 @@ public class ChatPageFragment extends Fragment {
             //attempts to set typeFriendEmail input to visible on click as well as give focus to it
             public void onClick(View view) {
                 sendIcon.setVisibility(View.VISIBLE);
+                //below command attempts to make list of contacts disappear iff add friend button is pressed
+                //it disappears, but also makes virtual keyboard hide other bottom buttons like send
+                // need to add contraints to other elements in case recycler is invisible?
+                // recyclerView.setVisibility(View.GONE);
                 typeFriendEmail.setVisibility(View.VISIBLE);
                 typeFriendEmail.requestFocus();
                 sendIcon.setVisibility(View.VISIBLE);
@@ -112,14 +119,11 @@ public class ChatPageFragment extends Fragment {
             public void OnContactClicked(int position) {
                 //bundle is supposed to pass data to ChatFragment
                 Bundle bundle = new Bundle();
-                //bundle.putString(NAME_OF_ROOMMATE,contacts.get(position).getEmail());
-                bundle.putString("NAME_OF_ROOMMATE","5");
-                bundle.putString("EMAIL_OF_ROOMMATE", "5");
-                //EMAIL_OF_ROOMMATE = "5";
-                //NAME_OF_ROOMMATE = "5";
-                setArguments(bundle);
-
-                Navigation.findNavController(view).navigate(R.id.action_chatPageFragment_to_chatFragment) ;
+                bundle.putString("EMAIL_OF_ROOMMATE", contacts.get(position).getEmail());
+                ChatFragment chatFragment = new ChatFragment();
+                chatFragment.setArguments(bundle);
+                getParentFragmentManager().setFragmentResult("EMAIL_OF_ROOMMATE", bundle);
+                Navigation.findNavController(view).navigate(R.id.action_chatPageFragment_to_chatFragment);
 
             }
         };
@@ -132,10 +136,9 @@ public class ChatPageFragment extends Fragment {
         //use if arraylist becomes duplicated after each start of app
         contacts.clear();
 
-        // supposed to get contacts from database and convert to user class to add to array list of contacts
-        FirebaseFirestore.getInstance().collection("Contacts/"
-                +FirebaseAuth.getInstance().getCurrentUser().getEmail()+"/" +
-        "ContactList").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        // supposed to get contacts from database and convert to contact class to add to array list of contacts
+        FirebaseFirestore.getInstance().collection("Contact/"+FirebaseAuth.getInstance().getCurrentUser()
+                .getEmail()+"/ContactList").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@androidx.annotation.Nullable QuerySnapshot value, @androidx.annotation.Nullable FirebaseFirestoreException error) {
                 assert value != null;
@@ -147,7 +150,7 @@ public class ChatPageFragment extends Fragment {
                     contacts.add(new Contact(value.getDocuments().get(i).getString("firstName"), value.
                             getDocuments().get(i).getString("lastName"),
                             value.getDocuments().get(i).getString("email"),
-                            value.getDocuments().get(i).getBoolean("isBlocked")));
+                            value.getDocuments().get(i).getBoolean("blocked")));
                 }
 
                     chatPageAdapter = new ChatPageAdapter(contacts, getActivity(), onContactClickListener);
@@ -161,8 +164,6 @@ public class ChatPageFragment extends Fragment {
         });
     }
     private void sendIconListener(){
-        //in case send icon doesnt work, try to listen for enter key
-        //if()
         // if add friend was clicked, listen for send icon press
 
             sendIcon.setOnClickListener(new View.OnClickListener() {
@@ -210,10 +211,14 @@ public class ChatPageFragment extends Fragment {
                                     }
                                 });
                     }
+
+                }
                     typeFriendEmail.setVisibility(View.GONE);
                     sendIcon.setVisibility(View.GONE);
-                }}
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
             });
 
     }
+
 }

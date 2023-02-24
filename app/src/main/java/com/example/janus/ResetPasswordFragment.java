@@ -118,17 +118,17 @@ public class ResetPasswordFragment extends Fragment {
                 newPass.requestFocus();
             } else if (oldP.equals(newP)) {
                 //Toast.makeText(getActivity(), "Error! Password is the same as before.", Toast.LENGTH_LONG).show();
-                newPass.requestFocus();
                 newPass.setError("Error! Password is the same as before.");
-                // Trying to grab user email and compare to user input
-                // if the email does not match the current user email
+                newPass.requestFocus();
             } else {
                 Log.d(TAG, "Password reset here!");
                 fireDataReader.resetPassword(uEmail, oldP, newP);
 
                 Toast.makeText(getActivity(), "Password has been reset!", Toast.LENGTH_SHORT).show();
                 // Navigate back to settings after resetting.
-                //navController.navigate(R.id.action_resetPasswordFragment_to_settingsFragment);
+                // Right now this will navigate regardless of a successful password reset
+                // Need to implement check successful reset and then navigate
+                navController.navigate(R.id.action_resetPasswordFragment_to_settingsFragment);
             }
         }
     }

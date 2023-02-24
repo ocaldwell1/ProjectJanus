@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             R.id.forgotPasswordFragment,
             R.id.menuFragment,
             R.id.startFragment,
-            R.id.settingsFragment,
+            //R.id.settingsFragment, // Will need bot nav
             R.id.changePicFragment,
             R.id.resetPassFragment
     };

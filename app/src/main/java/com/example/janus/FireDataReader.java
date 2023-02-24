@@ -52,6 +52,7 @@ public class FireDataReader {
     }
 
     public boolean signIn(String email, String password) {
+        // added this check as there was errors when clicking log in with null inputs
         if(!email.equals("") && !password.equals("")) {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -331,8 +332,7 @@ public class FireDataReader {
     // reset/update Password function
     public void resetPassword(String email, String oldPass, String newPass) {
         fUser = mAuth.getCurrentUser();
-        User user = User.getInstance();
-        if (!(email.equals("")) && !(oldPass.equals("")) && !(newPass.equals(""))) {
+        if (hasUser() && !(email.equals("")) && !(oldPass.equals("")) && !(newPass.equals(""))) {
 
             AuthCredential credential = EmailAuthProvider.getCredential(email, oldPass);
             Log.d(TAG, "credential: " + credential);
@@ -346,7 +346,8 @@ public class FireDataReader {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         Log.d(TAG, "ReAuthentication and Password update success.");
-                                        signOut();
+                                        // Plan to implement sign out
+                                        //signOut();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -368,6 +369,9 @@ public class FireDataReader {
 
     public void signOut() {
         mAuth.signOut();
-        fUser = null;
+        // this should be null
+        fUser = mAuth.getCurrentUser();
+        Log.d(TAG, "signOut 1: " + mAuth.getCurrentUser());
+        Log.d(TAG, "signOut 2: " + User.isNotLoggedIn());
     }
 }

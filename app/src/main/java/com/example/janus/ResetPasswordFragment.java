@@ -80,12 +80,12 @@ public class ResetPasswordFragment extends Fragment {
         oldPass = view.findViewById(R.id.editTextOldPassword);
         newPass = view.findViewById(R.id.editTextNewPassword);
         submitButton = view.findViewById(R.id.resetPassSubmitButton);
-        String userEmail = email.toString();
-        String userOldPass = oldPass.toString();
-        String userNewPass = newPass.toString();
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String userEmail = email.getText().toString();
+                String userOldPass = oldPass.getText().toString();
+                String userNewPass = newPass.getText().toString();
                 resetPassAction(userEmail, userOldPass, userNewPass);
             }
         });
@@ -94,18 +94,42 @@ public class ResetPasswordFragment extends Fragment {
 
     // reset password function, will execute reset function in FireDataReader class
     public void resetPassAction(String uEmail, String oldP, String newP) {
+        User user = User.getInstance();
         // Having trouble grabbing user Data.
         Log.d(TAG, "getUserData: " + FireDataReader.getInstance().getUserData());
         // if there is no change in passwords
-        if(oldP.equals(newP)){
-            Toast.makeText(getActivity(), "Password is the same as before.", Toast.LENGTH_LONG).show();
-            // Trying to grab user email and compare to user input
-            // if the email does not match the current user email
-        }else if(!(uEmail.equals(User.getInstance().getEmail()))){
-            Log.d(TAG, "email: " + User.getInstance().getEmail());
-            Toast.makeText(getActivity(), "Error! Enter your current email.", Toast.LENGTH_LONG).show();
-        }else{
-            FireDataReader.getInstance().resetPassword(uEmail, oldP, newP);
+        Log.d(TAG, "input email: " + uEmail);
+        Log.d(TAG, "input old: " + oldP);
+        Log.d(TAG, "input new: " + newP);
+        // checks if user is logged in
+        if(!User.isNotLoggedIn() && user != null) {
+            FireDataReader fireDataReader = FireDataReader.getInstance();
+            if (!(uEmail.equals(user.getEmail())) || uEmail.equals("")) {
+                //Toast.makeText(getActivity(), "Error! Enter your current email.", Toast.LENGTH_LONG).show();
+                email.setError("Error! Enter your current email.");
+                email.requestFocus();
+                // check if email pattern
+            } else if (oldP.length() < 8 || oldP.equals("")) {
+                //Toast.makeText(getActivity(), "Error! Passwords need to be at least 8 characters.", Toast.LENGTH_LONG).show();
+                oldPass.setError("Error! Passwords need to be at least 8 characters.");
+                oldPass.requestFocus();
+            } else if (newP.equals("") || newP.length() < 8) {
+                newPass.setError("Error! Passwords need to be at least 8 characters.");
+                newPass.requestFocus();
+            } else if (oldP.equals(newP)) {
+                //Toast.makeText(getActivity(), "Error! Password is the same as before.", Toast.LENGTH_LONG).show();
+                newPass.requestFocus();
+                newPass.setError("Error! Password is the same as before.");
+                // Trying to grab user email and compare to user input
+                // if the email does not match the current user email
+            } else {
+                Log.d(TAG, "Password reset here!");
+                fireDataReader.resetPassword(uEmail, oldP, newP);
+
+                Toast.makeText(getActivity(), "Password has been reset!", Toast.LENGTH_SHORT).show();
+                // Navigate back to settings after resetting.
+                navController.navigate(R.id.action_resetPasswordFragment_to_settingsFragment);
+            }
         }
     }
 

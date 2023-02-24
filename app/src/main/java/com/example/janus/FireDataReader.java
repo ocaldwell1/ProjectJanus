@@ -324,27 +324,40 @@ public class FireDataReader {
     }
 
     // reset/update Password function
-    public void resetPassword(String email, String oldPass, String newPass){
+    public void resetPassword(String email, String oldPass, String newPass) {
         fUser = mAuth.getCurrentUser();
-        AuthCredential credential = EmailAuthProvider.getCredential(email, oldPass);
-        // asks user for credential
-        fUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    fUser.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()) {
-                                Log.d(TAG, "Password reset success.");
-                            }else{
-                                Log.d(TAG, "Password reset failed.");
-                            }
-                        }
-                    });
-                }
-            }
-        });
+        User user = User.getInstance();
+        if (!(email.equals("")) && !(oldPass.equals("")) && !(newPass.equals(""))) {
+
+            AuthCredential credential = EmailAuthProvider.getCredential(email, oldPass);
+            Log.d(TAG, "credential: " + credential);
+            // asks user for credential
+            fUser.reauthenticate(credential)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        // if successful, update the password
+                        fUser.updatePassword(newPass).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d(TAG, "ReAuthentication and Password update success.");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d(TAG, "Password update failed.");
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "ReAuthentication failed. Incorrect password.");
+                    }
+                });
+        }
     }
 
     public void signOut() {

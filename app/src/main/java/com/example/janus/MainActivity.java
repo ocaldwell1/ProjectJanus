@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
             R.id.forgotEmailFragment,
             R.id.forgotPasswordFragment,
             R.id.menuFragment,
-            R.id.startFragment
+            R.id.startFragment,
+            R.id.settingsFragment
     };
 
     protected void onStart() {
@@ -62,6 +63,22 @@ public class MainActivity extends AppCompatActivity {
             navController.popBackStack(item.getItemId(), false);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        MenuItem settings = menu.findItem(R.id.settingsFragment);
+        MenuItem profile = menu.findItem(R.id.menu_item_profile);
+        if(!User.isNotLoggedIn())
+        {
+            settings.setVisible(true);
+            profile.setVisible(true);
+        }else
+        {
+            settings.setVisible(false);
+            profile.setVisible(false);
+        }
+        return true;
     }
 
     @Override

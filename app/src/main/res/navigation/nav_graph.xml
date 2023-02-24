@@ -40,7 +40,12 @@
         android:id="@+id/resetPassFragment"
         android:name="com.example.janus.ResetPasswordFragment"
         android:label="fragment_reset_password"
-        tools:layout="@layout/fragment_reset_password"/>
+        tools:layout="@layout/fragment_reset_password">
+    <action
+        android:id="@+id/action_resetPasswordFragment_to_settingsFragment"
+        app:destination="@id/settingsFragment"
+        />
+    </fragment>
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.example.janus.CalendarFragment"

@@ -151,8 +151,8 @@ public class ChatPageFragment extends Fragment {
                 bundle.putString("EMAIL_OF_ROOMMATE", contacts.get(position).getEmail());
                 ChatFragment chatFragment = new ChatFragment();
                 chatFragment.setArguments(bundle);
-                getParentFragmentManager().setFragmentResult("EMAIL_OF_ROOMMATE", bundle);
-                Navigation.findNavController(view).navigate(R.id.action_chatPageFragment_to_chatFragment);
+
+                Navigation.findNavController(view).navigate(R.id.action_chatPageFragment_to_chatFragment, bundle);
 
             }
         };
@@ -311,7 +311,8 @@ public class ChatPageFragment extends Fragment {
                     for(int i = 0; i < receiverEmails.size();i++){
                         concatEmails+=receiverEmails.get(i);
                     }
-                    Log.d("concat", concatEmails);
+                    //FirebaseFirestore.getInstance().collection("Contact/"+FirebaseAuth.getInstance().getCurrentUser().getEmail()+
+                            //"/ContactList").add(new Contact())
                     Toast toast = Toast.makeText(getActivity(), "Groupchat being made", Toast.LENGTH_SHORT);
                     toast.show();
 

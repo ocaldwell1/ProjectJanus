@@ -97,6 +97,7 @@ public class ChatPageFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_chat_page, container, false);
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        concatEmails = "";
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.recyclerview);
         sendIcon = view.findViewById(R.id.sendIconForChatPage);
@@ -295,7 +296,6 @@ public class ChatPageFragment extends Fragment {
                 set.addAll(receiverEmails);
                 receiverEmails.clear();
                 receiverEmails.addAll(set);
-
                 // No people added before done being pressed
                 if(receiverEmails.size() == 0){
                     Toast toast = Toast.makeText(getActivity(), "No names to make group chat", Toast.LENGTH_SHORT);
@@ -306,9 +306,13 @@ public class ChatPageFragment extends Fragment {
                     toast.show();
                 }
                 else{
-
+                    for(int i = 0; i < receiverEmails.size();i++){
+                        concatEmails+=receiverEmails.get(i);
+                    }
+                    Log.d("concat", concatEmails);
                     Toast toast = Toast.makeText(getActivity(), "Groupchat being made", Toast.LENGTH_SHORT);
                     toast.show();
+
                 }
                 typeFriendEmail.setVisibility(View.GONE);
                 done.setVisibility(View.GONE);

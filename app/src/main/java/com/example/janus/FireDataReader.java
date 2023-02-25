@@ -52,14 +52,20 @@ public class FireDataReader {
     }
 
     public boolean signIn(String email, String password) {
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
-                    fUser = mAuth.getCurrentUser();
+        // added this check as there was errors when clicking log in with null inputs
+        if(!email.equals("") && !password.equals("")) {
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Sign in is successful");
+                        fUser = mAuth.getCurrentUser();
+                    }else{
+                        Log.d(TAG, "Sign in is not successful");
+                    }
                 }
-            }
-        });
+            });
+        }
         return hasUser();
     }
 
@@ -100,10 +106,10 @@ public class FireDataReader {
                                     Log.d("REQUESTS", "user email from database: " + userData.get("email").toString());
                                 }
                             }
-                            Log.d("REQUESTS", "here1");
+                            Log.d("REQUESTS", "getUserData here1");
                         }
                     });
-            Log.d("REQUESTS", "here2");
+            Log.d("REQUESTS", "getUserData here2");
         }
         Log.d("REQUESTS", "returning function");
         Log.d("REQUESTS", "userData size: " + userData.size());
@@ -112,26 +118,26 @@ public class FireDataReader {
 
     public ArrayList<com.example.janus.Task> getTaskList() {
         ArrayList<com.example.janus.Task> taskList = new ArrayList<>();
-        db.collection("Task").whereEqualTo("userID", fUser.getUid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
-                        for(QueryDocumentSnapshot document : task.getResult()) {
-                            Map<String, Object> data = document.getData();
-                            String taskName = data.get("taskName").toString();
-                            String taskSource = data.get("taskSource").toString();
-                            int weight = Math.toIntExact( (Long) data.get("taskWeight"));
-                            String dueDate = data.get("taskDueDate").toString();
-                            String notes = data.get("taskNote").toString();
-                            com.example.janus.Task newTask = new com.example.janus.Task(taskName, notes, weight, dueDate, taskSource);
-                            taskList.add(newTask);
-                            newTask.setId(document.getId());
+            db.collection("Task").whereEqualTo("userID", fUser.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull com.google.android.gms.tasks.Task<QuerySnapshot> task) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> data = document.getData();
+                                String taskName = data.get("taskName").toString();
+                                String taskSource = data.get("taskSource").toString();
+                                int weight = Math.toIntExact((Long) data.get("taskWeight"));
+                                String dueDate = data.get("taskDueDate").toString();
+                                String notes = data.get("taskNote").toString();
+                                com.example.janus.Task newTask = new com.example.janus.Task(taskName, notes, weight, dueDate, taskSource);
+                                taskList.add(newTask);
+                                newTask.setId(document.getId());
+                            }
+                            Collections.sort(taskList, Collections.reverseOrder());
+                            Log.d("SYNC", "populated task list");
                         }
-                        Collections.sort(taskList, Collections.reverseOrder());
-                        Log.d("SYNC", "populated task list");
-                    }
-                });
+                    });
         return taskList;
     }
 
@@ -324,30 +330,48 @@ public class FireDataReader {
     }
 
     // reset/update Password function
-    public void resetPassword(String email, String oldPass, String newPass){
+    public void resetPassword(String email, String oldPass, String newPass) {
         fUser = mAuth.getCurrentUser();
-        AuthCredential credential = EmailAuthProvider.getCredential(email, oldPass);
-        // asks user for credential
-        fUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    fUser.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()) {
-                                Log.d(TAG, "Password reset success.");
-                            }else{
-                                Log.d(TAG, "Password reset failed.");
-                            }
-                        }
-                    });
-                }
-            }
-        });
+        if (hasUser() && !(email.equals("")) && !(oldPass.equals("")) && !(newPass.equals(""))) {
+
+            AuthCredential credential = EmailAuthProvider.getCredential(email, oldPass);
+            Log.d(TAG, "credential: " + credential);
+            // asks user for credential
+            fUser.reauthenticate(credential)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        // if successful, update the password
+                        fUser.updatePassword(newPass).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d(TAG, "ReAuthentication and Password update success.");
+                                        // Plan to implement sign out
+                                        //signOut();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d(TAG, "Password update failed.");
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "ReAuthentication failed. Incorrect password.");
+                    }
+                });
+        }
     }
 
     public void signOut() {
         mAuth.signOut();
+        // this should be null
+        fUser = mAuth.getCurrentUser();
+        Log.d(TAG, "signOut 1: " + mAuth.getCurrentUser());
+        Log.d(TAG, "signOut 2: " + User.isNotLoggedIn());
     }
 }

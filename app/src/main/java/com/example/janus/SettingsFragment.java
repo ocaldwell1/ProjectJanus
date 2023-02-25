@@ -36,7 +36,7 @@ public class SettingsFragment extends Fragment {
 
     private NavController navController;
     private Button button;
-    private TextView resetPassTV, logOutTV;
+    private TextView resetPassTV, logOutTV, changePicTV;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -81,6 +81,7 @@ public class SettingsFragment extends Fragment {
 
         resetPassTV = view.findViewById(R.id.settingsResetPassTV);
         logOutTV = view.findViewById(R.id.settingsLogOutTV);
+        changePicTV = view.findViewById(R.id.settingsChangePicTV);
 
         logOutTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +93,12 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 resetPassAction();
-                //openDialog();
+            }
+        });
+        changePicTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePicAction();
             }
         });
     }
@@ -110,6 +116,9 @@ public class SettingsFragment extends Fragment {
         navController.navigate(R.id.action_settingsFragment_to_menuFragment);
         Toast.makeText(getActivity(), "Logged out!", Toast.LENGTH_SHORT).show();
 
+    }
+    public void changePicAction(){
+        navController.navigate(R.id.action_settingsFragment_to_changeProfileFragment);
     }
 
     public void openDialog() {

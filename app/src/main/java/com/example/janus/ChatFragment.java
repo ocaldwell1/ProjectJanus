@@ -99,9 +99,7 @@ public class ChatFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FirebaseFirestore.getInstance().collection("messages/"+chatroomId+"/messageList").add(
-                        new Message(FirebaseAuth.getInstance().getCurrentUser()
-
-                                .getEmail(),
+                        new Message(FirebaseAuth.getInstance().getCurrentUser().getEmail(),
                                 messageInput.getText().toString()));
 
 
@@ -141,6 +139,7 @@ public class ChatFragment extends Fragment {
         // [wmenkus] if there are multiple emails, it's a group chat and already works as a
         // chatroomId
         if(numOfEmails > 2) {
+
             chatroomId = emailOfRoommate;
             return chatroomId;
         }
@@ -168,11 +167,6 @@ public class ChatFragment extends Fragment {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@androidx.annotation.Nullable QuerySnapshot value, @androidx.annotation.Nullable FirebaseFirestoreException error) {
-
-
-
-
-
                         //int size for debug purposes
                         int size =0;
                         for(DocumentChange dc: value.getDocumentChanges()) {

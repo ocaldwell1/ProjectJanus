@@ -108,8 +108,6 @@ public class ChatPageFragment extends Fragment {
         contacts = new ArrayList<>();
         receiverEmails = new ArrayList<>();
         typeFriendEmail = view.findViewById(R.id.typeFriendEmail);
-        //typeFriendEmailForGroup = view.findViewById(R.id.typeFriendEmailForGroup);
-        sendIcon = view.findViewById(R.id.sendIconForChatPage);
         navController = Navigation.findNavController(view);
 
         friendRequestsButton.setOnClickListener(new View.OnClickListener() {

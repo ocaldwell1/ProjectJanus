@@ -100,9 +100,8 @@ public class ChatFragment extends Fragment {
             public void onClick(View view) {
                 FirebaseFirestore.getInstance().collection("messages/"+chatroomId+"/messageList").add(
                         new Message(FirebaseAuth.getInstance().getCurrentUser()
-                                .getEmail(), emailOfRoommate,
+                                .getEmail(),
                                 messageInput.getText().toString()));
-
 
                 messageInput.setText(""); //clears previous message after send
             }
@@ -111,28 +110,50 @@ public class ChatFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(messageAdapter);
 
-        setUpChatroom();
+        setUpChatroom(getChatroomId());
     }
-    private void setUpChatroom() {
+    private void setUpChatroom(String chatroomId) {
         FirebaseFirestore.getInstance().collection("user").document(FirebaseAuth.getInstance().getUid())
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@androidx.annotation.Nullable DocumentSnapshot value,
                                         @androidx.annotation.Nullable FirebaseFirestoreException error) {
-
-
-                        if(emailOfRoommate.compareTo(myUsername) > 0) {
-                            chatroomId = myUsername + emailOfRoommate;
-                        }
-                        else if(emailOfRoommate.compareTo(myUsername) == 0) {
-                            chatroomId = myUsername + emailOfRoommate;
-                        }
-                        else{
-                            chatroomId = emailOfRoommate + myUsername;
-                        }
                         attachMessageListener(chatroomId);
                     }
                 });
+    }
+
+    private String getChatroomId() {
+        String chatroomId;
+
+        // [wmenkus] first gets the number of emails in "emailOfRoommate," which will be multiple if
+        // it's a group chat
+        int numOfEmails = 0;
+        for(int i = 0; i < emailOfRoommate.length(); i++) {
+            if(emailOfRoommate.charAt(i) == '@') {
+                numOfEmails++;
+            }
+        }
+
+        // [wmenkus] if there are multiple emails, it's a group chat and already works as a
+        // chatroomId
+        if(numOfEmails > 2) {
+            chatroomId = emailOfRoommate;
+            return chatroomId;
+        }
+
+        // [wmenkus] otherwise, create a chatroomId by concatenating the user's email with
+        // the friend's email in alphabetical order
+        if(emailOfRoommate.compareTo(myUsername) > 0) {
+            chatroomId = myUsername + emailOfRoommate;
+        }
+        else if(emailOfRoommate.compareTo(myUsername) == 0) {
+            chatroomId = myUsername + emailOfRoommate;
+        }
+        else{
+            chatroomId = emailOfRoommate + myUsername;
+        }
+        return chatroomId;
     }
 
     //checks for when messages change/ notifies user of message being received
@@ -151,7 +172,7 @@ public class ChatFragment extends Fragment {
                         //int size for debug purposes
                         int size =0;
                         for(DocumentChange dc: value.getDocumentChanges()) {
-                            messages.add(new Message(dc.getDocument().get("sender").toString(), dc.getDocument().get("receiver").toString(),
+                            messages.add(new Message(dc.getDocument().get("sender").toString(),
                                     dc.getDocument().get("content").toString()));
                             size++;
                                     Log.d("myTag", String.valueOf(size));

@@ -311,9 +311,12 @@ public class ChatPageFragment extends Fragment {
                     for(int i = 0; i < receiverEmails.size();i++){
                         concatEmails+=receiverEmails.get(i);
                     }
-                    //FirebaseFirestore.getInstance().collection("Contact/"+FirebaseAuth.getInstance().getCurrentUser().getEmail()+
-                            //"/ContactList").add(new Contact())
+
+                    concatEmails += User.getInstance().getEmail();
+                    Log.d("concat", concatEmails);
+
                     Toast toast = Toast.makeText(getActivity(), "Groupchat being made", Toast.LENGTH_SHORT);
+                    ContactList.getInstance().addGroupChat(concatEmails, receiverEmails);
                     toast.show();
 
 

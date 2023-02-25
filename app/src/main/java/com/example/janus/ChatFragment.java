@@ -98,7 +98,7 @@ public class ChatFragment extends Fragment {
             public void onClick(View view) {
                 FirebaseFirestore.getInstance().collection("messages/"+chatroomId+"/messageList").add(
                         new Message(FirebaseAuth.getInstance().getCurrentUser()
-                                .getEmail(), emailOfRoommate, messageInput.getText().toString(), Timestamp.now()
+                                .getEmail(), messageInput.getText().toString(), Timestamp.now()
 
                         ));
 
@@ -175,7 +175,7 @@ public class ChatFragment extends Fragment {
                         //int size for debug purposes
                         int size =0;
                         for(DocumentChange dc: value.getDocumentChanges()) {
-                            messages.add(new Message(dc.getDocument().get("sender").toString(), dc.getDocument().get("receiver").toString(),
+                            messages.add(new Message(dc.getDocument().get("sender").toString(),
                                     dc.getDocument().get("content").toString(),
                                     (Timestamp) dc.getDocument().get("timestamp"))); size++;
                                     Log.d("myTag", String.valueOf(size));

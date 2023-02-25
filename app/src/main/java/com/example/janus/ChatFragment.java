@@ -107,7 +107,8 @@ public class ChatFragment extends Fragment {
         messageAdapter = new MessageAdapter(messages,getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(messageAdapter);
-        setUpChatroom(getChatroomId());
+        chatroomId = getChatroomId();
+        setUpChatroom(chatroomId);
     }
     private void setUpChatroom(String chatroomId) {
         FirebaseFirestore.getInstance().collection("user").document(FirebaseAuth.getInstance().getUid())

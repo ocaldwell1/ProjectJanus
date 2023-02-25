@@ -30,13 +30,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/ChattingWith"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_gravity="center"
-            />
 
     </LinearLayout>
 
@@ -62,7 +55,9 @@
     <EditText
         android:id="@+id/editMessageInput"
         android:hint="type message"
+        android:textColorHint="@color/white"
         android:layout_width="0dp"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"

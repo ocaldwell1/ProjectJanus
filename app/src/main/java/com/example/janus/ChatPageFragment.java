@@ -126,6 +126,7 @@ public class ChatPageFragment extends Fragment {
                 typeFriendEmail.requestFocus();
                 addFriendButton.setVisibility(View.GONE);
                 sendIconListener2();
+                doneIconListener();
             }
         });
         addFriendButton.setOnClickListener(new View.OnClickListener() {
@@ -278,7 +279,6 @@ public class ChatPageFragment extends Fragment {
                     }
 
                 }
-                doneIconListener();
             }
 
         });

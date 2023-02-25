@@ -149,8 +149,8 @@ public class ChatPageFragment extends Fragment {
                 bundle.putString("EMAIL_OF_ROOMMATE", contacts.get(position).getEmail());
                 ChatFragment chatFragment = new ChatFragment();
                 chatFragment.setArguments(bundle);
-                getParentFragmentManager().setFragmentResult("EMAIL_OF_ROOMMATE", bundle);
-                Navigation.findNavController(view).navigate(R.id.action_chatPageFragment_to_chatFragment);
+
+                Navigation.findNavController(view).navigate(R.id.action_chatPageFragment_to_chatFragment, bundle);
 
             }
         };
@@ -309,8 +309,12 @@ public class ChatPageFragment extends Fragment {
                     for(int i = 0; i < receiverEmails.size();i++){
                         concatEmails+=receiverEmails.get(i);
                     }
+
+                    concatEmails += User.getInstance().getEmail();
                     Log.d("concat", concatEmails);
+
                     Toast toast = Toast.makeText(getActivity(), "Groupchat being made", Toast.LENGTH_SHORT);
+                    ContactList.getInstance().addGroupChat(concatEmails, receiverEmails);
                     toast.show();
 
 

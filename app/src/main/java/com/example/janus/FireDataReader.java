@@ -331,6 +331,13 @@ public class FireDataReader {
         return contactData;
     }
 
+    public void addGroupChatToMembers(String groupChatName, ArrayList<String> members) {
+        for(String member : members) {
+            db.collection("Contact/" + member + "/ContactList")
+                    .add(new Contact("Group", "Chat", groupChatName, false));
+        }
+    }
+
     // forgot password reset email function
     public void forgotPassword(){
 

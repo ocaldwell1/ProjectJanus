@@ -73,19 +73,15 @@ public class ChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        getParentFragmentManager().setFragmentResultListener("EMAIL_OF_ROOMMATE", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@androidx.annotation.NonNull String requestKey, @androidx.annotation.NonNull Bundle result) {
-                emailOfRoommate = result.getString("EMAIL_OF_ROOMMATE");
-            }
-        });
+        // Inflate the layout for this fragment;
         return inflater.inflate(R.layout.fragment_chat, container, false);
 
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //initializes variables to respective xml layout counterparts
+        Bundle bundle = getArguments();
+        emailOfRoommate = bundle.getString("EMAIL_OF_ROOMMATE");
         myUsername = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         recyclerView = view.findViewById(R.id.recyclerchat);
         messageInput = view.findViewById(R.id.editMessageInput);
@@ -109,8 +105,8 @@ public class ChatFragment extends Fragment {
         messageAdapter = new MessageAdapter(messages,getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(messageAdapter);
-
-        setUpChatroom(getChatroomId());
+        chatroomId = getChatroomId();
+        setUpChatroom(chatroomId);
     }
     private void setUpChatroom(String chatroomId) {
         FirebaseFirestore.getInstance().collection("user").document(FirebaseAuth.getInstance().getUid())

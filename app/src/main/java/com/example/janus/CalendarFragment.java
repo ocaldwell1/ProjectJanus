@@ -111,7 +111,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         for (int i = 0; i < taskList.size(); i++) {
             Task task = taskList.get(i);
             dates.add(task.getDueDate());
-           //Log.d(TAG, "Task day is " + eventDay(dates.get(i)));
+            //Log.d(TAG, "Task day is " + eventDay(dates.get(i)));
         }
         return dates;
     }
@@ -207,8 +207,8 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
 
         // this returns the day of the week which the 1st of the month will be, range 0-7
         int dayOfWeek = firstDay.getDayOfWeek().getValue();
-       Log.d(TAG, "dayOfWeek: " + dayOfWeek);
-       // Log.d(TAG, "daysInMonth+dayOfWeek: " + (daysInMonth + dayOfWeek));
+        //Log.d(TAG, "dayOfWeek: " + dayOfWeek);
+        // Log.d(TAG, "daysInMonth+dayOfWeek: " + (daysInMonth + dayOfWeek));
 
         // creating daysInMonthArray
         // 6 rows of 7 days = 42
@@ -242,7 +242,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
                     dateString = "0" + (i - dayOfWeek);
                 }
                 daysInMonthArray.add(dateString);
-                Log.d(TAG, "added: " + i + ", i-dayOfWeek: " + dateString);
+                //Log.d(TAG, "added: " + i + ", i-dayOfWeek: " + dateString);
             }
         }
 

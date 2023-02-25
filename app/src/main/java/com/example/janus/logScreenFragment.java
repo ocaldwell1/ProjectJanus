@@ -1,5 +1,7 @@
 package com.example.janus;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +96,7 @@ public class logScreenFragment extends Fragment {
 
         if(userEmail.isEmpty()){
             logEmail.setError("Email required!");
+            logEmail.requestFocus();
         }else if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()){
             logEmail.setError("Email is not valid!");
             logEmail.requestFocus();
@@ -103,7 +107,11 @@ public class logScreenFragment extends Fragment {
         }
         FireDataReader fireDataReader = FireDataReader.getInstance();
         boolean success = fireDataReader.signIn(userEmail, userPass);
+        Log.d(TAG, "Logged in boolean: " + success);
+        // This is not synced correctly. It will not be successful on the first log in attempt
+        // The second attempt will work
         if(success) {
+        //if(!User.isNotLoggedIn()){
             String message = "Logged in!";
             getLogInMessage(message);
             Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();

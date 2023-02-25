@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -98,9 +100,8 @@ public class ChatFragment extends Fragment {
             public void onClick(View view) {
                 FirebaseFirestore.getInstance().collection("messages/"+chatroomId+"/messageList").add(
                         new Message(FirebaseAuth.getInstance().getCurrentUser()
-                                .getEmail(), emailOfRoommate, messageInput.getText().toString(), Timestamp.now()
-
-                        ));
+                                .getEmail(), emailOfRoommate,
+                                messageInput.getText().toString()));
 
 
                 messageInput.setText(""); //clears previous message after send
@@ -134,8 +135,9 @@ public class ChatFragment extends Fragment {
                 });
     }
 
-    //checks for when messages change/ notifies user of message being recieved
-    //trying to add message from firebase to arraylist on data cahnge?
+    //checks for when messages change/ notifies user of message being received
+    // add message from firebase to arraylist on data change
+    //Need way to order messages by time
     private void attachMessageListener(String chatroomId) {
         FirebaseFirestore.getInstance().collection("messages/"+chatroomId+"/messageList")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -145,29 +147,19 @@ public class ChatFragment extends Fragment {
 
 
 
-                    //  @Override
-                   // public void onEvent(@androidx.annotation.Nullable DocumentSnapshot value,
-                                      //  @androidx.annotation.Nullable FirebaseFirestoreException error) {
-                        // may need if other chatrooms messages still show after bundle fix
-                        //messages.clear();
+
                         //int size for debug purposes
                         int size =0;
                         for(DocumentChange dc: value.getDocumentChanges()) {
                             messages.add(new Message(dc.getDocument().get("sender").toString(), dc.getDocument().get("receiver").toString(),
-                                    dc.getDocument().get("content").toString(),
-                                    (Timestamp) dc.getDocument().get("timestamp"))); size++;
+                                    dc.getDocument().get("content").toString()));
+                            size++;
                                     Log.d("myTag", String.valueOf(size));
                         }
 
                       //  }
 
 
-                       // for (DocumentSnapshot querySnapshot: value) {
-                           // messages.add(querySnapshot.toObject(Message.class));
-                       // messages.add(new Message(FirebaseAuth.getInstance().getCurrentUser().toString(),
-                               // usernameOfRoommate, FirebaseFirestore.getInstance().
-                              //  collection("messages").document(chatroomId).toString()));
-                      //  }
                         messageAdapter.notifyDataSetChanged();
                         recyclerView.scrollToPosition(messages.size()-1);
                         recyclerView.setVisibility(View.VISIBLE);

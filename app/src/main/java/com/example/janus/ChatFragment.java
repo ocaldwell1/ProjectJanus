@@ -100,8 +100,10 @@ public class ChatFragment extends Fragment {
             public void onClick(View view) {
                 FirebaseFirestore.getInstance().collection("messages/"+chatroomId+"/messageList").add(
                         new Message(FirebaseAuth.getInstance().getCurrentUser()
+
                                 .getEmail(),
                                 messageInput.getText().toString()));
+
 
                 messageInput.setText(""); //clears previous message after send
             }
@@ -122,6 +124,7 @@ public class ChatFragment extends Fragment {
                     }
                 });
     }
+
 
     private String getChatroomId() {
         String chatroomId;
@@ -156,6 +159,7 @@ public class ChatFragment extends Fragment {
         return chatroomId;
     }
 
+
     //checks for when messages change/ notifies user of message being received
     // add message from firebase to arraylist on data change
     //Need way to order messages by time
@@ -172,6 +176,7 @@ public class ChatFragment extends Fragment {
                         //int size for debug purposes
                         int size =0;
                         for(DocumentChange dc: value.getDocumentChanges()) {
+
                             messages.add(new Message(dc.getDocument().get("sender").toString(),
                                     dc.getDocument().get("content").toString()));
                             size++;

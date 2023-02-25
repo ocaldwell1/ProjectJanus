@@ -1,5 +1,7 @@
 package com.example.janus;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +25,14 @@ public class ContactList {
     }
 
     public void add(String sender) {
-        Map<String, Object> contactData = fireDataReader.getContactData(sender);
+        fireDataReader.getContactData(sender);
+    }
+
+    public void addContactFromData(Map<String, Object> contactData) {
         String firstName = contactData.get("firstName").toString();
         String lastName = contactData.get("lastName").toString();
+        String email = contactData.get("email").toString();
         boolean isBlocked = false;
+        contactList.add(new Contact(firstName, lastName, email, isBlocked));
     }
 }

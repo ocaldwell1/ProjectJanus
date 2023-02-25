@@ -35,4 +35,10 @@ public class ContactList {
         boolean isBlocked = false;
         contactList.add(new Contact(firstName, lastName, email, isBlocked));
     }
+
+    public void addGroupChat(String groupChatName, ArrayList<String> memberEmails) {
+        contactList.add(new Contact("Group", "Chat", groupChatName, false));
+        memberEmails.add(User.getInstance().getEmail());
+        fireDataReader.addGroupChatToMembers(groupChatName, memberEmails);
+    }
 }

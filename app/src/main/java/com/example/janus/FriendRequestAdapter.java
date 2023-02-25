@@ -67,6 +67,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<com.example.janus
                     FriendRequestList friendRequestList = FriendRequestList.getInstance();
                     friendRequestList.accept(sender.getText().toString());
                     notifyItemRemoved(getAdapterPosition());
+                    notifyItemRangeChanged(getAdapterPosition(), requestList.size());
                 }
             });
 
@@ -76,6 +77,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<com.example.janus
                     FriendRequestList friendRequestList = FriendRequestList.getInstance();
                     friendRequestList.deny(sender.getText().toString());
                     notifyItemRemoved(getAdapterPosition());
+                    notifyItemRangeChanged(getAdapterPosition(), requestList.size());
                 }
             });
         }

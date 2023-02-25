@@ -296,6 +296,7 @@ public class ChatPageFragment extends Fragment {
                 set.addAll(receiverEmails);
                 receiverEmails.clear();
                 receiverEmails.addAll(set);
+
                 // No people added before done being pressed
                 if(receiverEmails.size() == 0){
                     Toast toast = Toast.makeText(getActivity(), "No names to make group chat", Toast.LENGTH_SHORT);
@@ -306,12 +307,14 @@ public class ChatPageFragment extends Fragment {
                     toast.show();
                 }
                 else{
+                
                     for(int i = 0; i < receiverEmails.size();i++){
                         concatEmails+=receiverEmails.get(i);
                     }
                     Log.d("concat", concatEmails);
                     Toast toast = Toast.makeText(getActivity(), "Groupchat being made", Toast.LENGTH_SHORT);
                     toast.show();
+
 
                 }
                 typeFriendEmail.setVisibility(View.GONE);

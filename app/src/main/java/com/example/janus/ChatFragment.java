@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -60,28 +61,6 @@ public class ChatFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment ChatFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    /*public static ChatFragment newInstance(String email) {
-        Bundle bundle = new Bundle();
-        bundle.putString("email", email);
-
-        ChatFragment fragment = new ChatFragment();
-        fragment.setArguments(bundle);
-
-        return fragment;
-    }
-    private void readBundle(Bundle bundle) {
-        if (bundle != null) {
-            emailOfRoommate = bundle.getString("email");
-        }
-    }*/
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,13 +87,8 @@ public class ChatFragment extends Fragment {
         myUsername = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         recyclerView = view.findViewById(R.id.recyclerchat);
         messageInput = view.findViewById(R.id.editMessageInput);
-        chattingWith = view.findViewById(R.id.ChattingWith);
-        //imageToolbar = view.findViewById(R.id.imageToolbar);
         sendIcon = view.findViewById(R.id.sendIcon);
         progressBar = view.findViewById(R.id.progressChat);
-        //below line is commented out because covered up by message
-        //in runtime and also null
-        //chattingWith.setText(usernameOfRoommate);
         messages= new ArrayList<>();
 
         //method for when send button is pressed, pushes message to firebase
@@ -122,12 +96,12 @@ public class ChatFragment extends Fragment {
         sendIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseFirestore.getInstance().collection("messages/"+chatroomId+"/messageList").add(new Message(FirebaseAuth.getInstance().getCurrentUser()
-                                .getEmail(), emailOfRoommate, messageInput.getText().toString()
+                FirebaseFirestore.getInstance().collection("messages/"+chatroomId+"/messageList").add(
+                        new Message(FirebaseAuth.getInstance().getCurrentUser()
+                                .getEmail(), emailOfRoommate, messageInput.getText().toString(), Timestamp.now()
 
                         ));
-                //messages.add(new Message(FirebaseAuth.getInstance().getCurrentUser()
-                       // .getEmail(), usernameOfRoommate, messageInput.getText().toString()));
+
 
                 messageInput.setText(""); //clears previous message after send
             }
@@ -138,8 +112,6 @@ public class ChatFragment extends Fragment {
 
         setUpChatroom();
     }
-    //placeholder method, needs fixing, supposed to create chatroomid by fetching username?
-    // doesnt work because both variables are null so will return error when implementing compareto
     private void setUpChatroom() {
         FirebaseFirestore.getInstance().collection("user").document(FirebaseAuth.getInstance().getUid())
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -147,15 +119,6 @@ public class ChatFragment extends Fragment {
                     public void onEvent(@androidx.annotation.Nullable DocumentSnapshot value,
                                         @androidx.annotation.Nullable FirebaseFirestoreException error) {
 
-                       /* if(usernameOfRoommate == null && myUsername == null)
-                            chatroomId = "0";
-                        else if(myUsername == null)
-                            chatroomId= "1";
-                        else if (usernameOfRoommate == null)
-                            chatroomId = "2";
-                        else{
-                            chatroomId = "4";
-                        }*/
 
                         if(emailOfRoommate.compareTo(myUsername) > 0) {
                             chatroomId = myUsername + emailOfRoommate;
@@ -191,7 +154,8 @@ public class ChatFragment extends Fragment {
                         int size =0;
                         for(DocumentChange dc: value.getDocumentChanges()) {
                             messages.add(new Message(dc.getDocument().get("sender").toString(), dc.getDocument().get("receiver").toString(),
-                                    dc.getDocument().get("content").toString())); size++;
+                                    dc.getDocument().get("content").toString(),
+                                    (Timestamp) dc.getDocument().get("timestamp"))); size++;
                                     Log.d("myTag", String.valueOf(size));
                         }
 

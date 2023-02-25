@@ -152,9 +152,6 @@ public class ChatPageFragment extends Fragment {
             public void onEvent(@androidx.annotation.Nullable QuerySnapshot value, @androidx.annotation.Nullable FirebaseFirestoreException error) {
                 assert value != null;
                 for (int i = 0; i < value.getDocuments().size(); i++) {
-                    //first method produced errors, new one seems to solve issues
-
-                    // contacts.add(querySnapshot.toObject(Contact.class));
 
                     contacts.add(new Contact(value.getDocuments().get(i).getString("firstName"), value.
                             getDocuments().get(i).getString("lastName"),

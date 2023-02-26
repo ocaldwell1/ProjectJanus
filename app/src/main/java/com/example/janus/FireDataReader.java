@@ -58,8 +58,10 @@ public class FireDataReader {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Log.d(TAG, "Sign in is successful");
                         fUser = mAuth.getCurrentUser();
+                        Log.d(TAG, "Sign in is successful: fUser: " + fUser);
+                        Log.d(TAG, "Sign in is successful: isNotLoggedIn: " + User.isNotLoggedIn());
+                        Log.d(TAG, "Sign in is successful: hasUser: " + hasUser());
                     }else{
                         Log.d(TAG, "Sign in is not successful");
                     }

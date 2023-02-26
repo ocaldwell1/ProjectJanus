@@ -30,6 +30,7 @@ public class User {
         firstName = (String) userData.get("firstName");
         lastName = (String) userData.get("lastName");
         email = (String) userData.get("email");
+        // imageURL = (String) userData.get("imageURL");
     }
 
     public static User getInstance() {

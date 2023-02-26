@@ -49,6 +49,7 @@ public class ChangePicFragment extends Fragment {
     private ImageView picture;
     DatabaseReference reference;
     FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+    private String image_url = "";
     public ChangePicFragment() {
         // Required empty public constructor
     }
@@ -86,7 +87,9 @@ public class ChangePicFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                savePictureAction();
+                savePictureAction(image_url);
+                Toast.makeText(getActivity(), "Profile picture saved!", Toast.LENGTH_SHORT).show();
+                navController.navigate(R.id.action_changePicFragment_to_settingsFragment);
             }
         });
 
@@ -125,8 +128,7 @@ public class ChangePicFragment extends Fragment {
                         @Override
                         public void onSuccess(Uri uri) {
                             String imageURL = uri.toString();
-                            User user = User.getInstance();
-                            user.setImageURL(imageURL);
+                            setURL(imageURL);
                             // below line will load selected image into the drawable
                             Glide.with(getActivity()).load(imageURL).into(picture);
                         }
@@ -135,14 +137,16 @@ public class ChangePicFragment extends Fragment {
             });
         }
     }
-
+    public void setURL(String url){
+        image_url = url;
+    }
     // navigate back to settings
-    public void savePictureAction(){
+    public void savePictureAction(String url){
         // execute picture change here
-
-        // toast success
-        Toast.makeText(getActivity(), "Profile picture saved!", Toast.LENGTH_SHORT).show();
-        navController.navigate(R.id.action_changePicFragment_to_settingsFragment);
+        if(!url.equals("")){
+            User user = User.getInstance();
+            user.setImageURL(url);
+        }
     }
 
 }

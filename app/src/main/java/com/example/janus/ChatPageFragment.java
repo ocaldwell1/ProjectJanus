@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,15 +51,17 @@ public class ChatPageFragment extends Fragment {
     private RecyclerView recyclerView;
     private String queryEmail;
     private ArrayList<Contact> contacts;
+    private ArrayList<String> receiverEmails;
+    private String concatEmails;
     private ProgressBar progressBar;
     private ChatPageAdapter chatPageAdapter;
     ChatPageAdapter.OnContactClickListener onContactClickListener;
     private NavController navController;
     private Button addFriendButton;
-    private Button friendRequestsButton;
-    private EditText typeFriendEmail;
+    private Button friendRequestsButton, createGroupChatButton;
+    private EditText typeFriendEmail, typeFriendEmailForGroup;
     private ImageView sendIcon;
-
+    private Button done;
     public ChatPageFragment() {
         // Required empty public constructor
     }
@@ -92,13 +97,18 @@ public class ChatPageFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_chat_page, container, false);
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        concatEmails = "";
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.recyclerview);
         sendIcon = view.findViewById(R.id.sendIconForChatPage);
         addFriendButton = view.findViewById(R.id.addFriendButton);
+        done = view.findViewById(R.id.Done);
         friendRequestsButton = view.findViewById(R.id.chatPageFriendRequestsButton);
+        createGroupChatButton = view.findViewById(R.id.createGroupChat);
         contacts = new ArrayList<>();
+        receiverEmails = new ArrayList<>();
         typeFriendEmail = view.findViewById(R.id.typeFriendEmail);
+        //typeFriendEmailForGroup = view.findViewById(R.id.typeFriendEmailForGroup);
         sendIcon = view.findViewById(R.id.sendIconForChatPage);
         navController = Navigation.findNavController(view);
 
@@ -108,12 +118,22 @@ public class ChatPageFragment extends Fragment {
                 navController.navigate(R.id.action_chatPageFragment_to_friendRequestsFragment);
             }
         });
-
+        createGroupChatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendIcon.setVisibility(View.VISIBLE);
+                typeFriendEmail.setVisibility(View.VISIBLE);
+                done.setVisibility(View.VISIBLE);
+                typeFriendEmail.requestFocus();
+                addFriendButton.setVisibility(View.GONE);
+                sendIconListener2();
+                doneIconListener();
+            }
+        });
         addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             //attempts to set typeFriendEmail input to visible on click as well as give focus to it
             public void onClick(View view) {
-                sendIcon.setVisibility(View.VISIBLE);
                 //below command attempts to make list of contacts disappear iff add friend button is pressed
                 //it disappears, but also makes virtual keyboard hide other bottom buttons like send
                 // need to add contraints to other elements in case recycler is invisible?
@@ -131,8 +151,8 @@ public class ChatPageFragment extends Fragment {
                 bundle.putString("EMAIL_OF_ROOMMATE", contacts.get(position).getEmail());
                 ChatFragment chatFragment = new ChatFragment();
                 chatFragment.setArguments(bundle);
-                getParentFragmentManager().setFragmentResult("EMAIL_OF_ROOMMATE", bundle);
-                Navigation.findNavController(view).navigate(R.id.action_chatPageFragment_to_chatFragment);
+
+                Navigation.findNavController(view).navigate(R.id.action_chatPageFragment_to_chatFragment, bundle);
 
             }
         };
@@ -145,7 +165,7 @@ public class ChatPageFragment extends Fragment {
         //use if arraylist becomes duplicated after each start of app
         contacts.clear();
 
-        // supposed to get contacts from database and convert to contact class to add to array list of contacts
+        // supposed to get contacts from database and convert to contact class to add to array list of contacts that show in phone
         FirebaseFirestore.getInstance().collection("Contact/"+FirebaseAuth.getInstance().getCurrentUser()
                 .getEmail()+"/ContactList").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -225,6 +245,90 @@ public class ChatPageFragment extends Fragment {
                 }
             });
 
+    }
+    private void sendIconListener2(){
+        sendIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                queryEmail = typeFriendEmail.getText().toString();
+                if (!queryEmail.isEmpty()) {
+                    typeFriendEmail.setText("");
+                    if (Objects.equals(queryEmail, FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
+                        Toast toast = Toast.makeText(getActivity(), "This is your email", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } else {
+
+                        FirebaseFirestore.getInstance().collection("Contact/"+FirebaseAuth.getInstance().getCurrentUser().getEmail()+
+                                        "/ContactList").
+                                whereEqualTo("email", queryEmail).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@androidx.annotation.Nullable QuerySnapshot value,
+                                                        @androidx.annotation.Nullable FirebaseFirestoreException error) {
+                                        //query search showed no such email, return no friend w/ this email
+                                        if (value.isEmpty()) {
+                                            Toast toast = Toast.makeText(getActivity(), "Unknown friend", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        } else {
+                                            receiverEmails.add(queryEmail);
+                                            Toast toast = Toast.makeText(getActivity(),
+                                                    "Friend added, type another email or click done", Toast.LENGTH_LONG);
+                                            toast.show();
+                                        }
+
+                                    }
+                                });
+                    }
+
+                }
+            }
+
+        });
+    }
+    private void doneIconListener() {
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Create a new LinkedHashSet and adds receiver emails list to it, which removes duplicates
+                //clears original list that way it can add back set to get list with no duplicate emails
+                //destroys ordering of list but in this case it doesnt matter
+                Set<String> set = new LinkedHashSet<>();
+                set.addAll(receiverEmails);
+                receiverEmails.clear();
+                receiverEmails.addAll(set);
+
+                // No people added before done being pressed
+                if(receiverEmails.size() == 0){
+                    Toast toast = Toast.makeText(getActivity(), "No names to make group chat", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else if(receiverEmails.size() == 1) {// Only 1 person added before done being pressed
+                    Toast toast = Toast.makeText(getActivity(), "Need at least 3 friends for group chat", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else{
+                
+                    for(int i = 0; i < receiverEmails.size();i++){
+                        concatEmails+=receiverEmails.get(i);
+                    }
+
+                    concatEmails += User.getInstance().getEmail();
+                    Log.d("concat", concatEmails);
+
+                    Toast toast = Toast.makeText(getActivity(), "Groupchat being made", Toast.LENGTH_SHORT);
+                    ContactList.getInstance().addGroupChat(concatEmails, receiverEmails);
+                    toast.show();
+
+
+                }
+                typeFriendEmail.setVisibility(View.GONE);
+                done.setVisibility(View.GONE);
+                sendIcon.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                addFriendButton.setVisibility(View.VISIBLE);
+                receiverEmails.clear();
+            }
+        });
     }
 
 }

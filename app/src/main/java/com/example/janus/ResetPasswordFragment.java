@@ -104,6 +104,7 @@ public class ResetPasswordFragment extends Fragment {
         if(!User.isNotLoggedIn()) {
             User user = User.getInstance();
             FireDataReader fireDataReader = FireDataReader.getInstance();
+            // ERROR: user.getEmail() is null when I log in and then try to reset password
             if (!(uEmail.equals(user.getEmail())) || uEmail.equals("")) {
                 //Toast.makeText(getActivity(), "Error! Enter your current email.", Toast.LENGTH_LONG).show();
                 email.setError("Error! Enter your current email.");

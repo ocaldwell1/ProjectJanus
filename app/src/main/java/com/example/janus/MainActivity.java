@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu( Menu menu ) {
         // inflates the menu item onto action bar
         getMenuInflater().inflate(R.menu.settings_menu, menu);
-        getMenuInflater().inflate(R.menu.profile_menu, menu);
+        //getMenuInflater().inflate(R.menu.profile_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -70,15 +70,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu)
     {
         MenuItem settings = menu.findItem(R.id.settingsFragment);
-        MenuItem profile = menu.findItem(R.id.menu_item_profile);
+        //MenuItem profile = menu.findItem(R.id.menu_item_profile);
         if(!User.isNotLoggedIn())
         {
             settings.setVisible(true);
-            profile.setVisible(true);
+            //profile.setVisible(true);
         }else
         {
             settings.setVisible(false);
-            profile.setVisible(false);
+            //profile.setVisible(false);
         }
         return true;
     }

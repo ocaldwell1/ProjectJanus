@@ -343,6 +343,10 @@ public class FireDataReader {
 
     }
 
+    public void changeEmail(){
+
+    }
+
     // reset/update Password function
     public void resetPassword(String email, String oldPass, String newPass) {
         fUser = mAuth.getCurrentUser();
@@ -379,13 +383,16 @@ public class FireDataReader {
                     }
                 });
         }
+        //fUser.reload();
     }
 
     public void signOut() {
+        Log.d(TAG, "signOut 0: " + mAuth.getCurrentUser());
+        Log.d(TAG, "signOut 1: " + User.isNotLoggedIn());
         mAuth.signOut();
         // this should be null
         fUser = mAuth.getCurrentUser();
-        Log.d(TAG, "signOut 1: " + mAuth.getCurrentUser());
-        Log.d(TAG, "signOut 2: " + User.isNotLoggedIn());
+        Log.d(TAG, "signOut 2: " + mAuth.getCurrentUser());
+        Log.d(TAG, "signOut 3: " + User.isNotLoggedIn());
     }
 }

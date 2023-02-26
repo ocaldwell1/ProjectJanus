@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ChangePicFragment">
 
-    <TextView
-        android:id="@+id/changePicTextView"
+
+    <Button
+        android:id="@+id/changePicEditButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change profile picture fragment"
-        android:textSize="20sp"
+        android:text="Browse photos"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.558" />
+        app:layout_constraintVertical_bias="0.658" />
 
     <Button
         android:id="@+id/changePicSaveButton"
@@ -28,6 +28,18 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.762" />
+        app:layout_constraintVertical_bias="0.777" />
+
+    <ImageView
+        android:id="@+id/changePicImageView"
+        android:layout_width="332dp"
+        android:layout_height="397dp"
+        android:src="@drawable/profile_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.047" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

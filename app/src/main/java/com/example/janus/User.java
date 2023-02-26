@@ -20,6 +20,7 @@ public class User {
     private Map<String, Object> userData;
     private final FireDataReader fireDataReader;
     private static User user;
+    private String imageURL = "null";
 
     private User() {
         fireDataReader = FireDataReader.getInstance();
@@ -37,6 +38,14 @@ public class User {
             user = new User();
         }
         return user;
+    }
+
+    public String getImageURL(){
+        return imageURL;
+    }
+
+    public void setImageURL(String val){
+        imageURL = val;
     }
 
     public String getFirstName(){

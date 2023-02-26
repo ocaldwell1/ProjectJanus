@@ -14,9 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -36,7 +38,8 @@ public class SettingsFragment extends Fragment {
 
     private NavController navController;
     private Button button;
-    private TextView resetPassTV, logOutTV, changePicTV;
+    private TextView resetPassTV, logOutTV, changePicTV, firstName, lastName, uEmail;
+    private ImageView picture;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -79,6 +82,14 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(view);
 
+        firstName = view.findViewById(R.id.settingsFirstNameTV);
+        lastName = view.findViewById(R.id.settingsLastNameTV);
+        uEmail = view.findViewById(R.id.settingsEmailTV);
+        firstName.setText(User.getInstance().getFirstName());
+        lastName.setText(User.getInstance().getLastName());
+        uEmail.setText(User.getInstance().getEmail());
+        picture = view.findViewById(R.id.settingsImageView);
+
         resetPassTV = view.findViewById(R.id.settingsResetPassTV);
         logOutTV = view.findViewById(R.id.settingsLogOutTV);
         changePicTV = view.findViewById(R.id.settingsChangePicTV);
@@ -101,6 +112,13 @@ public class SettingsFragment extends Fragment {
                 changePicAction();
             }
         });
+
+        User user = User.getInstance();
+        if(user.getImageURL().equals("null")){
+
+        }else{
+            Glide.with(getActivity()).load(user.getImageURL()).into(picture);
+        }
     }
 
     public void resetPassAction() {

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class NewTaskFragment extends Fragment {
@@ -29,7 +31,7 @@ public class NewTaskFragment extends Fragment {
     private EditText taskNameEditText;
     private EditText sourceEditText;
     private Spinner weightSpinner;
-    private EditText dueDateEditText;
+    private DatePicker dueDateEditText;
     private EditText notesEditText;
     private Button saveButton, shareButton;
 
@@ -84,7 +86,7 @@ public class NewTaskFragment extends Fragment {
             public void onClick(View view) {
                 try {
                     // saveTaskAndNavigateBack(view);
-                    createShareableJsonLink(view);
+                    // createShareableJsonLink(view);  TODO: Change this using native Android implementation
                 }
                 catch(Exception e) {
                     e.printStackTrace();
@@ -93,6 +95,7 @@ public class NewTaskFragment extends Fragment {
         });
     }
 
+    /**
     public void createShareableJsonLink(View view ) {
 
         // [jms] check for blank tasks
@@ -157,7 +160,7 @@ public class NewTaskFragment extends Fragment {
         clipboard.setPrimaryClip(clip);
         Toast.makeText(getActivity(), "Saved task to clipboard!", Toast.LENGTH_SHORT).show();
     }
-
+**/
     public void saveTaskAndNavigateBack(View view) {
         /**
          * Saves the current task filled in the form and returns to the main menu page home
@@ -170,23 +173,24 @@ public class NewTaskFragment extends Fragment {
         String source = sourceEditText.getText().toString();
 
         // Check due-date
-        String dueDate = dueDateEditText.getText().toString();
+        int day = dueDateEditText.getDayOfMonth();
+        int month = dueDateEditText.getMonth() + 1;
+        int year = dueDateEditText.getYear();
+        Date dueDate = new Date(year, month, day);
+
 
         int weight = Integer.parseInt(weightSpinner.getSelectedItem().toString());
         String notes = notesEditText.getText().toString();
-        Task newTask = new Task(taskName, notes, weight, dueDate,source);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
+        String due = format.format(calendar.getTime());
+        //String due = dueDateEditText.getText().toString();
+        Task newTask = new Task(taskName, notes, weight, due,source);
         TaskList taskList = TaskList.getInstance();
 
-        Date now = new Date();
-        Date due;
-        // Check the date format
-        try {
-            due = new SimpleDateFormat("MM/dd/yyyy").parse(dueDate);
-        } catch (ParseException e) {
-            Toast.makeText(getActivity(), "Please enter a valid date following MM/DD/YYYY", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "Date could not be parsed. ");
-            return;
-        }
+        Date now = new Date(System.currentTimeMillis());
 
         // Check for invalid input
         if (taskName.equals("")) {
@@ -199,7 +203,7 @@ public class NewTaskFragment extends Fragment {
             Log.d(TAG, "No task source  in task");
             return;
         }
-        else if (due.compareTo(now) < 0) {
+        else if (dueDate.compareTo(now) < 0) {
             Toast.makeText(getActivity(), "Due date has passed!", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Invalid time");
             return;

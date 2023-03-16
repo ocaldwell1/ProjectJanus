@@ -38,6 +38,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
         @Override
         public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
             holder.textMessage.setText(messages.get(position).getContent() );
+            //holder.senderEmail.setText(messages.get(position).getSender());
 
             ConstraintLayout constraintLayout = holder.constraintLayout;
             if (messages.get(position).getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
@@ -73,12 +74,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
         ConstraintLayout constraintLayout;
         TextView textMessage;
         ImageView profileImage;
+        //TextView senderEmail;
             public MessageHolder(@NonNull View itemView) {
                 super(itemView);
 
                 constraintLayout = itemView.findViewById(R.id.constraintLayout);
                 textMessage = itemView.findViewById(R.id.messageContents);
                 profileImage = itemView.findViewById(R.id.chatProfileImg);
+                //senderEmail = itemView.findViewById(R.id.senderEmail);
             }
         }
     }

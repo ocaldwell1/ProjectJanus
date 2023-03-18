@@ -26,29 +26,31 @@
         app:layout_constraintBottom_toTopOf="@id/recyclerview"
         tools2:layout_editor_absoluteX="0dp" />
 
-    <Button
+    <ImageButton
         android:id="@+id/createGroupChat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:text="Create Group Chat"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/groupchat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.64"
-        app:layout_constraintStart_toStartOf="parent"></Button>
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintVertical_bias="0.976"
+        android:background="@drawable/roundedbutton"
+        app:layout_constraintStart_toStartOf="parent"></ImageButton>
 
-    <Button
+    <ImageButton
         android:id="@+id/addFriendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Add Friend"
+        android:layout_marginBottom="28dp"
+        android:src="@drawable/plusfriend"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerview"
-        app:layout_constraintVertical_bias="0.976"></Button>
+        app:layout_constraintHorizontal_bias="0.044"
+        android:background="@drawable/roundedbutton"
+        app:layout_constraintStart_toStartOf="parent"></ImageButton>
+
     <Button
         android:id="@+id/Done"
         android:visibility="gone"
@@ -88,6 +90,7 @@
         android:layout_height="40dp"
         android:layout_marginBottom="12dp"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/createGroupChat"
         android:src="@drawable/sent_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

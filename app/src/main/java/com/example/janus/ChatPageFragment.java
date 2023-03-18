@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -57,8 +58,8 @@ public class ChatPageFragment extends Fragment {
     private ChatPageAdapter chatPageAdapter;
     ChatPageAdapter.OnContactClickListener onContactClickListener;
     private NavController navController;
-    private Button addFriendButton;
-    private Button friendRequestsButton, createGroupChatButton;
+    private ImageButton addFriendButton, createGroupChatButton;
+    private Button friendRequestsButton;
     private EditText typeFriendEmail, typeFriendEmailForGroup;
     private ImageView sendIcon;
     private Button done;

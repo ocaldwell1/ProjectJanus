@@ -2,6 +2,8 @@ package com.example.janus;
 
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -17,7 +19,7 @@ import java.util.Map;
 public class User {
 
     private String firstName, lastName, email;
-    private Map<String, Object> userData;
+    private MutableLiveData<Map<String, Object>> userData;
     private final FireDataReader fireDataReader;
     private static User user;
     private String imageURL = "null";
@@ -25,11 +27,8 @@ public class User {
     private User() {
         fireDataReader = FireDataReader.getInstance();
         Log.d("REQUESTS", "creating user");
-        userData = fireDataReader.getUserData();
-        Map<String, Object> userData = fireDataReader.getUserData();
-        firstName = (String) userData.get("firstName");
-        lastName = (String) userData.get("lastName");
-        email = (String) userData.get("email");
+        userData = new MutableLiveData<>();
+        userData.setValue(fireDataReader.getUserData());
         // imageURL = (String) userData.get("imageURL");
     }
 
@@ -51,19 +50,26 @@ public class User {
 
     public String getFirstName(){
         //return this.firstName;
-        return userData.get("firstName").toString();
+        return userData.getValue().get("firstName").toString();
     }
     public String getLastName(){
         //return this.lastName;
-        return userData.get("lastName").toString();
+        return userData.getValue().get("lastName").toString();
     }
     public String getEmail(){
         //return this.email;
-        return userData.get("email").toString();
+        return userData.getValue().get("email").toString();
     }
 
     public static boolean isNotLoggedIn(){
         return !FireDataReader.getInstance().hasUser();
+    }
+
+    public MutableLiveData<Map<String, Object>> getUserData() {
+        if(userData == null) {
+            userData = new MutableLiveData<>();
+        }
+        return userData;
     }
 
 }

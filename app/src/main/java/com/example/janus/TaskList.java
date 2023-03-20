@@ -1,10 +1,12 @@
 package com.example.janus;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class TaskList {
-    private ArrayList<Task> taskList;
+    private MutableLiveData<ArrayList<Task>> taskList;
     private FireDataReader fireDataReader;
     private static TaskList instance;
 
@@ -19,15 +21,16 @@ public class TaskList {
 
     private TaskList() {
         fireDataReader = FireDataReader.getInstance();
-        taskList = fireDataReader.getTaskList();
+        taskList = new MutableLiveData<>();
+        taskList.setValue(fireDataReader.getTaskList());
     }
 
     public void sort() {
-        Collections.sort(taskList, Collections.reverseOrder());
+        Collections.sort(taskList.getValue(), Collections.reverseOrder());
     }
 
     public void addTask(Task task) {
-        taskList.add(task);
+        taskList.getValue().add(task);
         sort();
         fireDataReader.addTaskToFireStore(task);
     }
@@ -35,22 +38,22 @@ public class TaskList {
     public void removeTask(String id) {
         Task found = getTaskById(id);
         fireDataReader.removeTaskFromFireStore(found);
-        taskList.remove(found);
+        taskList.getValue().remove(found);
         sort();
     }
 
     public int size()
     {
-        return taskList.size();
+        return taskList.getValue().size();
     }
 
     public Task get(int pos) {
-        return taskList.get(pos);
+        return taskList.getValue().get(pos);
     }
 
     public Task getTaskById(String id) {
         Task foundTask = null;
-        for (Task t : taskList) {
+        for (Task t : taskList.getValue()) {
             if(t.getId().equals(id)) {
                 foundTask = t;
             }
@@ -66,7 +69,10 @@ public class TaskList {
         sort();
     }
 
-    public ArrayList<Task> getTaskList() {
-        return this.taskList;
+    public MutableLiveData<ArrayList<Task>> getTaskList() {
+        if(taskList == null) {
+            taskList = new MutableLiveData<>();
+        }
+        return taskList;
     }
 }

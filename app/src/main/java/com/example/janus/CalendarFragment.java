@@ -68,7 +68,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        taskList = TaskList.getInstance().getTaskList();
+        taskList = TaskList.getInstance().getTaskList().getValue();
     }
 
     @Override

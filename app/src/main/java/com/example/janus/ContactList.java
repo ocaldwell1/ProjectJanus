@@ -2,18 +2,21 @@ package com.example.janus;
 
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ContactList {
-    private ArrayList<Contact> contactList;
+    private MutableLiveData<ArrayList<Contact>> contactList;
     private FireDataReader fireDataReader;
     private static ContactList instance;
 
     private ContactList() {
         fireDataReader = FireDataReader.getInstance();
-        contactList = fireDataReader.getContactList();
+        contactList = new MutableLiveData<>();
+        contactList.setValue(fireDataReader.getContactList());
     }
 
     public static ContactList getInstance() {
@@ -33,12 +36,19 @@ public class ContactList {
         String lastName = contactData.get("lastName").toString();
         String email = contactData.get("email").toString();
         boolean isBlocked = false;
-        contactList.add(new Contact(firstName, lastName, email, isBlocked));
+        contactList.getValue().add(new Contact(firstName, lastName, email, isBlocked));
     }
 
     public void addGroupChat(String groupChatName, ArrayList<String> memberEmails) {
-        contactList.add(new Contact("Group", "Chat", groupChatName, false));
+        contactList.getValue().add(new Contact("Group", "Chat", groupChatName, false));
         memberEmails.add(User.getInstance().getEmail());
         fireDataReader.addGroupChatToMembers(groupChatName, memberEmails);
+    }
+
+    public MutableLiveData<ArrayList<Contact>> getContactList() {
+        if (contactList == null) {
+            contactList = new MutableLiveData<>();
+        }
+        return contactList;
     }
 }

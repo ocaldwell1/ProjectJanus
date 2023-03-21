@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -20,6 +23,9 @@ public class StartFragment extends Fragment {
     private User user;
     private TaskList taskList;
     private ContactList contactList;
+    private boolean userDataLoaded = false;
+    private boolean taskListLoaded = false;
+    private boolean contactListLoaded = false;
 
 
     public StartFragment() {
@@ -38,7 +44,7 @@ public class StartFragment extends Fragment {
         final Observer<Map<String, Object>> userObserver = new Observer<Map<String, Object>>() {
             @Override
             public void onChanged(Map<String, Object> stringObjectMap) {
-                Toast.makeText(getActivity(), "user data loaded", Toast.LENGTH_SHORT).show();
+                userDataLoaded = true;
                 Log.d("ASYNC", "user data loaded");
             }
         };
@@ -49,6 +55,7 @@ public class StartFragment extends Fragment {
         final Observer<ArrayList<Task>> taskListObserver = new Observer<ArrayList<Task>>() {
             @Override
             public void onChanged(ArrayList<Task> taskArrayList) {
+                taskListLoaded = true;
                 Log.d("ASYNC", "task data loaded");
             }
         };
@@ -59,6 +66,7 @@ public class StartFragment extends Fragment {
         final Observer<ArrayList<Contact>> contactListObserver = new Observer<ArrayList<Contact>>() {
             @Override
             public void onChanged(ArrayList<Contact> contacts) {
+                contactListLoaded = true;
                 Log.d("ASYNC", "contact data loaded");
             }
         };
@@ -71,21 +79,17 @@ public class StartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         getActivity().setTitle("Start");
-        View view = inflater.inflate(R.layout.fragment_start, container, false);
+        return inflater.inflate(R.layout.fragment_start, container, false);
+    }
 
-        // If the user is logged in, pre-load the task list
-        if(!User.isNotLoggedIn()){
-            TaskList.getInstance().getTaskList();
-            User.getInstance();
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        tryToContinue(view);
+    }
+
+    public void tryToContinue(View view) {
+        if(userDataLoaded && taskListLoaded && contactListLoaded) {
+            Navigation.findNavController(view).navigate(R.id.action_startFragment_to_taskFragment);
         }
-
-        Button startFragmentStartButton = (Button) view.findViewById(R.id.startFragmentStartButton);
-        startFragmentStartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_startFragment_to_taskFragment);
-            }
-        });
-        return view;
     }
 }

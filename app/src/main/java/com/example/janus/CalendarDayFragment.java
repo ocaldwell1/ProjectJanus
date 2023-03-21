@@ -59,7 +59,7 @@ public class CalendarDayFragment extends Fragment implements ItemClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        taskList = TaskList.getInstance().getTaskList().getValue();
+        taskList = TaskList.getInstance().getTaskList();
     }
 
     @Override

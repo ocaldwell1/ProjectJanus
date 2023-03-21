@@ -78,7 +78,7 @@ public class UpcomingTasksFragment extends Fragment implements ItemClickListener
             recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
             Log.d(TAG, "Looking at the tasks.");
-            taskList = TaskList.getInstance().getTaskList().getValue();
+            taskList = TaskList.getInstance().getTaskList();
             Log.d(TAG, String.valueOf(taskList.size()));
             recyclerView.setAdapter(new TaskAdapter(taskList));
 

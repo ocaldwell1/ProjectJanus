@@ -2,6 +2,8 @@ package com.example.janus;
 
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,9 +12,11 @@ public class ContactList {
     private ArrayList<Contact> contactList;
     private FireDataReader fireDataReader;
     private static ContactList instance;
+    private static MutableLiveData<Boolean> isLoaded;
 
     private ContactList() {
         fireDataReader = FireDataReader.getInstance();
+        isLoaded = new MutableLiveData<>(false);
         contactList = fireDataReader.getContactList();
     }
 
@@ -40,5 +44,16 @@ public class ContactList {
         contactList.add(new Contact("Group", "Chat", groupChatName, false));
         memberEmails.add(User.getInstance().getEmail());
         fireDataReader.addGroupChatToMembers(groupChatName, memberEmails);
+    }
+
+    public MutableLiveData<Boolean> isLoaded() {
+        if (isLoaded == null) {
+            isLoaded = new MutableLiveData<>(false);
+        }
+        return isLoaded;
+    }
+
+    public static void setIsLoaded() {
+        isLoaded.setValue(true);
     }
 }

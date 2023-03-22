@@ -59,6 +59,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/newTaskWeightSpinner"
         app:layout_constraintStart_toStartOf="@+id/newTaskSourceEditText" />
 
+    <!--
     <EditText
         android:id="@+id/newTaskDueDateEditText"
         android:layout_width="0dp"
@@ -71,7 +72,17 @@
         app:layout_constraintEnd_toEndOf="@+id/newTaskSourceEditText"
         app:layout_constraintStart_toEndOf="@+id/newTaskDueDateText"
         app:layout_constraintTop_toBottomOf="@+id/newTaskWeightSpinner" />
-
+    -->
+    <DatePicker
+        android:id="@+id/newTaskDueDateEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
+        android:layout_gravity = "center"
+        app:layout_constraintTop_toBottomOf="@+id/newTaskWeightText"
+        />
+    <!--
     <TextView
         android:id="@+id/newTaskDueDateText"
         android:layout_width="wrap_content"
@@ -79,7 +90,7 @@
         android:text="Due Date: "
         app:layout_constraintBottom_toBottomOf="@+id/newTaskDueDateEditText"
         app:layout_constraintStart_toStartOf="@+id/newTaskWeightText" />
-
+    -->
     <EditText
         android:id="@+id/newTaskNotesEditText"
         android:layout_width="wrap_content"
@@ -107,7 +118,7 @@
         android:id="@+id/newTaskShareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Copy shareable link to clipboard"
+        android:text="Share Task"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newTaskSaveButton"/>

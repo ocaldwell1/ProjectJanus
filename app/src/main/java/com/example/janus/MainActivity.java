@@ -3,6 +3,7 @@ package com.example.janus;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -17,6 +18,8 @@ import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -54,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu( Menu menu ) {
         // inflates the menu item onto action bar
         getMenuInflater().inflate(R.menu.settings_menu, menu);
-        getMenuInflater().inflate(R.menu.profile_menu, menu);
+        //getMenuInflater().inflate(R.menu.profile_menu, menu);
+
+        if(!User.isNotLoggedIn()) {
+            // change profile pic to imageURL
+        }
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -70,17 +77,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu)
     {
         MenuItem settings = menu.findItem(R.id.settingsFragment);
-        MenuItem profile = menu.findItem(R.id.menu_item_profile);
+        //MenuItem profile = menu.findItem(R.id.menu_item_profile);
         if(!User.isNotLoggedIn())
         {
             settings.setVisible(true);
-            profile.setVisible(true);
+            //profile.setVisible(true);
         }else
         {
             settings.setVisible(false);
-            profile.setVisible(false);
+            //profile.setVisible(false);
         }
-        return true;
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

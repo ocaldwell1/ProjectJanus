@@ -2,6 +2,8 @@ package com.example.janus;
 
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -20,15 +22,15 @@ public class User {
     private Map<String, Object> userData;
     private final FireDataReader fireDataReader;
     private static User user;
+    private String imageURL = "null";
+    private static MutableLiveData<Boolean> isLoaded;
 
     private User() {
         fireDataReader = FireDataReader.getInstance();
         Log.d("REQUESTS", "creating user");
+        isLoaded = new MutableLiveData<>(false);
         userData = fireDataReader.getUserData();
-        Map<String, Object> userData = fireDataReader.getUserData();
-        firstName = (String) userData.get("firstName");
-        lastName = (String) userData.get("lastName");
-        email = (String) userData.get("email");
+        // imageURL = (String) userData.get("imageURL");
     }
 
     public static User getInstance() {
@@ -37,6 +39,14 @@ public class User {
             user = new User();
         }
         return user;
+    }
+
+    public String getImageURL(){
+        return imageURL;
+    }
+
+    public void setImageURL(String val){
+        imageURL = val;
     }
 
     public String getFirstName(){
@@ -54,6 +64,17 @@ public class User {
 
     public static boolean isNotLoggedIn(){
         return !FireDataReader.getInstance().hasUser();
+    }
+
+    public MutableLiveData<Boolean> isLoaded() {
+        if(isLoaded == null) {
+            isLoaded = new MutableLiveData<>(false);
+        }
+        return isLoaded;
+    }
+
+    public static void setIsLoaded() {
+        isLoaded.setValue(true);
     }
 
 }

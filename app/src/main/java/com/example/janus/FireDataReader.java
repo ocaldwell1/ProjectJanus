@@ -58,8 +58,10 @@ public class FireDataReader {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Log.d(TAG, "Sign in is successful");
                         fUser = mAuth.getCurrentUser();
+                        Log.d(TAG, "Sign in is successful: fUser: " + fUser);
+                        Log.d(TAG, "Sign in is successful: isNotLoggedIn: " + User.isNotLoggedIn());
+                        Log.d(TAG, "Sign in is successful: hasUser: " + hasUser());
                     }else{
                         Log.d(TAG, "Sign in is not successful");
                     }
@@ -107,6 +109,7 @@ public class FireDataReader {
                                 }
                             }
                             Log.d("REQUESTS", "getUserData here1");
+                            User.setIsLoaded();
                         }
                     });
             Log.d("REQUESTS", "getUserData here2");
@@ -136,6 +139,7 @@ public class FireDataReader {
                             }
                             Collections.sort(taskList, Collections.reverseOrder());
                             Log.d("SYNC", "populated task list");
+                            TaskList.setIsLoaded();
                         }
                     });
         return taskList;
@@ -182,10 +186,8 @@ public class FireDataReader {
     }
 
     /**
-     * [wmenkus] This is not right at the moment (2/20/2023), it's currently trying to get isBlocked
-     * from the User database, and queries Contact using user IDs. Solve that issue (Maybe
-     * User.getInstance.getEmail?) and figure out a way to store tuples of contactEmail,
-     * isBlocked in the contactIds list
+     * [wmenkus] (3/21/2023) This may end up causing some synchronization issues, looks like the
+     * second part of the compound query may start before the first part completes.
      */
     public ArrayList<Contact> getContactList() {
         ArrayList<String> contactIds = new ArrayList<>();
@@ -343,6 +345,10 @@ public class FireDataReader {
 
     }
 
+    public void changeEmail(){
+
+    }
+
     // reset/update Password function
     public void resetPassword(String email, String oldPass, String newPass) {
         fUser = mAuth.getCurrentUser();
@@ -379,13 +385,16 @@ public class FireDataReader {
                     }
                 });
         }
+        //fUser.reload();
     }
 
     public void signOut() {
+        Log.d(TAG, "signOut 0: " + mAuth.getCurrentUser());
+        Log.d(TAG, "signOut 1: " + User.isNotLoggedIn());
         mAuth.signOut();
         // this should be null
         fUser = mAuth.getCurrentUser();
-        Log.d(TAG, "signOut 1: " + mAuth.getCurrentUser());
-        Log.d(TAG, "signOut 2: " + User.isNotLoggedIn());
+        Log.d(TAG, "signOut 2: " + mAuth.getCurrentUser());
+        Log.d(TAG, "signOut 3: " + User.isNotLoggedIn());
     }
 }

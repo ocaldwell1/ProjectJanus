@@ -44,6 +44,9 @@
         android:name="com.example.janus.ChangePicFragment"
         android:label="fragment_change_picture"
         tools:layout="@layout/fragment_change_picture">
+        <action
+            android:id="@+id/action_changePicFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/resetPassFragment"
@@ -156,8 +159,8 @@
             android:id="@+id/action_logScreenFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
         <action
-            android:id="@+id/action_logScreenFragment_to_taskFragment"
-            app:destination="@id/taskFragment" />
+            android:id="@+id/action_logScreenFragment_to_startFragment"
+            app:destination="@id/startFragment" />
     </fragment>
 
     <fragment

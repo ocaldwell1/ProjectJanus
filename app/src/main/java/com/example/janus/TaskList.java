@@ -1,5 +1,7 @@
 package com.example.janus;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,7 +9,7 @@ public class TaskList {
     private ArrayList<Task> taskList;
     private FireDataReader fireDataReader;
     private static TaskList instance;
-
+    private static MutableLiveData<Boolean> isLoaded;
     public static TaskList getInstance() {
         FireDataReader fireDataReader = FireDataReader.getInstance();
         if(fireDataReader.hasUser() && instance == null) {
@@ -19,6 +21,7 @@ public class TaskList {
 
     private TaskList() {
         fireDataReader = FireDataReader.getInstance();
+        isLoaded = new MutableLiveData<>(false);
         taskList = fireDataReader.getTaskList();
     }
 
@@ -67,6 +70,17 @@ public class TaskList {
     }
 
     public ArrayList<Task> getTaskList() {
-        return this.taskList;
+        return taskList;
+    }
+
+    public MutableLiveData<Boolean> isLoaded() {
+        if(isLoaded == null) {
+            isLoaded = new MutableLiveData<>(false);
+        }
+        return isLoaded;
+    }
+
+    public static void setIsLoaded() {
+        isLoaded.setValue(true);
     }
 }

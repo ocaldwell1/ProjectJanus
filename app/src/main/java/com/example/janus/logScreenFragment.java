@@ -107,7 +107,9 @@ public class logScreenFragment extends Fragment {
         }
         FireDataReader fireDataReader = FireDataReader.getInstance();
         boolean success = fireDataReader.signIn(userEmail, userPass);
-        Log.d(TAG, "Logged in boolean: " + success);
+        Log.d(TAG, "Logged in: boolean: " + success);
+        Log.d(TAG, "Logged in: hasUser: " + fireDataReader.hasUser());
+        Log.d(TAG, "Logged in: isNotLoggedIn: " + User.isNotLoggedIn());
         // This is not synced correctly. It will not be successful on the first log in attempt
         // The second attempt will work
         if(success) {
@@ -116,11 +118,8 @@ public class logScreenFragment extends Fragment {
             getLogInMessage(message);
             Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
-            // first load tasks, to prevent issues
-            TaskList.getInstance().getTaskList();
-
             // nav to log complete / upcoming assignments
-            navController.navigate(R.id.action_logScreenFragment_to_taskFragment);
+            navController.navigate(R.id.action_logScreenFragment_to_startFragment);
         }
         else {
             String message = "Error! Invalid Credentials!";

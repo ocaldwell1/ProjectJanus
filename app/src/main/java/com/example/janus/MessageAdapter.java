@@ -38,7 +38,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
         @Override
         public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
             holder.textMessage.setText(messages.get(position).getContent() );
-            //holder.senderEmail.setText(messages.get(position).getSender());
+            holder.senderEmail.setText(messages.get(position).getSender());
 
             ConstraintLayout constraintLayout = holder.constraintLayout;
             if (messages.get(position).getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())) {
@@ -47,20 +47,30 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
                 constraintSet.clone(constraintLayout);
                 constraintSet.clear(R.id.profileCardview, ConstraintSet.LEFT);
                 constraintSet.clear(R.id.messageContents, ConstraintSet.LEFT);
+                constraintSet.clear(R.id.senderEmail, ConstraintSet.LEFT);
                 constraintSet.connect(R.id.profileCardview, ConstraintSet.RIGHT, R.id.constraintLayout,
                         ConstraintSet.RIGHT, 0);
                 constraintSet.connect(R.id.messageContents, ConstraintSet.RIGHT, R.id.profileCardview,
                         ConstraintSet.LEFT, 0);
+                constraintSet.connect(R.id.senderEmail, ConstraintSet.RIGHT, R.id.profileCardview,
+                        ConstraintSet.LEFT, 0);
+                constraintSet.connect(R.id.senderEmail, ConstraintSet.TOP, R.id.messageContents,
+                        ConstraintSet.BOTTOM, 0);
                 constraintSet.applyTo(constraintLayout);
             } else {
                 ConstraintSet constraintSet = new ConstraintSet();
                 constraintSet.clone(constraintLayout);
                 constraintSet.clear(R.id.profileCardview, ConstraintSet.RIGHT);
                 constraintSet.clear(R.id.messageContents, ConstraintSet.RIGHT);
+                constraintSet.clear(R.id.senderEmail, ConstraintSet.RIGHT);
                 constraintSet.connect(R.id.profileCardview, ConstraintSet.LEFT, R.id.constraintLayout,
                         ConstraintSet.LEFT, 0);
                 constraintSet.connect(R.id.messageContents, ConstraintSet.LEFT, R.id.profileCardview,
                         ConstraintSet.RIGHT, 0);
+                constraintSet.connect(R.id.senderEmail, ConstraintSet.LEFT, R.id.profileCardview,
+                        ConstraintSet.RIGHT, 0);
+                constraintSet.connect(R.id.senderEmail, ConstraintSet.TOP, R.id.messageContents,
+                        ConstraintSet.BOTTOM, 0);
                 constraintSet.applyTo(constraintLayout);
             }
         }
@@ -74,14 +84,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
         ConstraintLayout constraintLayout;
         TextView textMessage;
         ImageView profileImage;
-        //TextView senderEmail;
+        TextView senderEmail;
             public MessageHolder(@NonNull View itemView) {
                 super(itemView);
 
                 constraintLayout = itemView.findViewById(R.id.constraintLayout);
                 textMessage = itemView.findViewById(R.id.messageContents);
                 profileImage = itemView.findViewById(R.id.chatProfileImg);
-                //senderEmail = itemView.findViewById(R.id.senderEmail);
+                senderEmail = itemView.findViewById(R.id.senderEmail);
             }
         }
     }

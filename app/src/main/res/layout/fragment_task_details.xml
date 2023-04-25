@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TaskDetailsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="vertical"
+        android:id="@+id/textOutput">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Task Title: "
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/taskTitleName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="First Name : "
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="26sp"
+                android:gravity="right"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Source : "
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/taskSource"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="CSCE 310 "
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="26sp"
+                android:gravity="right"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Due Date : "
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/taskDueDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="10/24 "
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="26sp"
+                android:gravity="right" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:id="@+id/notesView">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Additional Notes : "
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/taskNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="Task Notes "
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="26sp"
+                android:gravity="right"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#000000"/>
+
+        <Button
+            android:id="@+id/editTaskButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:text="Edit" />
+
+        <Button
+            android:id="@+id/deleteTaskButton"
+            android:layout_width="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:text="Mark Completed"
+            android:layout_weight="1"
+            app:layout_constraintTop_toBottomOf="@+id/editTaskButton" />
+
+        <Button
+            android:id="@+id/shareTaskButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:text="Share"
+            app:layout_constraintTop_toBottomOf="@+id/deleteTaskButton" />
+
+    </LinearLayout>
+
+</ScrollView>

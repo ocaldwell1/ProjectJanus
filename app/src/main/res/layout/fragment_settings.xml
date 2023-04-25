@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsFragment">
+
+
+    <TextView
+        android:id="@+id/settingsFirstNameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FirstName"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.379" />
+
+    <TextView
+        android:id="@+id/settingsLastNameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LastName"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.417" />
+
+    <TextView
+        android:id="@+id/settingsEmailTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.467" />
+
+    <TextView
+        android:id="@+id/settingsResetPassTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset Password"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.836" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/darkThemeSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dark Theme"
+        android:textColor="#757575"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.141"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.67" />
+
+    <TextView
+        android:id="@+id/settingsLogOutTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log Out"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.102"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsResetPassTV"
+        app:layout_constraintVertical_bias="0.329" />
+
+    <TextView
+        android:id="@+id/settingsChangePicTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change profile picture"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.163"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.759" />
+
+    <TextView
+        android:id="@+id/settingsPrioritySpinnerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Priority Calculation Method:"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/settingsChangePicTV"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.561" />
+
+    <ImageView
+        android:id="@+id/settingsImageView"
+        android:layout_width="230dp"
+        android:layout_height="222dp"
+        android:src="@drawable/profile_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.028" />
+
+    <Spinner
+        android:id="@+id/settingsPriorityCalculationSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/settingsPrioritySpinnerText"
+        app:layout_constraintStart_toEndOf="@+id/settingsPrioritySpinnerText"
+        app:layout_constraintTop_toTopOf="@+id/settingsPrioritySpinnerText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

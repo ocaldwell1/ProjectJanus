@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="30dp"
+    android:layout_margin="16dp">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:id="@+id/taskTitleName"
+            android:layout_marginLeft="8dp"
+            android:text="Task Title"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="26sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:id="@+id/taskDueDate"
+            android:gravity="right"
+            android:layout_marginLeft="1dp"
+            android:text="Task Due Date"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="26sp"
+            android:textStyle="italic"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:id="@+id/taskSource"
+            android:layout_gravity="bottom|left"
+            android:layout_marginLeft="8dp"
+            android:text="Task Class/Source"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
